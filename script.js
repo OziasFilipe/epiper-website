@@ -234,18 +234,31 @@ heroProofs.forEach((el) => counterObserver.observe(el));
   document.body.appendChild(banner);
 })();
 
-/* Hero slideshow auto-cycle */
+/* Hero slideshow auto-cycle with dots */
 (function() {
   const slideshow = document.getElementById('heroSlideshow');
   if (!slideshow) return;
   const imgs = slideshow.querySelectorAll('img');
+  const dots = document.getElementById('heroDots');
   if (imgs.length < 2) return;
   let idx = 0;
+  function goTo(index) {
+    imgs.forEach(i => i.classList.remove('active'));
+    imgs[index].classList.add('active');
+    if (dots) {
+      dots.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+      dots.querySelector(`.dot[data-index="${index}"]`).classList.add('active');
+    }
+    idx = index;
+  }
+  if (dots) {
+    dots.querySelectorAll('.dot').forEach(d => {
+      d.addEventListener('click', () => goTo(parseInt(d.dataset.index)));
+    });
+  }
   setInterval(() => {
-    imgs[idx].classList.remove('active');
-    idx = (idx + 1) % imgs.length;
-    imgs[idx].classList.add('active');
-  }, 3500);
+    goTo((idx + 1) % imgs.length);
+  }, 4000);
 })();
 
 /* Close mobile nav when window resizes past breakpoint */

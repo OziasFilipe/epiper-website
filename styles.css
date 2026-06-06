@@ -484,6 +484,10 @@ video {
 .device-slideshow img:first-child { display: block; width: 100%; height: auto; }
 .device-slideshow img:not(:first-child) { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 4px; opacity: 0; }
 .device-slideshow img.active { opacity: 1; }
+.device-dots { display: flex; gap: 8px; justify-content: center; margin-top: 14px; }
+.device-dots .dot { width: 10px; height: 10px; border-radius: 50%; background: #d1d5db; cursor: pointer; transition: all .3s ease; border: none; padding: 0; }
+.device-dots .dot.active { background: var(--green); transform: scale(1.3); box-shadow: 0 0 8px rgba(31,93,231,0.3); }
+.device-dots .dot:hover { background: #9ca3af; }
 @media (max-width: 860px) { .device-mockup { max-width: 500px; margin: 0 auto; } .device-laptop { transform: none; } }
 
 .hero-eyebrow {
