@@ -1,0 +1,12 @@
+{
+  "name": "epiper-website",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npx netlify dev"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^8.0.0",
+    "sql.js": "^1.11.0"
+  }
+}

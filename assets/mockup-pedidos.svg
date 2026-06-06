@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" fill="none">
+  <defs>
+    <linearGradient id="btn-green" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#16a34a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="750" fill="#f8fafc" rx="12"/>
+  <rect x="0" y="0" width="240" height="750" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="70" y="20" width="100" height="36" rx="6" fill="#dcfce7"/>
+  <text x="120" y="44" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="16" fill="#16a34a">epiper</text>
+  <line x1="20" y1="72" x2="220" y2="72" stroke="#f1f5f9" stroke-width="1"/>
+  <rect x="16" y="90" width="208" height="40" rx="8" fill="#f0fdf4"/>
+  <rect x="16" y="90" width="4" height="40" rx="2" fill="#22c55e"/>
+  <text x="50" y="115" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#16a34a">📋  Pedidos</text>
+  <rect x="16" y="138" width="208" height="40" rx="8" fill="transparent"/>
+  <text x="50" y="163" font-family="Inter, sans-serif" font-size="13" font-weight="500" fill="#64748b">🛒  Produtos</text>
+  <rect x="16" y="186" width="208" height="40" rx="8" fill="transparent"/>
+  <text x="50" y="211" font-family="Inter, sans-serif" font-size="13" font-weight="500" fill="#64748b">👥  Clientes</text>
+  <rect x="16" y="234" width="208" height="40" rx="8" fill="transparent"/>
+  <text x="50" y="259" font-family="Inter, sans-serif" font-size="13" font-weight="500" fill="#64748b">📊  Relatórios</text>
+  <rect x="16" y="282" width="208" height="40" rx="8" fill="transparent"/>
+  <text x="50" y="307" font-family="Inter, sans-serif" font-size="13" font-weight="500" fill="#64748b">🏷️  Tabela de Preços</text>
+  <rect x="16" y="330" width="208" height="40" rx="8" fill="transparent"/>
+  <text x="50" y="355" font-family="Inter, sans-serif" font-size="13" font-weight="500" fill="#64748b">📦  Estoque</text>
+  <rect x="16" y="378" width="208" height="40" rx="8" fill="transparent"/>
+  <text x="50" y="403" font-family="Inter, sans-serif" font-size="13" font-weight="500" fill="#64748b">⚙️  Configurações</text>
+  <line x1="20" y1="660" x2="220" y2="660" stroke="#f1f5f9" stroke-width="1"/>
+  <circle cx="45" cy="698" r="16" fill="#dcfce7"/>
+  <text x="45" y="703" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#16a34a">LS</text>
+  <text x="70" y="695" font-family="Inter, sans-serif" font-size="13" font-weight="500" fill="#1e293b">Laborsil</text>
+  <text x="70" y="710" font-family="Inter, sans-serif" font-size="10" fill="#94a3b8">08.845.829/0001-05</text>
+  <text x="200" y="700" font-family="Inter, sans-serif" font-size="11" fill="#94a3b8">⋮</text>
+  <rect x="240" y="0" width="960" height="64" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="260" y="14" width="400" height="36" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="280" y="37" font-family="Inter, sans-serif" font-size="13" fill="#94a3b8">🔍  Buscar produto, cliente ou pedido...</text>
+  <rect x="1000" y="16" width="36" height="32" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="1018" y="37" font-family="Inter, sans-serif" font-size="14" fill="#475569">🔔</text>
+  <circle cx="1028" cy="20" r="5" fill="#ef4444"/>
+  <rect x="1046" y="16" width="36" height="32" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="1064" y="37" font-family="Inter, sans-serif" font-size="14" fill="#475569">💬</text>
+  <circle cx="1074" cy="20" r="5" fill="#ef4444"/>
+  <rect x="1092" y="16" width="36" height="32" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="1110" y="37" font-family="Inter, sans-serif" font-size="14" fill="#475569">👤</text>
+  <text x="260" y="98" font-family="Inter, sans-serif" font-size="12" fill="#94a3b8">Pedidos / Novo Pedido</text>
+  <text x="260" y="124" font-family="Inter, sans-serif" font-size="20" font-weight="700" fill="#1e293b">Novo Pedido</text>
+  <rect x="260" y="144" width="280" height="80" rx="10" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="276" y="168" font-family="Inter, sans-serif" font-size="11" fill="#94a3b8">CLIENTE</text>
+  <text x="276" y="192" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#1e293b">Auto Peças Centro Ltda</text>
+  <text x="276" y="210" font-family="Inter, sans-serif" font-size="11" fill="#64748b">CNPJ: 12.345.678/0001-90</text>
+  <rect x="556" y="144" width="200" height="80" rx="10" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="572" y="168" font-family="Inter, sans-serif" font-size="11" fill="#94a3b8">CONDIÇÃO DE PAGAMENTO</text>
+  <text x="572" y="192" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#1e293b">28 dias</text>
+  <text x="572" y="210" font-family="Inter, sans-serif" font-size="11" fill="#64748b">Boleto 28 dias</text>
+  <rect x="772" y="144" width="160" height="80" rx="10" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="788" y="168" font-family="Inter, sans-serif" font-size="11" fill="#94a3b8">VENDEDOR</text>
+  <text x="788" y="192" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#1e293b">Carlos Silva</text>
+  <text x="788" y="210" font-family="Inter, sans-serif" font-size="11" fill="#64748b">Mat. 045</text>
+  <rect x="260" y="240" width="620" height="44" rx="10" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="280" y="267" font-family="Inter, sans-serif" font-size="13" fill="#94a3b8">🔍  Digite o código, nome ou referência do produto...</text>
+  <rect x="790" y="246" width="80" height="32" rx="6" fill="url(#btn-green)"/>
+  <text x="830" y="267" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="white">Buscar</text>
+  <rect x="260" y="296" width="620" height="220" rx="10" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="260" y="296" width="620" height="36" rx="10" fill="#f8fafc"/>
+  <line x1="260" y1="332" x2="880" y2="332" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="280" y="318" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#64748b">CÓDIGO</text>
+  <text x="360" y="318" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#64748b">PRODUTO</text>
+  <text x="540" y="318" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#64748b">UN</text>
+  <text x="600" y="318" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#64748b">QTDE</text>
+  <text x="660" y="318" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#64748b">PREÇO</text>
+  <text x="740" y="318" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#64748b">DESC %</text>
+  <text x="820" y="318" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#64748b">TOTAL</text>
+  <line x1="260" y1="368" x2="880" y2="368" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="280" y="388" font-family="Inter, sans-serif" font-size="12" fill="#1e293b" font-weight="500">001458</text>
+  <text x="360" y="388" font-family="Inter, sans-serif" font-size="12" fill="#1e293b">Óleo Motor 5W30 1L</text>
+  <text x="540" y="388" font-family="Inter, sans-serif" font-size="12" fill="#64748b">UN</text>
+  <text x="600" y="388" font-family="Inter, sans-serif" font-size="12" fill="#1e293b">12</text>
+  <text x="660" y="388" font-family="Inter, sans-serif" font-size="12" fill="#1e293b">R$ 32,50</text>
+  <text x="740" y="388" font-family="Inter, sans-serif" font-size="12" fill="#22c55e">10%</text>
+  <text x="830" y="388" text-anchor="end" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1e293b">R$ 351,00</text>
+  <line x1="260" y1="404" x2="880" y2="404" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="280" y="424" font-family="Inter, sans-serif" font-size="12" fill="#1e293b" font-weight="500">002213</text>
+  <text x="360" y="424" font-family="Inter, sans-serif" font-size="12" fill="#1e293b">Filtro de Óleo</text>
+  <text x="540" y="424" font-family="Inter, sans-serif" font-size="12" fill="#64748b">UN</text>
+  <text x="600" y="424" font-family="Inter, sans-serif" font-size="12" fill="#1e293b">6</text>
+  <text x="660" y="424" font-family="Inter, sans-serif" font-size="12" fill="#1e293b">R$ 18,90</text>
+  <text x="740" y="424" font-family="Inter, sans-serif" font-size="12" fill="#22c55e">5%</text>
+  <text x="830" y="424" text-anchor="end" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1e293b">R$ 107,73</text>
+  <line x1="260" y1="440" x2="880" y2="440" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="280" y="460" font-family="Inter, sans-serif" font-size="12" fill="#1e293b" font-weight="500">003847</text>
+  <text x="360" y="460" font-family="Inter, sans-serif" font-size="12" fill="#1e293b">Pastilha Freio Diant.</text>
+  <text x="540" y="460" font-family="Inter, sans-serif" font-size="12" fill="#64748b">PAR</text>
+  <text x="600" y="460" font-family="Inter, sans-serif" font-size="12" fill="#1e293b">3</text>
+  <text x="660" y="460" font-family="Inter, sans-serif" font-size="12" fill="#1e293b">R$ 89,90</text>
+  <text x="740" y="460" font-family="Inter, sans-serif" font-size="12" fill="#22c55e">—</text>
+  <text x="830" y="460" text-anchor="end" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1e293b">R$ 269,70</text>
+  <line x1="260" y1="476" x2="880" y2="476" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="280" y="496" font-family="Inter, sans-serif" font-size="12" fill="#1e293b" font-weight="500">004125</text>
+  <text x="360" y="496" font-family="Inter, sans-serif" font-size="12" fill="#1e293b">Bateria 60Ah Moura</text>
+  <text x="540" y="496" font-family="Inter, sans-serif" font-size="12" fill="#64748b">UN</text>
+  <text x="600" y="496" font-family="Inter, sans-serif" font-size="12" fill="#1e293b">2</text>
+  <text x="660" y="496" font-family="Inter, sans-serif" font-size="12" fill="#1e293b">R$ 459,00</text>
+  <text x="740" y="496" font-family="Inter, sans-serif" font-size="12" fill="#22c55e">8%</text>
+  <text x="830" y="496" text-anchor="end" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1e293b">R$ 844,56</text>
+  <rect x="896" y="64" width="304" height="686" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="896" y="64" width="304" height="52" fill="#f8fafc"/>
+  <text x="916" y="95" font-family="Inter, sans-serif" font-size="15" font-weight="600" fill="#1e293b">Resumo do Pedido</text>
+  <text x="1160" y="95" font-family="Inter, sans-serif" font-size="11" fill="#64748b">#PED-0047</text>
+  <line x1="916" y1="130" x2="1180" y2="130" stroke="#f1f5f9" stroke-width="1"/>
+  <circle cx="926" cy="150" r="10" fill="#dcfce7"/><text x="926" y="154" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#16a34a">1</text>
+  <text x="944" y="148" font-family="Inter, sans-serif" font-size="12" fill="#1e293b">Óleo Motor 5W30 1L</text>
+  <text x="944" y="162" font-family="Inter, sans-serif" font-size="10" fill="#94a3b8">12 un x R$ 32,50</text>
+  <text x="1176" y="154" text-anchor="end" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1e293b">R$ 351,00</text>
+  <circle cx="926" cy="190" r="10" fill="#dcfce7"/><text x="926" y="194" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#16a34a">2</text>
+  <text x="944" y="188" font-family="Inter, sans-serif" font-size="12" fill="#1e293b">Filtro de Óleo</text>
+  <text x="944" y="202" font-family="Inter, sans-serif" font-size="10" fill="#94a3b8">6 un x R$ 18,90</text>
+  <text x="1176" y="194" text-anchor="end" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1e293b">R$ 107,73</text>
+  <circle cx="926" cy="230" r="10" fill="#dcfce7"/><text x="926" y="234" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#16a34a">3</text>
+  <text x="944" y="228" font-family="Inter, sans-serif" font-size="12" fill="#1e293b">Pastilha Freio Diant.</text>
+  <text x="944" y="242" font-family="Inter, sans-serif" font-size="10" fill="#94a3b8">3 par x R$ 89,90</text>
+  <text x="1176" y="234" text-anchor="end" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1e293b">R$ 269,70</text>
+  <circle cx="926" cy="270" r="10" fill="#dcfce7"/><text x="926" y="274" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#16a34a">4</text>
+  <text x="944" y="268" font-family="Inter, sans-serif" font-size="12" fill="#1e293b">Bateria 60Ah Moura</text>
+  <text x="944" y="282" font-family="Inter, sans-serif" font-size="10" fill="#94a3b8">2 un x R$ 459,00</text>
+  <text x="1176" y="274" text-anchor="end" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1e293b">R$ 844,56</text>
+  <line x1="916" y1="300" x2="1180" y2="300" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="916" y="330" font-family="Inter, sans-serif" font-size="12" fill="#64748b">Subtotal</text>
+  <text x="1176" y="330" text-anchor="end" font-family="Inter, sans-serif" font-size="12" fill="#1e293b">R$ 1.572,99</text>
+  <text x="916" y="355" font-family="Inter, sans-serif" font-size="12" fill="#64748b">Descontos</text>
+  <text x="1176" y="355" text-anchor="end" font-family="Inter, sans-serif" font-size="12" fill="#22c55e">- R$ 89,35</text>
+  <text x="916" y="380" font-family="Inter, sans-serif" font-size="12" fill="#64748b">Frete</text>
+  <text x="1176" y="380" text-anchor="end" font-family="Inter, sans-serif" font-size="12" fill="#1e293b">R$ 45,00</text>
+  <line x1="916" y1="395" x2="1180" y2="395" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="916" y="425" font-family="Inter, sans-serif" font-size="15" font-weight="700" fill="#1e293b">Total</text>
+  <text x="1176" y="425" text-anchor="end" font-family="Inter, sans-serif" font-size="18" font-weight="700" fill="#16a34a">R$ 1.528,64</text>
+  <rect x="916" y="450" width="264" height="44" rx="10" fill="url(#btn-green)"/>
+  <text x="1048" y="477" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="white">Finalizar Pedido</text>
+  <rect x="916" y="504" width="264" height="44" rx="10" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="1048" y="531" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" fill="#64748b">Adicionar Observação</text>
+  <rect x="916" y="558" width="264" height="44" rx="10" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="1048" y="585" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" fill="#64748b">Salvar Rascunho</text>
+  <rect x="916" y="620" width="264" height="80" rx="10" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="936" y="640" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#16a34a">✅ Estoque disponível</text>
+  <text x="936" y="658" font-family="Inter, sans-serif" font-size="10" fill="#64748b">Todos os itens selecionados</text>
+  <text x="936" y="676" font-family="Inter, sans-serif" font-size="10" fill="#64748b">possuem estoque suficiente.</text>
+</svg>

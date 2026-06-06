@@ -1,0 +1,44 @@
+[build]
+  command = "npm install"
+  functions = "netlify/functions"
+  publish = "."
+
+[[redirects]]
+  from = "/robo-cobranca.html"
+  to = "/index.html"
+  status = 301
+
+[[redirects]]
+  from = "/robo-cobranca"
+  to = "/index.html"
+  status = 301
+
+[[redirects]]
+  from = "/especialista.html"
+  to = "/fale-conosco.html"
+  status = 301
+
+[[redirects]]
+  from = "/especialista"
+  to = "/fale-conosco.html"
+  status = 301
+
+[[redirects]]
+  from = "/fale-conosco"
+  to = "/fale-conosco.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin"
+  to = "/admin.html"
+  status = 200
+
+[[redirects]]
+  from = "/leads"
+  to = "/.netlify/functions/leads"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404

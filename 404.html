@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <meta property="og:image" content="https://epiper.com.br/assets/epiper.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, follow" />
+  <title>Pagina nao encontrada | ePiper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .error-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, #ffffff 0%, #f0f2f5 100%); padding: 1rem; }
+    .error-box { text-align: center; max-width: 480px; width: 100%; }
+    .error-box .code { font-size: 6rem; font-weight: 800; color: #e2e8f2; line-height: 1; margin-bottom: 0.5rem; }
+    .error-box h1 { font-size: 1.5rem; color: #1f242d; margin-bottom: 0.5rem; }
+    .error-box p { color: #5b6b82; font-size: 1rem; margin-bottom: 2rem; line-height: 1.6; }
+    .error-box .logo { width: 120px; margin-bottom: 1rem; }
+    .error-links { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+    .error-links a { padding: 0.7rem 1.2rem; border-radius: 999px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.2s; }
+    .error-links .btn-primary { background: #1f5de8; color: #fff; }
+    .error-links .btn-primary:hover { transform: translateY(-2px); }
+    .error-links .btn-outline { border: 1px solid #d6deeb; color: #3c4654; }
+    .error-links .btn-outline:hover { background: #f5f7fa; }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ePiper Tecnologia",
+    "url": "https://epiper.com.br",
+    "logo": "https://epiper.com.br/assets/epiper.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+55-27-99621-7169",
+      "contactType": "sales",
+      "email": "contato@epiper.com.br"
+    }
+  }
+  </script>
+</head>
+<body>
+  <main class="error-page">
+    <div class="error-box">
+      <a href="index.html"><img src="assets/epiper.png" alt="ePiper" class="logo" /></a>
+      <div class="code">404</div>
+      <h1>Pagina nao encontrada</h1>
+      <p>O link que voce acessou nao existe ou foi removido. Confira o endereco ou volte para o inicio.</p>
+      <div class="error-links">
+        <a href="index.html" class="btn-primary">Pagina inicial</a>
+        <a href="fale-conosco.html" class="btn-outline">Fale conosco</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

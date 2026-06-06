@@ -1,0 +1,479 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <meta property="og:image" content="https://epiper.com.br/assets/epiper.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Admin | ePiper Leads</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f0f2f5; color: #1f242d; min-height: 100vh; }
+    .login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 1rem; background: linear-gradient(135deg, #f0f2f5 0%, #e2e8f2 100%); }
+    .login-box { background: #fff; border-radius: 24px; padding: 2.5rem; width: 100%; max-width: 400px; box-shadow: 0 24px 80px rgba(0,0,0,0.1); text-align: center; }
+    .login-box .logo { width: 140px; margin-bottom: 1.5rem; }
+    .login-box h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+    .login-box p { color: #5b6b82; font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .login-box input { width: 100%; padding: 0.85rem 1rem; border: 1px solid #d6deeb; border-radius: 10px; font-size: 1rem; font-family: inherit; outline: none; margin-bottom: 1rem; transition: border-color 0.2s; }
+    .login-box input:focus { border-color: #1f5de8; box-shadow: 0 0 0 3px rgba(31,93,232,0.12); }
+    .login-box button { width: 100%; padding: 0.85rem; background: #1f5de8; color: #fff; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.2s; font-family: inherit; }
+    .login-box button:hover { background: #1a4fc4; }
+    .login-error { color: #b42318; font-size: 0.85rem; margin-top: 0.5rem; display: none; }
+    .login-error.show { display: block; }
+    .app { display: none; }
+    .app.show { display: block; }
+    .topbar { background: #fff; border-bottom: 1px solid #e2e8f2; padding: 0 1.5rem; position: sticky; top: 0; z-index: 100; }
+    .topbar-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; max-width: 1280px; margin: 0 auto; }
+    .topbar-brand { display: flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 1.1rem; color: #1f242d; text-decoration: none; }
+    .topbar-brand img { height: 32px; width: auto; }
+    .topbar-brand span { color: #1f5de8; }
+    .topbar-actions { display: flex; align-items: center; gap: 0.5rem; }
+    .topbar-actions button { padding: 0.5rem 0.9rem; border-radius: 8px; border: 1px solid #d6deeb; background: #fff; font-size: 0.82rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+    .topbar-actions button:hover { background: #f5f7fa; }
+    .btn-logout { color: #b42318; border-color: #f5c6c2 !important; }
+    .btn-logout:hover { background: #fef2f2 !important; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 1.5rem; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .stat-card { background: #fff; border-radius: 14px; padding: 1.25rem 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid #e2e8f2; }
+    .stat-card h3 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: #697486; margin-bottom: 0.2rem; }
+    .stat-card .value { font-size: 1.8rem; font-weight: 800; color: #1f242d; }
+    .stat-card .value.green { color: #1fb053; }
+    .stat-card .value.blue { color: #1f5de8; }
+    .stat-card .value.orange { color: #e8912e; }
+    .stat-card .value.red { color: #b42318; }
+    .controls { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; }
+    .controls-left { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .search-input { padding: 0.6rem 0.85rem; border: 1px solid #d6deeb; border-radius: 8px; font-size: 0.9rem; font-family: inherit; outline: none; min-width: 200px; transition: border-color 0.2s; }
+    .search-input:focus { border-color: #1f5de8; box-shadow: 0 0 0 3px rgba(31,93,232,0.12); }
+    .filter-select { padding: 0.6rem 0.85rem; border: 1px solid #d6deeb; border-radius: 8px; font-size: 0.85rem; font-family: inherit; outline: none; background: #fff; cursor: pointer; }
+    .btn-export { padding: 0.6rem 1.2rem; background: #1fb053; color: #fff; border: none; border-radius: 8px; font-size: 0.82rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.2s; white-space: nowrap; }
+    .btn-export:hover { background: #179644; }
+    .btn-export:disabled, .btn-danger:disabled { opacity: 0.5; cursor: wait; }
+    .table-wrap { background: #fff; border-radius: 14px; border: 1px solid #e2e8f2; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 800px; }
+    th { text-align: left; padding: 0.85rem 1rem; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: #697486; font-weight: 700; border-bottom: 2px solid #e2e8f2; background: #fafbfc; white-space: nowrap; cursor: pointer; user-select: none; position: sticky; top: 0; }
+    th:hover { color: #1f242d; }
+    th .sort-icon { display: inline-block; margin-left: 0.25rem; font-size: 0.65rem; opacity: 0.4; }
+    th:hover .sort-icon { opacity: 1; }
+    th .sort-icon.active { opacity: 1; color: #1f5de8; }
+    td { padding: 0.75rem 1rem; border-bottom: 1px solid #eef1f5; font-size: 0.88rem; color: #3c4654; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f8f9fb; }
+    tr.clickable { cursor: pointer; }
+    .status-badge { display: inline-flex; padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.72rem; font-weight: 600; }
+    .s-novo { background: #e8f4fd; color: #1f5de8; }
+    .s-contatado { background: #e8faf0; color: #1fb053; }
+    .s-qualificado { background: #fef7e8; color: #e8912e; }
+    .s-perdido { background: #fef2f2; color: #b42318; }
+    .status-select { padding: 0.25rem 0.4rem; border-radius: 6px; border: 1px solid #d6deeb; font-size: 0.78rem; font-family: inherit; cursor: pointer; background: #fff; }
+    .btn-danger { padding: 0.3rem 0.6rem; background: none; border: 1px solid #f5c6c2; color: #b42318; border-radius: 6px; font-size: 0.75rem; cursor: pointer; font-family: inherit; transition: all 0.2s; opacity: 0.5; }
+    tr:hover .btn-danger { opacity: 1; }
+    .btn-danger:hover { background: #fef2f2; }
+    .empty-state { text-align: center; padding: 3rem 1rem; color: #697486; }
+    .empty-state h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .empty-state p { font-size: 0.9rem; }
+    .loading { text-align: center; padding: 3rem; color: #697486; }
+    .pagination { display: flex; align-items: center; justify-content: center; gap: 0.25rem; margin-top: 1rem; flex-wrap: wrap; }
+    .pagination button { padding: 0.4rem 0.7rem; border: 1px solid #d6deeb; border-radius: 6px; background: #fff; cursor: pointer; font-family: inherit; font-size: 0.82rem; font-weight: 500; transition: all 0.15s; }
+    .pagination button:hover:not(:disabled):not(.active) { background: #f5f7fa; }
+    .pagination button.active { background: #1f5de8; color: #fff; border-color: #1f5de8; }
+    .pagination button:disabled { opacity: 0.35; cursor: default; }
+    .pagination .info { font-size: 0.82rem; color: #697486; padding: 0 0.5rem; }
+
+    /* Detail modal */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; display: none; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-overlay.show { display: flex; }
+    .modal { background: #fff; border-radius: 20px; padding: 2rem; width: 100%; max-width: 560px; max-height: 85vh; overflow-y: auto; box-shadow: 0 24px 80px rgba(0,0,0,0.2); animation: modalIn 0.25s ease; }
+    @keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+    .modal-header h2 { font-size: 1.3rem; }
+    .modal-close { width: 36px; height: 36px; border: none; background: #f0f2f5; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+    .modal-close:hover { background: #e2e8f2; }
+    .modal-field { margin-bottom: 1rem; }
+    .modal-field label { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: #697486; font-weight: 700; margin-bottom: 0.2rem; }
+    .modal-field p { font-size: 0.95rem; color: #1f242d; }
+    .modal-field p.mensagem { background: #f8f9fb; padding: 0.75rem; border-radius: 8px; line-height: 1.6; }
+    .modal-actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e2e8f2; }
+    .modal-actions button { padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+    .modal-actions .btn-primary { background: #1f5de8; color: #fff; border: none; }
+    .modal-actions .btn-primary:hover { background: #1a4fc4; }
+    .modal-actions .btn-delete { background: none; color: #b42318; border: 1px solid #f5c6c2; }
+    .modal-actions .btn-delete:hover { background: #fef2f2; }
+
+    /* Toast notifications */
+    .toast-container { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 300; display: grid; gap: 0.5rem; }
+    .toast { padding: 0.85rem 1.2rem; border-radius: 10px; font-size: 0.85rem; font-weight: 500; color: #fff; animation: toastIn 0.3s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.15); max-width: 360px; }
+    .toast.success { background: #1fb053; }
+    .toast.error { background: #b42318; }
+    @keyframes toastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+    @media (max-width: 768px) {
+      .container { padding: 1rem; }
+      .controls { flex-direction: column; align-items: stretch; }
+      .controls-left { flex-direction: column; }
+      .search-input { min-width: auto; width: 100%; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .topbar-actions button { padding: 0.4rem 0.6rem; font-size: 0.75rem; }
+      .modal { padding: 1.5rem; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ePiper Tecnologia",
+    "url": "https://epiper.com.br",
+    "logo": "https://epiper.com.br/assets/epiper.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+55-27-99621-7169",
+      "contactType": "sales",
+      "email": "contato@epiper.com.br"
+    }
+  }
+  </script>
+</head>
+<body>
+
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <img src="assets/epiper.png" alt="ePiper" class="logo" />
+    <h1>Painel Administrativo</h1>
+    <p>Digite a senha para gerenciar os leads.</p>
+    <input type="password" id="passwordInput" placeholder="Senha de administrador" autofocus autocomplete="off" />
+    <button onclick="login()">Entrar</button>
+    <p class="login-error" id="loginError">Senha incorreta.</p>
+  </div>
+</div>
+
+<div class="app" id="app">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a href="index.html" class="topbar-brand">
+        <img src="assets/epiper.png" alt="ePiper" />
+        <span>Leads</span>
+      </a>
+      <div class="topbar-actions">
+        <button onclick="exportCSV()" class="btn-export" id="exportBtn">CSV</button>
+        <button onclick="refresh()">Atualizar</button>
+        <button onclick="logout()" class="btn-logout">Sair</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="stats-grid" id="stats">
+      <div class="stat-card">
+        <h3>Total</h3>
+        <div class="value blue" id="totalLeads">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>Novos</h3>
+        <div class="value" id="totalNovos">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>Contatados</h3>
+        <div class="value green" id="totalContatados">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>Qualificados</h3>
+        <div class="value orange" id="totalQualificados">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>Perdidos</h3>
+        <div class="value red" id="totalPerdidos">0</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="controls-left">
+        <input type="text" class="search-input" id="searchInput" placeholder="Buscar nome, empresa ou email..." oninput="render()" />
+        <select class="filter-select" id="statusFilter" onchange="render()">
+          <option value="">Todos os status</option>
+          <option value="novo">Novo</option>
+          <option value="contatado">Contatado</option>
+          <option value="qualificado">Qualificado</option>
+          <option value="perdido">Perdido</option>
+        </select>
+        <select class="filter-select" id="moduloFilter" onchange="render()">
+          <option value="">Todos os modulos</option>
+          <option value="Piper Pedido Eletronico">Pedido Eletronico</option>
+          <option value="Piper Telemarketing">Telemarketing</option>
+          <option value="Piper Integracoes">Integracoes</option>
+          <option value="Piper Contato">Contato</option>
+        </select>
+      </div>
+      <span style="font-size:0.82rem;color:#697486;white-space:nowrap;" id="leadCount">0 leads</span>
+    </div>
+
+    <div class="table-wrap">
+      <div class="loading" id="loading">Carregando leads...</div>
+      <div class="table-scroll">
+        <table id="leadsTable" style="display:none;">
+          <thead>
+            <tr>
+              <th onclick="sort('id')"># <span class="sort-icon" id="sId"></span></th>
+              <th onclick="sort('nome')">Nome <span class="sort-icon" id="sNome"></span></th>
+              <th onclick="sort('empresa')">Empresa <span class="sort-icon" id="sEmpresa"></span></th>
+              <th onclick="sort('email')">Email <span class="sort-icon" id="sEmail"></span></th>
+              <th onclick="sort('telefone')">Telefone <span class="sort-icon" id="sTelefone"></span></th>
+              <th onclick="sort('modulo')">Modulo <span class="sort-icon" id="sModulo"></span></th>
+              <th onclick="sort('created_at')">Data <span class="sort-icon" id="sCreated_at"></span></th>
+              <th>Status</th>
+              <th style="width:40px;"></th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <h3>Nenhum lead encontrado</h3>
+        <p>Os leads aparecerao aqui apos o primeiro cadastro no site.</p>
+      </div>
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modalTitle">Detalhes do Lead</h2>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+const ADMIN_PASSWORD = '821760';
+const API = '/.netlify/functions/leads';
+let allLeads = [];
+let sortField = 'created_at';
+let sortDir = 'desc';
+let page = 1;
+const PER_PAGE = 20;
+
+function login() {
+  const pw = document.getElementById('passwordInput').value;
+  if (pw === ADMIN_PASSWORD) {
+    sessionStorage.setItem('epiper_admin', '1');
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').classList.add('show');
+    load();
+  } else {
+    document.getElementById('loginError').classList.add('show');
+  }
+}
+document.getElementById('passwordInput').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+
+function checkAuth() {
+  if (sessionStorage.getItem('epiper_admin') === '1') {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').classList.add('show');
+    load();
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem('epiper_admin');
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('app').classList.remove('show');
+}
+
+async function load() {
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('leadsTable').style.display = 'none';
+  document.getElementById('emptyState').style.display = 'none';
+  try {
+    const res = await fetch(`${API}?action=list&password=${ADMIN_PASSWORD}`);
+    const data = await res.json();
+    allLeads = data.ok && Array.isArray(data.leads) ? data.leads : [];
+  } catch { allLeads = []; }
+  document.getElementById('loading').style.display = 'none';
+  stats();
+  render();
+}
+
+function stats() {
+  document.getElementById('totalLeads').textContent = allLeads.length;
+  document.getElementById('totalNovos').textContent = allLeads.filter(l => l.status === 'novo').length;
+  document.getElementById('totalContatados').textContent = allLeads.filter(l => l.status === 'contatado').length;
+  document.getElementById('totalQualificados').textContent = allLeads.filter(l => l.status === 'qualificado').length;
+  document.getElementById('totalPerdidos').textContent = allLeads.filter(l => l.status === 'perdido').length;
+}
+
+function sort(field) {
+  if (sortField === field) { sortDir = sortDir === 'asc' ? 'desc' : 'asc'; }
+  else { sortField = field; sortDir = 'asc'; }
+  document.querySelectorAll('.sort-icon').forEach(el => { el.classList.remove('active'); el.textContent = ''; });
+  const icon = document.getElementById('s' + field.charAt(0).toUpperCase() + field.slice(1));
+  if (icon) { icon.textContent = sortDir === 'asc' ? '\u25B2' : '\u25BC'; icon.classList.add('active'); }
+  render();
+}
+
+function filtered() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const sf = document.getElementById('statusFilter').value;
+  const mf = document.getElementById('moduloFilter').value;
+  return allLeads.filter(l => {
+    if (q && !(l.nome||'').toLowerCase().includes(q) && !(l.empresa||'').toLowerCase().includes(q) && !(l.email||'').toLowerCase().includes(q)) return false;
+    if (sf && l.status !== sf) return false;
+    if (mf && l.modulo !== mf) return false;
+    return true;
+  }).sort((a, b) => {
+    let va = a[sortField] || '', vb = b[sortField] || '';
+    if (sortField === 'id') { va = Number(va); vb = Number(vb); }
+    else if (sortField === 'created_at') { va = new Date(va); vb = new Date(vb); }
+    else { va = va.toString().toLowerCase(); vb = vb.toString().toLowerCase(); }
+    return va < vb ? (sortDir === 'asc' ? -1 : 1) : va > vb ? (sortDir === 'asc' ? 1 : -1) : 0;
+  });
+}
+
+function render() {
+  const list = filtered();
+  document.getElementById('leadCount').textContent = list.length + ' leads';
+  if (!list.length) {
+    document.getElementById('leadsTable').style.display = 'none';
+    document.getElementById('emptyState').style.display = 'block';
+    document.getElementById('pagination').innerHTML = '';
+    return;
+  }
+  document.getElementById('emptyState').style.display = 'none';
+  const totalPages = Math.ceil(list.length / PER_PAGE);
+  if (page > totalPages) page = totalPages;
+  if (page < 1) page = 1;
+  const start = (page - 1) * PER_PAGE;
+  const rows = list.slice(start, start + PER_PAGE);
+  document.getElementById('tableBody').innerHTML = rows.map(l => `
+    <tr class="clickable" onclick="view(${l.id})">
+      <td style="font-weight:600;color:#1f242d;">${esc(l.id)}</td>
+      <td><strong>${esc(l.nome)}</strong></td>
+      <td>${esc(l.empresa)}</td>
+      <td style="color:#1f5de8;">${esc(l.email)}</td>
+      <td>${esc(l.telefone)}</td>
+      <td>${esc(l.modulo)}</td>
+      <td style="font-size:0.8rem;white-space:nowrap;">${date(l.created_at)}</td>
+      <td><select class="status-select" data-id="${l.id}" value="${l.status}" onclick="event.stopPropagation()" onchange="updateStatus(${l.id},this.value)">${opts(l.status)}</select></td>
+      <td><button class="btn-danger" onclick="event.stopPropagation();del(${l.id})" title="Excluir">&times;</button></td>
+    </tr>
+  `).join('');
+  document.getElementById('leadsTable').style.display = 'table';
+  pg(totalPages, list.length);
+}
+
+function opts(s) {
+  return ['novo','contatado','qualificado','perdido'].map(v => `<option value="${v}"${v===s?' selected':''}>${v.charAt(0).toUpperCase()+v.slice(1)}</option>`).join('');
+}
+
+function pg(total, count) {
+  const el = document.getElementById('pagination');
+  if (total <= 1) { el.innerHTML = ''; return; }
+  let h = `<button onclick="go(${page-1})" ${page<=1?'disabled':''}>&laquo;</button>`;
+  for (let i = 1; i <= total; i++) h += `<button onclick="go(${i})" class="${i===page?'active':''}">${i}</button>`;
+  h += `<button onclick="go(${page+1})" ${page>=total?'disabled':''}>&raquo;</button>`;
+  h += `<span class="info">${page}/${total}</span>`;
+  el.innerHTML = h;
+}
+
+function go(p) { if (p >= 1) { page = p; render(); } }
+
+function esc(s) { return String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
+
+function date(d) { return d ? new Date(d).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '-'; }
+
+async function updateStatus(id, status) {
+  try {
+    const res = await fetch(API, { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:`action=update_status&id=${id}&status=${status}&password=${ADMIN_PASSWORD}` });
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error);
+    const lead = allLeads.find(l => l.id === id);
+    if (lead) lead.status = status;
+    stats();
+    toast('Status atualizado para ' + status, 'success');
+  } catch(e) { toast('Erro: ' + e.message, 'error'); load(); }
+}
+
+async function del(id) {
+  if (!confirm('Excluir lead #' + id + '?')) return;
+  try {
+    const res = await fetch(API, { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:`action=delete&id=${id}&password=${ADMIN_PASSWORD}` });
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error);
+    allLeads = allLeads.filter(l => l.id !== id);
+    stats();
+    render();
+    toast('Lead excluido.', 'success');
+  } catch(e) { toast('Erro: ' + e.message, 'error'); load(); }
+}
+
+function view(id) {
+  const l = allLeads.find(x => x.id === id);
+  if (!l) return;
+  document.getElementById('modalTitle').textContent = 'Lead #' + l.id;
+  document.getElementById('modalBody').innerHTML = `
+    <div class="modal-field"><label>Nome</label><p>${esc(l.nome)}</p></div>
+    <div class="modal-field"><label>Empresa</label><p>${esc(l.empresa)}</p></div>
+    <div class="modal-field"><label>Email</label><p>${esc(l.email)}</p></div>
+    <div class="modal-field"><label>Telefone</label><p>${esc(l.telefone)}</p></div>
+    <div class="modal-field"><label>Modulo de Interesse</label><p>${esc(l.modulo) || '-'}</p></div>
+    <div class="modal-field"><label>Status</label><p><span class="status-badge s-${l.status}">${l.status}</span></p></div>
+    <div class="modal-field"><label>Data de Cadastro</label><p>${date(l.created_at)}</p></div>
+    <div class="modal-field"><label>Origem</label><p>${esc(l.origem) || '-'}</p></div>
+    <div class="modal-field"><label>IP</label><p>${esc(l.ip) || '-'}</p></div>
+    ${l.mensagem ? `<div class="modal-field"><label>Mensagem</label><p class="mensagem">${esc(l.mensagem)}</p></div>` : ''}
+    <div class="modal-actions">
+      <button class="btn-delete" onclick="closeModal();del(${l.id})">Excluir lead</button>
+      <button class="btn-primary" onclick="closeModal()">Fechar</button>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
+document.getElementById('modalOverlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+async function exportCSV() {
+  const btn = document.getElementById('exportBtn');
+  btn.disabled = true; btn.textContent = '...';
+  try {
+    const res = await fetch(`${API}?action=export&password=${ADMIN_PASSWORD}`);
+    if (!res.ok) throw new Error('Erro');
+    const blob = await res.blob();
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `leads_epiper_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    toast('CSV exportado.', 'success');
+  } catch(e) { toast('Erro ao exportar.', 'error'); }
+  finally { btn.disabled = false; btn.textContent = 'CSV'; }
+}
+
+function refresh() { load(); }
+
+function toast(msg, type) {
+  const c = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.3s'; setTimeout(() => t.remove(), 300); }, 3000);
+}
+
+checkAuth();
+</script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <meta property="og:image" content="https://epiper.com.br/assets/epiper.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>CRM ePiper - Area Administrativa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .crm-container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+    .crm-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #e6e9ef; }
+    .crm-header h1 { font-size: 1.8rem; color: #1f242d; }
+    .crm-stats { display: flex; gap: 2rem; }
+    .crm-stat { text-align: center; }
+    .crm-stat-value { font-size: 2rem; font-weight: 700; color: #02b53e; }
+    .crm-stat-label { font-size: 0.85rem; color: #697486; }
+    .crm-table-wrap { background: #fff; border: 1px solid #e6e9ef; border-radius: 12px; overflow: hidden; }
+    .crm-table { width: 100%; border-collapse: collapse; }
+    .crm-table th, .crm-table td { padding: 1rem; text-align: left; border-bottom: 1px solid #e6e9ef; }
+    .crm-table th { background: #f8f9fa; font-weight: 600; color: #3c4654; font-size: 0.9rem; }
+    .crm-table td { font-size: 0.95rem; color: #1f242d; }
+    .crm-table tr:last-child td { border-bottom: none; }
+    .crm-table tr:hover { background: #f8f9fa; }
+    .crm-badge { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.8rem; font-weight: 500; }
+    .badge-novo { background: #e8f8ee; color: #0f8b44; }
+    .crm-empty { text-align: center; padding: 3rem; color: #697486; }
+    .crm-loading { text-align: center; padding: 3rem; color: #697486; }
+    .crm-logout { color: #dc3545; text-decoration: none; font-weight: 500; }
+    .crm-login-overlay { position: fixed; inset: 0; background: #f3f5f8; display: flex; align-items: center; justify-content: center; z-index: 100; }
+    .crm-login-box { background: #fff; padding: 2rem; border-radius: 16px; border: 1px solid #e6e9ef; width: 100%; max-width: 400px; box-shadow: 0 24px 58px rgba(15,31,53,0.12); }
+    .crm-login-box h2 { margin-bottom: 1.5rem; text-align: center; }
+    .crm-login-box input { width: 100%; padding: 0.8rem; border: 1px solid #d6deeb; border-radius: 8px; margin-bottom: 1rem; font-size: 1rem; }
+    .crm-login-box button { width: 100%; padding: 0.8rem; background: #1f5de8; color: #fff; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; }
+    .crm-login-box button:hover { background: #1a4ec4; }
+    .crm-login-error { color: #dc3545; font-size: 0.9rem; text-align: center; margin-bottom: 1rem; display: none; }
+    .hidden { display: none !important; }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ePiper Tecnologia",
+    "url": "https://epiper.com.br",
+    "logo": "https://epiper.com.br/assets/epiper.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+55-27-99621-7169",
+      "contactType": "sales",
+      "email": "contato@epiper.com.br"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="crm-login" class="crm-login-overlay">
+    <div class="crm-login-box">
+      <h2>Acesso CRM ePiper</h2>
+      <p class="crm-login-error" id="login-error">Senha incorreta. Tente novamente.</p>
+      <form id="login-form">
+        <input type="password" id="crm-password" placeholder="Digite a senha de acesso" required />
+        <button type="submit">Entrar</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="crm-content" class="hidden">
+    <header class="topbar">
+      <div class="container nav-wrap">
+        <a href="index.html" class="logo" aria-label="ePiper inicio">
+          <img src="assets/epiper.png" alt="ePiper Tecnologia" class="logo-image" />
+        </a>
+        <nav class="nav" aria-label="Navegacao principal">
+          <a href="index.html">Site Principal</a>
+          <a href="fale-conosco.html" class="btn-nav">Formulario</a>
+          <a href="#" class="crm-logout" id="logout-btn">Sair</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="crm-container">
+      <div class="crm-header">
+        <h1>Painel de Cadastros</h1>
+        <div class="crm-stats">
+          <div class="crm-stat">
+            <div class="crm-stat-value" id="total-cadastros">0</div>
+            <div class="crm-stat-label">Total de Leads</div>
+          </div>
+          <div class="crm-stat">
+            <div class="crm-stat-value" id="export-btn" style="cursor:pointer;font-size:0.95rem;color:#1f5de8;">Exportar CSV</div>
+            <div class="crm-stat-label">Clique para exportar</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="crm-table-wrap">
+        <table class="crm-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Nome</th>
+              <th>Empresa</th>
+              <th>E-mail</th>
+              <th>Telefone</th>
+              <th>Modulo</th>
+              <th>Mensagem</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="crm-tbody">
+            <tr><td colspan="8" class="crm-loading">Carregando...</td></tr>
+          </tbody>
+        </table>
+        <div class="crm-empty" id="crm-empty" style="display:none;">Nenhum cadastro encontrado.</div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'epiper_crm_auth';
+    const loginOverlay = document.getElementById('crm-login');
+    const loginForm = document.getElementById('login-form');
+    const loginError = document.getElementById('login-error');
+    const crmContent = document.getElementById('crm-content');
+    const logoutBtn = document.getElementById('logout-btn');
+    const crmTbody = document.getElementById('crm-tbody');
+    const crmEmpty = document.getElementById('crm-empty');
+    const totalCadastros = document.getElementById('total-cadastros');
+    const exportBtn = document.getElementById('export-btn');
+
+    let authToken = '';
+
+    function checkAuth() {
+      const token = sessionStorage.getItem(STORAGE_KEY);
+      if (token) {
+        authToken = token;
+        loginOverlay.classList.add('hidden');
+        crmContent.classList.remove('hidden');
+        loadLeads();
+      }
+    }
+
+    async function loadLeads() {
+      crmTbody.innerHTML = '<tr><td colspan="8" class="crm-loading">Carregando...</td></tr>';
+      crmEmpty.style.display = 'none';
+
+      try {
+        const response = await fetch('/.netlify/functions/leads?action=list', {
+          headers: { 'X-Admin-Password': authToken }
+        });
+
+        if (!response.ok) {
+          const err = await response.json().catch(() => ({}));
+          throw new Error(err.error || 'Erro ao carregar leads.');
+        }
+
+        const data = await response.json();
+
+        if (!data.ok || !Array.isArray(data.leads)) {
+          throw new Error('Resposta invalida do servidor.');
+        }
+
+        totalCadastros.textContent = data.leads.length;
+
+        if (data.leads.length === 0) {
+          crmTbody.innerHTML = '';
+          crmEmpty.style.display = 'block';
+          return;
+        }
+
+        crmEmpty.style.display = 'none';
+        crmTbody.innerHTML = data.leads.map(lead => {
+          const date = lead.created_at ? new Date(lead.created_at).toLocaleString('pt-BR') : '';
+          const msg = lead.mensagem ? `<span style="font-size:0.85rem;color:#697486;">${escapeHtml(lead.mensagem)}</span>` : '';
+          return `<tr>
+            <td>${date}</td>
+            <td>${escapeHtml(lead.nome)}</td>
+            <td>${escapeHtml(lead.empresa)}</td>
+            <td>${escapeHtml(lead.email)}</td>
+            <td>${escapeHtml(lead.telefone)}</td>
+            <td>${escapeHtml(lead.modulo)}</td>
+            <td>${msg}</td>
+            <td><span class="crm-badge badge-novo">Novo</span></td>
+          </tr>`;
+        }).join('');
+      } catch (error) {
+        crmTbody.innerHTML = `<tr><td colspan="8" class="crm-loading">${escapeHtml(error.message)}</td></tr>`;
+      }
+    }
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const password = document.getElementById('crm-password').value.trim();
+
+      if (!password) {
+        loginError.textContent = 'Digite a senha.';
+        loginError.style.display = 'block';
+        return;
+      }
+
+      authToken = password;
+
+      try {
+        const testResponse = await fetch('/.netlify/functions/leads?action=list', {
+          headers: { 'X-Admin-Password': authToken }
+        });
+
+        if (!testResponse.ok) {
+          loginError.textContent = 'Senha incorreta. Tente novamente.';
+          loginError.style.display = 'block';
+          return;
+        }
+
+        sessionStorage.setItem(STORAGE_KEY, authToken);
+        loginError.style.display = 'none';
+        loginOverlay.classList.add('hidden');
+        crmContent.classList.remove('hidden');
+        loadLeads();
+      } catch {
+        loginError.textContent = 'Erro de conexao com o servidor.';
+        loginError.style.display = 'block';
+      }
+    });
+
+    logoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      sessionStorage.removeItem(STORAGE_KEY);
+      authToken = '';
+      window.location.reload();
+    });
+
+    exportBtn.addEventListener('click', () => {
+      const url = new URL('/.netlify/functions/leads', window.location.origin);
+      url.searchParams.set('action', 'export');
+      url.searchParams.set('password', authToken);
+      window.open(url.toString(), '_blank');
+    });
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text || '';
+      return div.innerHTML;
+    }
+
+    checkAuth();
+  </script>
+</body>
+</html>
