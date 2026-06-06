@@ -99,6 +99,12 @@
     .product-form label:nth-child(5), .product-form label:nth-child(6) { grid-column: 1 / -1; }
     .product-form button { margin-top: 1rem; width: 100%; }
     @media (max-width: 980px) { .features-grid { grid-template-columns: 1fr; } .product-form .form-grid { grid-template-columns: 1fr; } }
+    .hero-split { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; text-align: left; }
+    .hero-split .product-badge { margin-bottom: 1rem; }
+    .hero-split h1 { text-align: left; }
+    .hero-split p { margin: 0 0 1.5rem; }
+    .device-thumbs img:hover { border-color: #089c6a; box-shadow: 0 6px 16px rgba(8,156,106,0.2); }
+    @media (max-width: 860px) { .hero-split { grid-template-columns: 1fr; text-align: center; } .hero-split h1 { text-align: center; } }
   </style>
   <script type="application/ld+json">
   {
@@ -127,7 +133,7 @@
       </button>
       <nav class="nav" aria-label="Navegação principal">
         <div class="nav-dropdown">
-          <a href="index.html#modulos" class="nav-dropdown-trigger">Plataforma <span class="nav-arrow">v</span></a>
+          <a href="index.html#modulos" class="nav-dropdown-trigger">Plataforma <span class="nav-arrow"><svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
           <div class="nav-dropdown-menu">
             <div class="mega-menu-header">
               <h3>Nossos Módulos</h3>
@@ -179,11 +185,22 @@
 
   <main>
     <section class="product-hero">
-      <div class="container">
-        <span class="product-badge">Módulo ePiper</span>
-        <h1><span>Telemarketing</span> & Televendas</h1>
-        <p>Sistema completo de televendas para captação de pedidos por telefone. Gerencie carteiras, roteiros de abordagem e follow-up automatizado com histórico completo de contatos e produtividade por equipe.</p>
-        <a href="#contato" class="btn-primary" style="background: #089c6a; min-width: 220px; display: inline-block;">Quero saber mais</a>
+      <div class="container hero-split">
+        <div>
+          <span class="product-badge">Módulo ePiper</span>
+          <h1><span>Telemarketing</span> & Televendas</h1>
+          <p>Sistema completo de televendas para captação de pedidos por telefone. Gerencie carteiras, roteiros de abordagem e follow-up automatizado com histórico completo de contatos e produtividade por equipe.</p>
+          <a href="#contato" class="btn-primary" style="background: #089c6a; min-width: 220px; display: inline-block;">Quero saber mais</a>
+        </div>
+        <div class="device-mockup">
+          <div class="device-laptop">
+            <div class="device-screen">
+              <img src="assets/Novo%20Pedido%20-%20Telemarkting.png" alt="Sistema de Televendas" id="heroScreen2" />
+            </div>
+            <div class="device-notch"></div>
+            <div class="device-base"></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -248,12 +265,12 @@
         </div>
         <div class="images-grid">
           <div class="image-card">
-            <img src="assets/mockup-dashboard.svg" alt="Gestão de carteiras" style="border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08);" />
-            <div class="image-card-caption">Gestão de Carteiras</div>
+            <img src="assets/Novo%20Pedido%20-%20Telemarkting.png" alt="Novo pedido no televendas" style="border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08);" />
+            <div class="image-card-caption">Novo Pedido</div>
           </div>
           <div class="image-card">
-            <img src="assets/mockup-dashboard.svg" alt="Roteiros de abordagem" style="border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08);" />
-            <div class="image-card-caption">Roteiros</div>
+            <img src="assets/mockup-dashboard.svg" alt="Gestão de carteiras" style="border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08);" />
+            <div class="image-card-caption">Gestão de Carteiras</div>
           </div>
           <div class="image-card">
             <img src="assets/mockup-dashboard.svg" alt="Dashboard de produtividade" style="border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08);" />

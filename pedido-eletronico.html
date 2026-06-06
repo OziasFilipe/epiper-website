@@ -104,6 +104,12 @@
     .product-form label:nth-child(5), .product-form label:nth-child(6) { grid-column: 1 / -1; }
     .product-form button { margin-top: 1rem; width: 100%; }
     @media (max-width: 980px) { .features-grid { grid-template-columns: 1fr; } .product-form .form-grid { grid-template-columns: 1fr; } }
+    .hero-split { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; text-align: left; }
+    .hero-split .product-badge { margin-bottom: 1rem; }
+    .hero-split h1 { text-align: left; }
+    .hero-split p { margin: 0 0 1.5rem; }
+    .device-thumbs img:hover { border-color: #00a6c7; box-shadow: 0 6px 16px rgba(0,166,199,0.2); }
+    @media (max-width: 860px) { .hero-split { grid-template-columns: 1fr; text-align: center; } .hero-split h1 { text-align: center; } }
   </style>
   <script type="application/ld+json">
   {
@@ -132,7 +138,7 @@
       </button>
       <nav class="nav" aria-label="Navegação principal">
         <div class="nav-dropdown">
-          <a href="index.html#modulos" class="nav-dropdown-trigger">Plataforma <span class="nav-arrow">v</span></a>
+          <a href="index.html#modulos" class="nav-dropdown-trigger">Plataforma <span class="nav-arrow"><svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
           <div class="nav-dropdown-menu">
             <div class="mega-menu-header">
               <h3>Nossos Módulos</h3>
@@ -184,11 +190,27 @@
 
   <main>
     <section class="product-hero">
-      <div class="container">
-        <span class="product-badge">Módulo ePiper</span>
-        <h1><span>Pedido</span> Eletrônico</h1>
-        <p>Sistema completo para distribuidoras, atacadistas e indústrias que vendem B2B. Consulte tabela de preços, histórico e disponibilidade em tempo real. Reduza erros e acelere o fechamento dos pedidos dos seus vendedores.</p>
-        <a href="#contato" class="btn-primary" style="background: #00a6c7; min-width: 220px; display: inline-block;">Quero saber mais</a>
+      <div class="container hero-split">
+        <div>
+          <span class="product-badge">Módulo ePiper</span>
+          <h1><span>Pedido</span> Eletrônico</h1>
+          <p>Sistema completo para distribuidoras, atacadistas e indústrias que vendem B2B. Consulte tabela de preços, histórico e disponibilidade em tempo real. Reduza erros e acelere o fechamento dos pedidos dos seus vendedores.</p>
+          <a href="#contato" class="btn-primary" style="background: #00a6c7; min-width: 220px; display: inline-block;">Quero saber mais</a>
+        </div>
+        <div class="device-mockup">
+          <div class="device-laptop">
+            <div class="device-screen">
+              <img src="assets/Novo%20Pedido-%20Pedido%20Eletronico.png" alt="Sistema de Pedido Eletrônico" id="heroScreen" />
+            </div>
+            <div class="device-notch"></div>
+            <div class="device-base"></div>
+          </div>
+          <div class="device-thumbs">
+            <img src="assets/Novo%20Pedido-%20Pedido%20Eletronico.png" alt="Novo pedido" onclick="document.getElementById('heroScreen').src=this.src" />
+            <img src="assets/Financiero%20-%20Pedido%20Eletronico.png" alt="Financeiro" onclick="document.getElementById('heroScreen').src=this.src" />
+            <img src="assets/Retorno%20do%20Pedido%20-%20Pedido%20Eletronico.png" alt="Retorno" onclick="document.getElementById('heroScreen').src=this.src" />
+          </div>
+        </div>
       </div>
     </section>
 
@@ -253,16 +275,16 @@
         </div>
         <div class="images-grid">
           <div class="image-card">
-            <img src="assets/mockup-pedidos.svg" alt="Tela de lançamento de pedidos" style="border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08);" />
-            <div class="image-card-caption">Lançamento de Pedidos</div>
+            <img src="assets/Novo%20Pedido-%20Pedido%20Eletronico.png" alt="Novo pedido" style="border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08);" />
+            <div class="image-card-caption">Novo Pedido</div>
           </div>
           <div class="image-card">
-            <img src="assets/mockup-pedidos.svg" alt="Tabela de preços em tempo real" style="border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08);" />
-            <div class="image-card-caption">Tabela de Preços</div>
+            <img src="assets/Financiero%20-%20Pedido%20Eletronico.png" alt="Financeiro" style="border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08);" />
+            <div class="image-card-caption">Financeiro</div>
           </div>
           <div class="image-card">
-            <img src="assets/mockup-dashboard.svg" alt="Relatórios e dashboard" style="border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08);" />
-            <div class="image-card-caption">Relatórios</div>
+            <img src="assets/Retorno%20do%20Pedido%20-%20Pedido%20Eletronico.png" alt="Retorno do pedido" style="border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08);" />
+            <div class="image-card-caption">Retorno do Pedido</div>
           </div>
         </div>
       </div>

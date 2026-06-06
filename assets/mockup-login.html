@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>epiper - Login</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;height:100vh;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at top,#0f1a2e,#070c16);}
+.login-wrapper{width:100%;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-card{background:#fff;border-radius:16px;padding:40px 32px;width:100%;max-width:420px;box-shadow:0 8px 40px rgba(0,0,0,0.3);text-align:center}
+.logo-wrap{margin-bottom:20px}
+.logo-wrap img{max-height:56px;width:auto}
+.login-card h1{font-size:20px;font-weight:600;color:#1a1a2e;margin-bottom:4px}
+.login-card .subtitle{font-size:14px;color:#6b7280;margin-bottom:28px}
+.input-group{text-align:left;margin-bottom:18px}
+.input-group label{display:block;font-size:13px;font-weight:500;color:#374151;margin-bottom:4px}
+.input-group input{width:100%;padding:11px 14px;border:1px solid #d1d5db;border-radius:8px;font-size:15px;outline:none;transition:border-color .2s}
+.input-group input:focus{border-color:#001d4a;box-shadow:0 0 0 3px rgba(0,29,74,0.1)}
+.btn-submit{width:100%;padding:12px;background:#001d4a;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px;box-shadow:0 4px 12px rgba(0,29,74,0.3);transition:background .2s}
+.btn-submit:hover{background:#002b6a}
+.forgot-link{display:block;margin-top:16px;font-size:13px;color:#6b7280;text-decoration:none}
+.forgot-link:hover{color:#001d4a}
+</style>
+</head>
+<body>
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="logo-wrap">
+      <img src="epiper.png" alt="epiper">
+    </div>
+    <h1>Acessar plataforma</h1>
+    <p class="subtitle">Informe seus dados para entrar</p>
+    <form>
+      <div class="input-group">
+        <label for="cnpj">CNPJ</label>
+        <input id="cnpj" type="text" placeholder="00.000.000/0001-00" value="">
+      </div>
+      <div class="input-group">
+        <label for="senha">Senha</label>
+        <input id="senha" type="password" placeholder="Sua senha" value="">
+      </div>
+      <button class="btn-submit" type="button">Entrar</button>
+      <a href="#" class="forgot-link">Esqueceu a senha?</a>
+    </form>
+  </div>
+</div>
+</body>
+</html>

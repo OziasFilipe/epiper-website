@@ -234,6 +234,20 @@ heroProofs.forEach((el) => counterObserver.observe(el));
   document.body.appendChild(banner);
 })();
 
+/* Hero slideshow auto-cycle */
+(function() {
+  const slideshow = document.getElementById('heroSlideshow');
+  if (!slideshow) return;
+  const imgs = slideshow.querySelectorAll('img');
+  if (imgs.length < 2) return;
+  let idx = 0;
+  setInterval(() => {
+    imgs[idx].classList.remove('active');
+    idx = (idx + 1) % imgs.length;
+    imgs[idx].classList.add('active');
+  }, 3500);
+})();
+
 /* Close mobile nav when window resizes past breakpoint */
 window.addEventListener('resize', () => {
   if (window.innerWidth > 980 && nav) {
