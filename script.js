@@ -242,12 +242,20 @@ heroProofs.forEach((el) => counterObserver.observe(el));
   const dots = document.getElementById('heroDots');
   if (imgs.length < 2) return;
   let idx = 0;
+  var label = document.getElementById('slideLabel');
   function goTo(index) {
     imgs.forEach(i => i.classList.remove('active'));
     imgs[index].classList.add('active');
     if (dots) {
       dots.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
       dots.querySelector(`.dot[data-index="${index}"]`).classList.add('active');
+    }
+    if (label) {
+      label.style.opacity = 0;
+      setTimeout(function() {
+        label.textContent = imgs[index].getAttribute('data-label');
+        label.style.opacity = 1;
+      }, 200);
     }
     idx = index;
   }
