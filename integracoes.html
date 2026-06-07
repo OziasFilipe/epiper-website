@@ -219,39 +219,6 @@
         <a href="fale-conosco.html">Fale conosco</a>
       </div>
 
-      <div class="int-form-wrap">
-        <div class="contact-box" style="text-align:center;">
-          <h2>Solicite informações</h2>
-          <p>Preencha seus dados e nosso time comercial entra em contato.</p>
-          <form class="lead-form" id="lead-form" method="POST" action="/.netlify/functions/leads">
-            <input type="hidden" name="modulo" value="Piper Integrações" />
-            <div class="form-grid" style="max-width:500px;margin:1.5rem auto 0;">
-              <label>
-                Nome <span>obrigatório</span>
-                <input type="text" name="nome" placeholder="Seu nome" required />
-              </label>
-              <label>
-                Empresa <span>obrigatório</span>
-                <input type="text" name="empresa" placeholder="Nome da empresa" required />
-              </label>
-              <label>
-                E-mail <span>obrigatório</span>
-                <input type="email" name="email" placeholder="você@empresa.com" required />
-              </label>
-              <label>
-                Telefone <span>obrigatório</span>
-                <input type="tel" name="telefone" placeholder="(27) 99621-7169" required />
-              </label>
-              <label style="grid-column:1/-1;">
-                Mensagem
-                <textarea name="mensagem" rows="3" placeholder="Qual ERP você usa? Que tipo de integração precisa?"></textarea>
-              </label>
-            </div>
-            <button type="submit" class="btn-primary submit-btn" id="submit-btn">Enviar solicitação</button>
-            <p class="form-feedback" id="form-status" aria-live="polite"></p>
-          </form>
-        </div>
-      </div>
     </section>
   </main>
 
