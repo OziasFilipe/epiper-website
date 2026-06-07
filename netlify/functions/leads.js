@@ -59,7 +59,7 @@ exports.handler = async (event) => {
         const password = params.get('password') || '';
         if (password !== ADMIN_PASSWORD) {
           db.close();
-          return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha invalida.' }) };
+          return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha inválida.' }) };
         }
         const id = params.get('id');
         const status = params.get('status');
@@ -78,7 +78,7 @@ exports.handler = async (event) => {
         const password = params.get('password') || '';
         if (password !== ADMIN_PASSWORD) {
           db.close();
-          return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha invalida.' }) };
+          return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha inválida.' }) };
         }
         const id = params.get('id');
         if (!id) {
@@ -123,7 +123,7 @@ exports.handler = async (event) => {
       if (action === 'export') {
         if (password !== ADMIN_PASSWORD) {
           db.close();
-          return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha invalida.' }) };
+          return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha inválida.' }) };
         }
 
         const rows = db.exec(`SELECT * FROM leads ORDER BY created_at DESC`);
@@ -146,7 +146,7 @@ exports.handler = async (event) => {
 
       if (password !== ADMIN_PASSWORD) {
         db.close();
-        return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha invalida.' }) };
+        return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha inválida.' }) };
       }
 
       const rows = db.exec(`SELECT * FROM leads ORDER BY created_at DESC`);
