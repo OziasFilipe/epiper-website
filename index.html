@@ -194,13 +194,17 @@
         </div>
           <div class="hero-visual">
           <div class="device-mockup">
-            <div class="hero-balloon device-balloon" id="slideLabel">Login</div>
             <div class="device-laptop">
               <div class="device-screen">
                 <div class="device-slideshow" id="heroSlideshow">
-                  <img src="assets/Login%20-%20Pedido%20Eletronico.png" data-label="Login" alt="Login ePiper" />
-                  <img src="assets/Novo%20Pedido-%20Pedido%20Eletronico.png" data-label="Pedido Eletrônico — Novo Pedido" alt="Novo pedido" />
-                  <img src="assets/Novo%20Pedido%20-%20Telemarkting.png" data-label="Telemarketing — Novo Pedido" alt="Televendas" />
+                  <div style="position:relative">
+                    <img src="assets/Login%20-%20Pedido%20Eletronico.png" data-label="Login" alt="Login ePiper" />
+                    <img src="assets/Novo%20Pedido-%20Pedido%20Eletronico.png" data-label="Pedido Eletrônico — Novo Pedido" alt="Novo pedido" />
+                    <img src="assets/Novo%20Pedido%20-%20Telemarkting.png" data-label="Telemarketing — Novo Pedido" alt="Televendas" />
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:center;margin-bottom:14px">
+                  <span class="hero-balloon" id="slideLabel" style="margin:0;animation:none;font-size:0.9rem;padding:0.6rem 1.2rem">Login</span>
                 </div>
               </div>
               <div class="device-notch"></div>
@@ -245,25 +249,37 @@
     <section class="lead-simple" id="modulos">
       <div class="container">
         <div class="section-title reveal">
-          <h2>Solucoes estrategicas para sua empresa decolar.</h2>
-          <p>epiper reune 6 modulos totalmente integrados que otimizam sua gestao de ponta a ponta.</p>
+          <h2>Duas soluções, um só objetivo: vender mais.</h2>
+          <p>A epiper tem os produtos que sua equipe comercial precisa para acelerar pedidos e atender melhor.</p>
         </div>
-        <div class="lead-grid reveal-delay">
-          <article class="lead-card">
-            <h3>Pedido Eletronico</h3>
-            <p>Vendedores externos consultam cliente, preco, estoque e fecham pedidos com menos erro, mantendo a operacao comercial mais organizada.</p>
+        <div class="lead-grid reveal-delay" style="grid-template-columns:1fr 1fr">
+          <article class="lead-card" style="border-left:4px solid #00a6c7">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+              <span style="background:#00a6c7;color:#fff;border-radius:8px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 4h2l2.4 10.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.7L21 8H7"/><circle cx="10" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/></svg>
+              </span>
+              <h3 style="margin:0;font-size:1.2rem">Pedido Eletrônico</h3>
+            </div>
+            <p style="font-size:0.95rem">Vendedores em campo consultam cliente, preço e estoque em tempo real e fecham o pedido na hora. Digitação rápida, tabela automática e menos erros.</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+              <span style="background:#e8f8fc;color:#0088a8;font-size:0.75rem;padding:3px 10px;border-radius:999px;font-weight:600">Performance no lançamento</span>
+              <span style="background:#e8f8fc;color:#0088a8;font-size:0.75rem;padding:3px 10px;border-radius:999px;font-weight:600">Tabela em tempo real</span>
+            </div>
+            <a href="pedido-eletronico.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:14px;color:#00a6c7;font-weight:600;font-size:0.9rem;text-decoration:none">Conhecer produto <span style="font-size:1.1rem">→</span></a>
           </article>
-          <article class="lead-card">
-            <h3>Telemarketing</h3>
-            <p>Ferramenta para o setor de televendas tirar pedidos com agilidade, consultando clientes, produtos, precos e condicoes comerciais.</p>
-          </article>
-          <article class="lead-card">
-            <h3>Gestao comercial</h3>
-            <p>Organize rotinas de vendas, atendimento e acompanhamento de clientes em um fluxo mais simples para gestores e equipes comerciais.</p>
-          </article>
-          <article class="lead-card">
-            <h3>Integracao ERP</h3>
-            <p>Mantenha clientes, produtos, estoque, tabela de preco e pedidos alinhados entre a epiper, Winthor e outros sistemas da sua empresa.</p>
+          <article class="lead-card" style="border-left:4px solid #089c6a">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+              <span style="background:#089c6a;color:#fff;border-radius:8px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72"/></svg>
+              </span>
+              <h3 style="margin:0;font-size:1.2rem">Telemarketing</h3>
+            </div>
+            <p style="font-size:0.95rem">Equipe de televendas tira pedidos por telefone com agilidade. Gestão de carteiras, roteiros de abordagem e follow-up automatizado para nunca perder uma venda.</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+              <span style="background:#e8fcf4;color:#067a52;font-size:0.75rem;padding:3px 10px;border-radius:999px;font-weight:600">Follow-up automático</span>
+              <span style="background:#e8fcf4;color:#067a52;font-size:0.75rem;padding:3px 10px;border-radius:999px;font-weight:600">Gestão de carteiras</span>
+            </div>
+            <a href="telemarketing.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:14px;color:#089c6a;font-weight:600;font-size:0.9rem;text-decoration:none">Conhecer produto <span style="font-size:1.1rem">→</span></a>
           </article>
         </div>
       </div>
@@ -272,51 +288,65 @@
     <section class="lead-simple lead-simple-alt" id="beneficios">
       <div class="container">
         <div class="section-title reveal">
-          <h2>Por que usar</h2>
-          <p>A epiper ajuda empresas que precisam ganhar velocidade sem perder controle.</p>
+          <h2>Performance que faz a diferença no dia a dia</h2>
+          <p>Mais velocidade para lançar pedidos, menos retrabalho e resultados que aparecem.</p>
         </div>
-        <div class="lead-benefits reveal-delay">
+        <div class="lead-benefits reveal-delay" style="grid-template-columns:repeat(3,1fr)">
           <article>
-            <strong>Menos retrabalho</strong>
-            <p>Reduz planilhas paralelas, redigitacao e informacoes espalhadas entre sistemas.</p>
+            <strong style="font-size:1.2rem;color:#00a6c7">⏱️ Até 3x mais rápido</strong>
+            <p>Digitação inteligente de pedidos com busca por código, descrição ou referência. Seu vendedor lança em segundos o que levava minutos.</p>
           </article>
           <article>
-            <strong>Mais produtividade</strong>
-            <p>Equipe comercial trabalha com dados prontos para vender, atender e cobrar.</p>
+            <strong style="font-size:1.2rem;color:#089c6a">📉 Zero redigitação</strong>
+            <p>Pedido sai do sistema direto para o ERP. Chega de digitar duas vezes ou perder informações entre planilhas e papéis.</p>
           </article>
           <article>
-            <strong>Mais previsibilidade</strong>
-            <p>Gestao acompanha resultados e gargalos sem depender de controles manuais.</p>
+            <strong style="font-size:1.2rem;color:#003b44">📊 Dados em tempo real</strong>
+            <p>Preço, estoque e condições comerciais sempre atualizados. Cada cliente vê a tabela correta na hora de comprar.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="lead-strip" id="integracoes">
+    <section class="lead-strip" id="canais">
       <div class="container lead-strip-box reveal">
-        <strong>Integra com seu ERP</strong>
-        <p>Conectamos a epiper ao Winthor e a outros sistemas para manter clientes, produtos, estoque, tabela de preco e pedidos alinhados. Sua empresa pode comecar pelo modulo que resolve a dor principal.</p>
+        <strong>Dois canais de venda, uma plataforma</strong>
+        <p>O <strong>Pedido Eletrônico</strong> atende seus vendedores externos — eles consultam clientes, preços e estoque pelo celular e fecham pedidos onde estiverem. O <strong>Telemarketing</strong> organiza o televendas da sua empresa com carteiras inteligentes, roteiros de abordagem e follow-up automático. Os dois canais compartilham a mesma base de clientes, produtos e preços, integrada direto com seu ERP.</p>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:24px">
+          <a href="pedido-eletronico.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:999px;background:linear-gradient(135deg,#e0f7fc,#ccf0f5);color:#007a91;font-weight:700;font-size:0.9rem;text-decoration:none;border:1px solid rgba(0,166,199,0.25);transition:all .3s ease;box-shadow:0 2px 8px rgba(0,166,199,0.1)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#007a91" stroke-width="2"><path d="M3 4h2l2.4 10.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.7L21 8H7"/><circle cx="10" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/></svg>
+            Pedido Eletrônico
+          </a>
+          <a href="telemarketing.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:999px;background:linear-gradient(135deg,#e0f8ee,#d0ece3);color:#067a52;font-weight:700;font-size:0.9rem;text-decoration:none;border:1px solid rgba(8,156,106,0.25);transition:all .3s ease;box-shadow:0 2px 8px rgba(8,156,106,0.1)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#067a52" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72"/></svg>
+            Telemarketing
+          </a>
+          <a href="fale-conosco.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:999px;background:linear-gradient(135deg,#e0e8f5,#d0dcec);color:#003b44;font-weight:700;font-size:0.9rem;text-decoration:none;border:1px solid rgba(0,59,68,0.2);transition:all .3s ease;box-shadow:0 2px 8px rgba(0,59,68,0.1)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#003b44" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Falar com consultor
+          </a>
+        </div>
       </div>
     </section>
 
     <section class="lead-simple lead-simple-alt" id="como-funciona">
       <div class="container">
         <div class="section-title reveal">
-          <h2>Como começar</h2>
-          <p>Rapido de entender, acompanhado pelo nosso time.</p>
+          <h2>Comece em 3 passos</h2>
+          <p>Rápido de entender, acompanhado pelo nosso time do início ao fim.</p>
         </div>
         <div class="lead-steps reveal-delay">
           <article>
             <span>1</span>
-            <p><strong>Diagnostico:</strong> entendemos modulos, ERP e rotina comercial.</p>
+            <p><strong>Diagnóstico:</strong> entendemos sua operação, ERP e qual produto atende primeiro.</p>
           </article>
           <article>
             <span>2</span>
-            <p><strong>Configuracao:</strong> ajustamos usuarios, regras e integracoes.</p>
+            <p><strong>Configuração:</strong> ajustamos usuários, regras de preço e a integração com seu sistema.</p>
           </article>
           <article>
             <span>3</span>
-            <p><strong>Uso acompanhado:</strong> seu time comeca com orientacao da epiper.</p>
+            <p><strong>Uso acompanhado:</strong> sua equipe começa com treinamento e suporte da epiper.</p>
           </article>
         </div>
       </div>
@@ -324,20 +354,22 @@
 
     <section class="contact">
       <div class="container contact-box reveal" style="text-align:center;">
-        <h2>Quer saber se serve para sua empresa?</h2>
-        <p>Fale com nosso time e veja o melhor caminho para sua operacao.</p>
-        <a class='btn-primary' href='fale-conosco.html' style='margin-top:1rem;color:#fff;'>Fale conosco</a>
+        <h2>Qual produto serve para sua empresa?</h2>
+        <p>Os dois? Apenas um? Fale com nosso time e descubra o melhor caminho para sua operação.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:16px">
+          <a class='btn-primary' href='https://wa.me/5527996217169?text=Ol%C3%A1!%20Quero%20falar%20com%20um%20consultor.'>Falar no WhatsApp</a>
+          <a class='btn-secondary' href='fale-conosco.html' style='color:var(--blue) !important'>Agendar demonstração</a>
+        </div>
       </div>
     </section>
 
     <section class="faq" id="faq">
       <div class="container">
-        <div class="faq-head reveal">
+        <div class="faq-head reveal" style="text-align:center;justify-content:center;flex-direction:column;align-items:center">
           <div>
             <span class="faq-badge">FAQ</span>
             <h2>Duvidas rapidas</h2>
           </div>
-          <a class='btn-primary faq-cta' href='fale-conosco.html'>Agende sua demonstracao</a>
         </div>
         <div class="faq-list reveal">
           <article class="faq-item">

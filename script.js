@@ -15,6 +15,7 @@ const API_BASE = '/.netlify/functions/leads';
 if (navDropdown && navDropdownTrigger) {
   navDropdownTrigger.addEventListener('click', (e) => {
     e.preventDefault();
+    e.stopPropagation();
     navDropdown.classList.toggle('open');
     navDropdownTrigger.classList.toggle('active');
   });
@@ -32,14 +33,26 @@ if (yearEl) {
 }
 
 if (menuToggle && nav) {
-  menuToggle.addEventListener('click', () => {
-    const isOpen = nav.classList.toggle('open');
+  function toggleNav(force) {
+    const isOpen = force !== undefined ? force : nav.classList.toggle('open');
+    nav.classList.toggle('open', isOpen);
     menuToggle.setAttribute('aria-expanded', String(isOpen));
     document.body.classList.toggle('nav-open', isOpen);
+  }
+
+  menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleNav();
   });
+  menuToggle.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleNav();
+  }, { passive: false });
 
   nav.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => {
+    link.addEventListener('click', (e) => {
+      if (link.closest('.nav-dropdown')) return;
       nav.classList.remove('open');
       menuToggle.setAttribute('aria-expanded', 'false');
       document.body.classList.remove('nav-open');
