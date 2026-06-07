@@ -583,6 +583,10 @@
         <h3>Perdidos</h3>
         <div class="value red" id="totalPerdidos">0</div>
       </div>
+      <div class="stat-card">
+        <h3>Visitantes hoje</h3>
+        <div class="value" id="totalVisitors" style="color:#6e7191;">0</div>
+      </div>
     </div>
 
     <div class="controls">
@@ -767,6 +771,9 @@ async function load(silent) {
     const res = await fetch(`${API}?action=list&password=${TOKEN}`);
     const data = await res.json();
     allLeads = data.ok && Array.isArray(data.leads) ? data.leads : [];
+    if (data.track) {
+      document.getElementById('totalVisitors').textContent = data.track.today || 0;
+    }
   } catch { if (!silent) allLeads = []; }
   if (!silent) document.getElementById('loading').style.display = 'none';
   leadCount = allLeads.length;

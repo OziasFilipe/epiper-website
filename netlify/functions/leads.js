@@ -1,11 +1,15 @@
 const fs = require('fs');
 const ADMIN_PASSWORD = '821760';
 const DB_PATH = '/tmp/leads.json';
+const TRACK_PATH = '/tmp/track.json';
 
 const WHATSAPP_TO = '5527996217169';
 const WHATSAPP_URL = 'https://whatsapp.conectaped.com/whatsapp/send?sessionId=site';
 
 const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || 'comercial@epiper.com.br';
+
+// 1x1 transparent GIF (base64)
+const PIXEL_GIF = Buffer.from('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', 'base64');
 
 function readDb() {
   try {
@@ -17,6 +21,51 @@ function readDb() {
 
 function writeDb(leads) {
   fs.writeFileSync(DB_PATH, JSON.stringify(leads, null, 2));
+}
+
+function readTrack() {
+  try {
+    return JSON.parse(fs.readFileSync(TRACK_PATH, 'utf-8'));
+  } catch {
+    return { today: 0, total: 0, date: '', lastWpp: 0 };
+  }
+}
+
+function writeTrack(t) {
+  fs.writeFileSync(TRACK_PATH, JSON.stringify(t, null, 2));
+}
+
+function trackVisit() {
+  const t = readTrack();
+  const today = new Date().toISOString().slice(0, 10);
+  if (t.date !== today) { t.date = today; t.today = 0; }
+  t.today += 1;
+  t.total += 1;
+  writeTrack(t);
+  return t;
+}
+
+async function sendWppText(text) {
+  try {
+    const res = await fetch(WHATSAPP_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', accept: '*/*' },
+      body: JSON.stringify({ to: WHATSAPP_TO, text }),
+    });
+    const body = await res.text();
+    console.log('WPP sent:', res.status, body);
+  } catch (err) {
+    console.error('WPP failed:', err.message);
+  }
+}
+
+async function notifyVisitor(t) {
+  const now = Date.now();
+  const track = readTrack();
+  if (now - (track.lastWpp || 0) < 1800000) return; // 30 min throttle
+  track.lastWpp = now;
+  writeTrack(track);
+  await sendWppText(`👀 *${t.today} visitante${t.today > 1 ? 's' : ''}* hoje no ePiper.com.br`);
 }
 
 function escapeCsv(val) {
@@ -200,6 +249,17 @@ exports.handler = async (event) => {
       const action = url.searchParams.get('action') || 'list';
       const password = url.searchParams.get('password') || event.headers['x-admin-password'] || '';
 
+      if (action === 'track') {
+        const t = trackVisit();
+        notifyVisitor(t);
+        return {
+          statusCode: 200,
+          headers: { ...headers, 'Content-Type': 'image/gif', 'Cache-Control': 'no-store, no-cache, must-revalidate' },
+          body: PIXEL_GIF.toString('base64'),
+          isBase64Encoded: true,
+        };
+      }
+
       if (action === 'export') {
         if (password !== ADMIN_PASSWORD) {
           return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha invalida.' }) };
@@ -224,7 +284,8 @@ exports.handler = async (event) => {
       }
 
       const leads = readDb().reverse();
-      return { statusCode: 200, headers: { ...headers, 'Content-Type': 'application/json' }, body: JSON.stringify({ ok: true, leads }) };
+      const track = readTrack();
+      return { statusCode: 200, headers: { ...headers, 'Content-Type': 'application/json' }, body: JSON.stringify({ ok: true, leads, track: { today: track.today, total: track.total } }) };
     }
 
     return { statusCode: 405, headers, body: JSON.stringify({ ok: false, error: 'Metodo nao permitido.' }) };
