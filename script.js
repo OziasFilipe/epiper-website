@@ -150,7 +150,7 @@ if (leadForm) {
         throw new Error(result.error || 'Nao foi possivel enviar sua solicitacao.');
       }
 
-      window.location.href = leadForm.getAttribute('action') || 'obrigado.html';
+      window.location.href = formData.get('redirect') || 'obrigado.html';
     } catch (error) {
       if (formStatus) {
         formStatus.textContent = error.message || 'Erro ao enviar. Tente novamente.';
