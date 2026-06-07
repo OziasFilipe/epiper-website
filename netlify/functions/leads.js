@@ -1,9 +1,18 @@
-const initSqlJs = require('sql.js');
-const { getStore } = require('@netlify/blobs');
-
+const fs = require('fs');
 const ADMIN_PASSWORD = '821760';
-const DB_KEY = 'epiper_leads.db';
-const STORE_NAME = 'leads-store';
+const DB_PATH = '/tmp/leads.json';
+
+function readDb() {
+  try {
+    return JSON.parse(fs.readFileSync(DB_PATH, 'utf-8'));
+  } catch {
+    return [];
+  }
+}
+
+function writeDb(leads) {
+  fs.writeFileSync(DB_PATH, JSON.stringify(leads, null, 2));
+}
 
 function escapeCsv(val) {
   const s = String(val ?? '');
@@ -27,30 +36,6 @@ exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers, body: '' };
 
   try {
-    const SQL = await initSqlJs();
-    const store = getStore(STORE_NAME);
-
-    let db;
-    const existing = await store.get(DB_KEY, { type: 'arrayBuffer' }).catch(() => null);
-    if (existing && existing.byteLength > 0) {
-      db = new SQL.Database(new Uint8Array(existing));
-    } else {
-      db = new SQL.Database();
-      db.run(`CREATE TABLE IF NOT EXISTS leads (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nome TEXT NOT NULL,
-        empresa TEXT NOT NULL,
-        email TEXT NOT NULL,
-        telefone TEXT NOT NULL,
-        mensagem TEXT DEFAULT '',
-        modulo TEXT DEFAULT '',
-        origem TEXT DEFAULT 'site',
-        ip TEXT DEFAULT '',
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        status TEXT DEFAULT 'novo'
-      )`);
-    }
-
     if (event.httpMethod === 'POST') {
       const params = new URLSearchParams(event.body || '');
       const action = params.get('action');
@@ -58,59 +43,65 @@ exports.handler = async (event) => {
       if (action === 'update_status') {
         const password = params.get('password') || '';
         if (password !== ADMIN_PASSWORD) {
-          db.close();
-          return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha inválida.' }) };
+          return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha invalida.' }) };
         }
-        const id = params.get('id');
+        const id = Number(params.get('id'));
         const status = params.get('status');
         if (!id || !status) {
-          db.close();
           return { statusCode: 400, headers, body: JSON.stringify({ ok: false, error: 'ID e status sao obrigatorios.' }) };
         }
-        db.run(`UPDATE leads SET status = ? WHERE id = ?`, [status, id]);
-        const data = db.export();
-        await store.set(DB_KEY, Buffer.from(data));
-        db.close();
+        const leads = readDb();
+        const idx = leads.findIndex(l => l.id === id);
+        if (idx === -1) {
+          return { statusCode: 404, headers, body: JSON.stringify({ ok: false, error: 'Lead nao encontrado.' }) };
+        }
+        leads[idx].status = status;
+        writeDb(leads);
         return { statusCode: 200, headers, body: JSON.stringify({ ok: true, message: 'Status atualizado.' }) };
       }
 
       if (action === 'delete') {
         const password = params.get('password') || '';
         if (password !== ADMIN_PASSWORD) {
-          db.close();
-          return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha inválida.' }) };
+          return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha invalida.' }) };
         }
-        const id = params.get('id');
+        const id = Number(params.get('id'));
         if (!id) {
-          db.close();
           return { statusCode: 400, headers, body: JSON.stringify({ ok: false, error: 'ID obrigatorio.' }) };
         }
-        db.run(`DELETE FROM leads WHERE id = ?`, [id]);
-        const data = db.export();
-        await store.set(DB_KEY, Buffer.from(data));
-        db.close();
+        const leads = readDb();
+        const filtered = leads.filter(l => l.id !== id);
+        if (filtered.length === leads.length) {
+          return { statusCode: 404, headers, body: JSON.stringify({ ok: false, error: 'Lead nao encontrado.' }) };
+        }
+        writeDb(filtered);
         return { statusCode: 200, headers, body: JSON.stringify({ ok: true, message: 'Lead excluido.' }) };
       }
 
-      const nome = params.get('nome')?.trim();
-      const empresa = params.get('empresa')?.trim();
-      const email = params.get('email')?.trim();
-      const telefone = params.get('telefone')?.trim();
-      const mensagem = params.get('mensagem')?.trim() || '';
-      const modulo = params.get('modulo')?.trim() || '';
+      const leads = readDb();
+      const nextId = leads.length > 0 ? Math.max(...leads.map(l => l.id)) + 1 : 1;
 
-      if (!nome || !empresa || !email || !telefone) {
-        db.close();
+      const lead = {
+        id: nextId,
+        nome: (params.get('nome') || '').trim(),
+        empresa: (params.get('empresa') || '').trim(),
+        email: (params.get('email') || '').trim(),
+        telefone: (params.get('telefone') || '').trim(),
+        mensagem: (params.get('mensagem') || '').trim(),
+        modulo: (params.get('modulo') || '').trim(),
+        interesse: (params.get('interesse') || '').trim(),
+        origem: 'site',
+        ip: getClientIp(event),
+        created_at: new Date().toISOString(),
+        status: 'novo',
+      };
+
+      if (!lead.nome || !lead.empresa || !lead.email || !lead.telefone) {
         return { statusCode: 400, headers, body: JSON.stringify({ ok: false, error: 'Preencha todos os campos obrigatorios.' }) };
       }
 
-      const ip = getClientIp(event);
-      db.run(`INSERT INTO leads (nome, empresa, email, telefone, mensagem, modulo, origem, ip) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        [nome, empresa, email, telefone, mensagem, modulo, 'site', ip]);
-
-      const data = db.export();
-      await store.set(DB_KEY, Buffer.from(data));
-      db.close();
+      leads.push(lead);
+      writeDb(leads);
 
       return { statusCode: 201, headers, body: JSON.stringify({ ok: true, message: 'Lead cadastrado com sucesso.' }) };
     }
@@ -122,19 +113,14 @@ exports.handler = async (event) => {
 
       if (action === 'export') {
         if (password !== ADMIN_PASSWORD) {
-          db.close();
-          return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha inválida.' }) };
+          return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha invalida.' }) };
         }
 
-        const rows = db.exec(`SELECT * FROM leads ORDER BY created_at DESC`);
-        db.close();
-
-        const cols = ['id','nome','empresa','email','telefone','mensagem','modulo','origem','ip','created_at','status'];
+        const leads = readDb();
+        const cols = ['id','nome','empresa','email','telefone','mensagem','modulo','interesse','origem','ip','created_at','status'];
         let csv = cols.map(escapeCsv).join(',') + '\n';
-        if (rows.length > 0) {
-          for (const row of rows[0].values) {
-            csv += row.map(escapeCsv).join(',') + '\n';
-          }
+        for (const lead of leads) {
+          csv += cols.map(c => escapeCsv(lead[c])).join(',') + '\n';
         }
 
         return {
@@ -145,24 +131,13 @@ exports.handler = async (event) => {
       }
 
       if (password !== ADMIN_PASSWORD) {
-        db.close();
-        return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha inválida.' }) };
+        return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha invalida.' }) };
       }
 
-      const rows = db.exec(`SELECT * FROM leads ORDER BY created_at DESC`);
-      db.close();
-
-      const cols = ['id','nome','empresa','email','telefone','mensagem','modulo','origem','ip','created_at','status'];
-      const leads = rows.length > 0 ? rows[0].values.map(v => {
-        const obj = {};
-        cols.forEach((c, i) => obj[c] = v[i]);
-        return obj;
-      }) : [];
-
+      const leads = readDb().reverse();
       return { statusCode: 200, headers: { ...headers, 'Content-Type': 'application/json' }, body: JSON.stringify({ ok: true, leads }) };
     }
 
-    db.close();
     return { statusCode: 405, headers, body: JSON.stringify({ ok: false, error: 'Metodo nao permitido.' }) };
 
   } catch (err) {
