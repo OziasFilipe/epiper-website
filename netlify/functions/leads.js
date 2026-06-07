@@ -110,9 +110,10 @@ async function notifyNewVisitor(v, page, isNew, day) {
   if (nowMs - (vis.lastWppPage||0) < 30000) return;
 
   const icon = v.isMobile ? '📱' : '💻';
+  const ipLine = v.ip && v.ip !== 'desconhecido' ? `\n🌐 IP: ${v.ip}` : '';
   let txt = isNew
-    ? `👤 *Novo visitante!*\n${icon} ${v.browser} - ${v.os}\n📍 ${page}\n🌐 #${day.visitors} hoje`
-    : `🔄 ${icon} Visitante acessou: ${page}\n💻 ${v.browser} - ${v.os}`;
+    ? `👤 *Novo visitante!*\n${icon} ${v.browser} - ${v.os}\n📍 ${page}\n🌐 #${day.visitors} hoje${ipLine}`
+    : `🔄 ${icon} Visitante acessou: ${page}\n💻 ${v.browser} - ${v.os}${ipLine}`;
 
   vis.lastWppPage = nowMs;
   writeVis(vis);
@@ -164,35 +165,61 @@ async function checkSummary() {
 }
 
 // ======== VISITOR STATS (for admin) ========
-function getVisitorStats() {
+function getVisitorStats(dateStr) {
   const vis = readVis();
-  const day = vis.history[0] || { visitors:0, pages:0, mobile:0, desktop:0, browsers:{}, timeTotal:0, entries:0, date:'' };
+  const targetDate = dateStr || (vis.history[0] ? vis.history[0].date : brDate());
+
+  // Find history entry for target date
+  const day = vis.history.find(d => d.date === targetDate)
+    || { visitors:0, pages:0, mobile:0, desktop:0, browsers:{}, timeTotal:0, entries:0, date:targetDate };
   const avg = day.entries > 0 ? Math.round(day.timeTotal/day.entries) : 0;
 
   // Last 7 days
   const week = vis.history.slice(0,7).map(d => ({ date:d.date, visitors:d.visitors, pages:d.pages }));
   const weekVisitors = vis.history.slice(0,7).reduce((s,d)=>s+d.visitors,0);
 
-  // Top pages today
+  // Top pages for target date: filter visitor pages by date
   const pageCount = {};
   for (const v of vis.visitors) {
     for (const p of v.pages) {
+      const pageDate = p.time ? p.time.slice(0,10).split('-').reverse().join('/') : '';
+      if (pageDate !== targetDate) continue;
       const key = p.url || '/';
       pageCount[key] = (pageCount[key]||0)+1;
     }
   }
   const topPages = Object.entries(pageCount).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([p,n])=>({page:p,views:n}));
 
-  // Browsers today
+  // Browsers for target date
   const browsers = Object.entries(day.browsers).map(([k,v])=>({name:k,count:v})).sort((a,b)=>b.count-a.count);
 
-  // Connected visitors (last 30 min)
+  // Connected visitors (last 30 min) — only meaningful for today
+  const isToday = targetDate === brDate();
   const nowMs = now();
-  const online = vis.visitors.filter(v => nowMs - v.lastSeen < 1800000).length;
+  const online = isToday ? vis.visitors.filter(v => nowMs - v.lastSeen < 1800000).length : 0;
+
+  // Visitors list with details for the date
+  const visitorList = [];
+  for (const v of vis.visitors) {
+    const dayPages = v.pages.filter(p => {
+      const pd = p.time ? p.time.slice(0,10).split('-').reverse().join('/') : '';
+      return pd === targetDate;
+    });
+    if (!dayPages.length) continue;
+    visitorList.push({
+      ip: v.ip,
+      browser: v.browser,
+      os: v.os,
+      isMobile: v.isMobile,
+      pages: dayPages.length,
+      firstPage: dayPages[0]?.time || '',
+      lastPage: dayPages[dayPages.length-1]?.time || '',
+    });
+  }
 
   return {
     today: { visitors:day.visitors, pages:day.pages, mobile:day.mobile, desktop:day.desktop,
-             avgSessionTime:avg, browsers, topPages, online, date:day.date },
+             avgSessionTime:avg, browsers, topPages, online, date:day.date, visitors:visitorList },
     week: { visitors:weekVisitors, days:week },
   };
 }
@@ -202,6 +229,7 @@ function formatWppLead(l) {
   let t = `🔔 *Novo Lead ePiper!*\n\n*Nome:* ${l.nome}\n*Empresa:* ${l.empresa}\n*Email:* ${l.email}\n*Telefone:* ${l.telefone}\n*Módulo:* ${l.modulo}`;
   if (l.interesse) t += `\n*Interesse:* ${l.interesse}`;
   if (l.mensagem) t += `\n*Mensagem:* ${l.mensagem}`;
+  if (l.ip && l.ip !== 'desconhecido') t += `\n🌐 IP: ${l.ip}`;
   return t+`\n\n📅 ${new Date(l.created_at).toLocaleString('pt-BR')}`;
 }
 
@@ -300,7 +328,8 @@ exports.handler = async (event) => {
       // ---- Admin: list leads + stats ----
       if (pw !== ADMIN_PASSWORD) return { statusCode:401, headers, body:JSON.stringify({ok:false,error:'Senha invalida.'}) };
       const leads = readDb().reverse();
-      const stats = getVisitorStats();
+      const date = url.searchParams.get('date')||'';
+      const stats = getVisitorStats(date);
       return { statusCode:200, headers:{...headers,'Content-Type':'application/json'}, body:JSON.stringify({ok:true,leads,track:stats}) };
     }
 
