@@ -71,14 +71,18 @@ function formatEmailHtml(lead) {
 }
 
 async function notifyWhatsApp(lead) {
-  const text = formatWhatsAppText(lead);
-  const res = await fetch(WHATSAPP_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', accept: '*/*' },
-    body: JSON.stringify({ to: WHATSAPP_TO, text }),
-  });
-  const body = await res.text();
-  try { return { status: res.status, body: JSON.parse(body) }; } catch { return { status: res.status, body }; }
+  try {
+    const text = formatWhatsAppText(lead);
+    const res = await fetch(WHATSAPP_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', accept: '*/*' },
+      body: JSON.stringify({ to: WHATSAPP_TO, text }),
+    });
+    const body = await res.text();
+    console.log('WhatsApp sent:', res.status, body);
+  } catch (err) {
+    console.error('WhatsApp failed:', err.message);
+  }
 }
 
 async function notifyEmail(lead) {
@@ -185,15 +189,10 @@ exports.handler = async (event) => {
       leads.push(lead);
       writeDb(leads);
 
-      let whatsappResult = null;
-      try { whatsappResult = await notifyWhatsApp(lead); } catch (_) {}
+      try { await notifyWhatsApp(lead); } catch (_) {}
       try { await notifyEmail(lead); } catch (_) {}
 
-      return { statusCode: 201, headers, body: JSON.stringify({
-        ok: true,
-        message: 'Lead cadastrado com sucesso.',
-        whatsapp: whatsappResult
-      }) };
+      return { statusCode: 201, headers, body: JSON.stringify({ ok: true, message: 'Lead cadastrado com sucesso.' }) };
     }
 
     if (event.httpMethod === 'GET') {
