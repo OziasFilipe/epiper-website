@@ -411,6 +411,9 @@
   </footer>
 
   <script src="script.js"></script>
+  <div class="lightbox" id="lightbox" onclick="this.classList.remove('open')">
+    <img id="lightboxImg" src="" alt="" />
+  </div>
   <div class="cookie-banner" id="cookieBanner">
     <p>Usamos cookies para melhorar sua experiência. Ao continuar, você concorda com nossa <a href="#">Política de Privacidade</a>.</p>
     <button onclick="localStorage.setItem('cookieConsent','1');document.getElementById('cookieBanner').style.display='none'">OK</button>

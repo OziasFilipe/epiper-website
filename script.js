@@ -282,3 +282,18 @@ window.addEventListener('resize', () => {
     if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
   }
 });
+
+/* Lightbox for image gallery */
+(function() {
+  var lb = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lightboxImg');
+  if (!lb || !lbImg) return;
+  document.querySelectorAll('.images-grid .image-card img, .device-thumbs img').forEach(function(img) {
+    img.style.cursor = 'pointer';
+    img.addEventListener('click', function() {
+      lbImg.src = this.src;
+      lbImg.alt = this.alt;
+      lb.classList.add('open');
+    });
+  });
+})();
