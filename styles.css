@@ -3566,3 +3566,13 @@ video {
   border-radius: 10px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.5);
 }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1.5rem;
+  align-items: start;
+}
+@media (max-width: 980px) {
+  .contact-grid { grid-template-columns: 1fr; }
+}
