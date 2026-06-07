@@ -1079,7 +1079,16 @@ function renderVisitors() {
       const badge = v.visitDays > 1 || v.totalVisits > 1
         ? '<span class="status-badge s-contatado">Recorrente</span>'
         : '<span class="status-badge s-novo">Novo</span>';
-      html += '<tr><td><strong>'+esc(v.ip)+'</strong></td><td style="font-size:0.8rem;color:#6e7191">'+geo+'</td><td>'+device+' '+badge+'</td><td>'+v.pages+'</td><td>'+v.totalVisits+'</td><td>'+v.visitDays+' dias</td><td style="font-size:0.78rem">'+v.firstSeen+'</td></tr>';
+      let pagesHtml = v.pages + ' pgs';
+      if (v.pageBreakdown && v.pageBreakdown.length) {
+        pagesHtml += '<div style="font-size:0.72rem;color:#6e7191;margin-top:4px;line-height:1.5">';
+        for (const p of v.pageBreakdown) {
+          let name = p.url.replace('.html','').replace('/','') || '/';
+          pagesHtml += '<span style="background:#f0f2f6;padding:1px 5px;border-radius:3px;margin-right:3px">'+esc(name)+' '+p.count+'x</span>';
+        }
+        pagesHtml += '</div>';
+      }
+      html += '<tr><td><strong>'+esc(v.ip)+'</strong></td><td style="font-size:0.8rem;color:#6e7191">'+geo+'</td><td>'+device+' '+badge+'</td><td>'+pagesHtml+'</td><td>'+v.totalVisits+'</td><td>'+v.visitDays+' dias</td><td style="font-size:0.78rem;white-space:nowrap">'+v.firstSeen+'</td></tr>';
     }
     html += '</tbody></table></div></div>';
   }

@@ -233,6 +233,16 @@ function getVisitorStats(dateStr) {
       return pd === targetDate;
     });
     if (!dayPages.length) continue;
+    // Count page views per URL for this visitor today
+    const pageCount = {};
+    for (const p of dayPages) {
+      const key = p.url || '/';
+      pageCount[key] = (pageCount[key]||0) + 1;
+    }
+    const pagesSorted = Object.entries(pageCount)
+      .sort((a,b) => b[1]-a[1])
+      .map(([url,count]) => ({ url, count }));
+
     visitorList.push({
       ip: v.ip,
       browser: v.browser,
@@ -240,12 +250,11 @@ function getVisitorStats(dateStr) {
       isMobile: v.isMobile,
       geo: v.geo || null,
       pages: dayPages.length,
+      pageBreakdown: pagesSorted,
       totalPages: v.pageViews || 0,
       totalVisits: v.totalVisits || 1,
       visitDays: (v.visitDays||[]).length,
       firstSeen: v.firstSeen ? new Date(v.firstSeen).toLocaleDateString('pt-BR') : '-',
-      firstPage: dayPages[0]?.time || '',
-      lastPage: dayPages[dayPages.length-1]?.time || '',
     });
   }
 
