@@ -159,13 +159,13 @@
                 <label>Nome <span>obrigatório</span><input type="text" name="nome" placeholder="Seu nome" required /></label>
                 <label>Empresa <span>obrigatório</span><input type="text" name="empresa" placeholder="Nome da empresa" required /></label>
                 <label>E-mail <span>obrigatório</span><input type="email" name="email" placeholder="voce@empresa.com" required /></label>
-                <label>Telefone <span>obrigatório</span><input type="tel" name="telefone" placeholder="(27) 99621-7169" required /></label>
+                <label>Telefone <span>obrigatório</span><input type="tel" name="telefone" placeholder="(27) 99621-7169" oninput="maskPhone(this)" required /></label>
                 <label style="grid-column:1/-1">Módulo de interesse <span>obrigatório</span>
                   <select name="interesse" required>
                     <option value="">Selecione</option>
                     <option>Piper Pedido Eletrônico</option>
                     <option>Piper Telemarketing</option>
-                    <option>Piper CRM</option>
+
                     <option>Hub completo</option>
                   </select>
                 </label>
