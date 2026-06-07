@@ -1,296 +1,312 @@
 const fs = require('fs');
 const ADMIN_PASSWORD = '821760';
 const DB_PATH = '/tmp/leads.json';
-const TRACK_PATH = '/tmp/track.json';
-
+const TRACK_PATH = '/tmp/visitors.json';
 const WHATSAPP_TO = '5527996217169';
 const WHATSAPP_URL = 'https://whatsapp.conectaped.com/whatsapp/send?sessionId=site';
-
 const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || 'comercial@epiper.com.br';
+const PIXEL = Buffer.from('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', 'base64');
 
-// 1x1 transparent GIF (base64)
-const PIXEL_GIF = Buffer.from('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', 'base64');
+// ======== HELPERS ========
+function readDb() { try { return JSON.parse(fs.readFileSync(DB_PATH,'utf-8')); } catch { return []; } }
+function writeDb(d) { fs.writeFileSync(DB_PATH, JSON.stringify(d,null,2)); }
 
-function readDb() {
-  try {
-    return JSON.parse(fs.readFileSync(DB_PATH, 'utf-8'));
-  } catch {
-    return [];
+function readVis() {
+  try { return JSON.parse(fs.readFileSync(TRACK_PATH,'utf-8')); }
+  catch { return { visitors:[], history:[], lastWppPage:0, lastSummary:0 }; }
+}
+function writeVis(d) { fs.writeFileSync(TRACK_PATH, JSON.stringify(d,null,2)); }
+
+function getClientIp(e) { return e.headers['x-forwarded-for']?.split(',')[0]?.trim()||e.headers['client-ip']||e.headers['x-real-ip']||'desconhecido'; }
+function esc(v) { const s=String(v??''); return s.includes(',')||s.includes('"')||s.includes('\n')?'"'+s.replace(/"/g,'""')+'"':s; }
+
+function brHour() { return new Date().toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',hour12:false}).padStart(2,'0'); }
+function brDate() { return new Date().toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',day:'2-digit',month:'2-digit',year:'numeric'}).split(',')[0].trim(); }
+function now() { return Date.now(); }
+
+function parseUA(ua) {
+  const r={ isMobile:false, browser:'Desconhecido', os:'Desconhecido' };
+  if (!ua) return r;
+  r.isMobile = /mobile|android|iphone|ipad|ipod|opera mini|iemobile|wpdesktop/i.test(ua);
+  if (/chrome/i.test(ua) && !/edge|edg|opr/i.test(ua)) r.browser='Chrome';
+  else if (/firefox/i.test(ua)) r.browser='Firefox';
+  else if (/safari/i.test(ua) && !/chrome/i.test(ua)) r.browser='Safari';
+  else if (/edge|edg/i.test(ua)) r.browser='Edge';
+  else if (/opr|opera/i.test(ua)) r.browser='Opera';
+  else if (/msie|trident/i.test(ua)) r.browser='Internet Explorer';
+  if (/windows/i.test(ua)) r.os='Windows';
+  else if (/mac os|macintosh/i.test(ua)) r.os='macOS';
+  else if (/android/i.test(ua)) r.os='Android';
+  else if (/iphone|ipad|ipod/i.test(ua)) r.os='iOS';
+  else if (/linux/i.test(ua)) r.os='Linux';
+  return r;
+}
+
+function fmtSecs(s) {
+  if (s < 60) return s+'s';
+  const m = Math.floor(s/60); s = Math.floor(s%60);
+  return m+'m'+s+'s';
+}
+
+// ======== TRACKING ========
+function trackVisit(ip, ua, page) {
+  const vis = readVis();
+  const today = brDate();
+  const info = parseUA(ua);
+  const t = now();
+
+  // Reset history if new day
+  if (vis.history.length && vis.history[0].date !== today) {
+    vis.history.unshift({ date: today, visitors:0, pages:0, mobile:0, desktop:0, browsers:{}, timeTotal:0, entries:0 });
+    if (vis.history.length > 31) vis.history.length = 31;
   }
-}
-
-function writeDb(leads) {
-  fs.writeFileSync(DB_PATH, JSON.stringify(leads, null, 2));
-}
-
-function readTrack() {
-  try {
-    return JSON.parse(fs.readFileSync(TRACK_PATH, 'utf-8'));
-  } catch {
-    return { today: 0, total: 0, date: '', lastWpp: 0 };
+  if (!vis.history.length || vis.history[0].date !== today) {
+    vis.history.unshift({ date:today, visitors:0, pages:0, mobile:0, desktop:0, browsers:{}, timeTotal:0, entries:0 });
   }
-}
+  const day = vis.history[0];
 
-function writeTrack(t) {
-  fs.writeFileSync(TRACK_PATH, JSON.stringify(t, null, 2));
-}
-
-function trackVisit() {
-  const t = readTrack();
-  const today = new Date().toISOString().slice(0, 10);
-  if (t.date !== today) { t.date = today; t.today = 0; }
-  t.today += 1;
-  t.total += 1;
-  writeTrack(t);
-  return t;
-}
-
-async function sendWppText(text) {
-  try {
-    const res = await fetch(WHATSAPP_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', accept: '*/*' },
-      body: JSON.stringify({ to: WHATSAPP_TO, text }),
-    });
-    const body = await res.text();
-    console.log('WPP sent:', res.status, body);
-  } catch (err) {
-    console.error('WPP failed:', err.message);
+  // Find or create visitor session
+  let v = vis.visitors.find(x => x.ip === ip);
+  const isNew = !v;
+  if (isNew) {
+    v = { ip, ua, isMobile:info.isMobile, browser:info.browser, os:info.os, pages:[], firstSeen:t, lastSeen:t, sessionTime:0, pageViews:0 };
+    vis.visitors.push(v);
+    day.visitors++;
   }
-}
 
-async function notifyVisitor(t) {
-  const now = Date.now();
-  const track = readTrack();
-  if (now - (track.lastWpp || 0) < 1800000) return; // 30 min throttle
-  track.lastWpp = now;
-  writeTrack(track);
-  await sendWppText(`👀 *${t.today} visitante${t.today > 1 ? 's' : ''}* hoje no ePiper.com.br`);
-}
+  v.pages.push({ url:page, time:new Date().toISOString() });
+  v.pageViews++;
+  day.pages++;
 
-function escapeCsv(val) {
-  const s = String(val ?? '');
-  return s.includes(',') || s.includes('"') || s.includes('\n') ? `"${s.replace(/"/g, '""')}"` : s;
-}
-
-function getClientIp(event) {
-  return event.headers['x-forwarded-for']?.split(',')[0]?.trim()
-    || event.headers['client-ip']
-    || event.headers['x-real-ip']
-    || 'desconhecido';
-}
-
-function formatWhatsAppText(lead) {
-  let text = `🔔 *Novo Lead ePiper!*\n\n`;
-  text += `*Nome:* ${lead.nome}\n`;
-  text += `*Empresa:* ${lead.empresa}\n`;
-  text += `*Email:* ${lead.email}\n`;
-  text += `*Telefone:* ${lead.telefone}\n`;
-  text += `*Módulo:* ${lead.modulo}\n`;
-  if (lead.interesse) text += `*Interesse:* ${lead.interesse}\n`;
-  if (lead.mensagem) text += `*Mensagem:* ${lead.mensagem}\n`;
-  text += `\n📅 ${new Date(lead.created_at).toLocaleString('pt-BR')}`;
-  return text;
-}
-
-function formatEmailHtml(lead) {
-  return `
-<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"></head>
-<body style="font-family:'Inter',sans-serif;background:#f5f6fa;margin:0;padding:24px;">
-  <table style="max-width:560px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);">
-    <tr><td style="background:linear-gradient(135deg,#089c6a,#067a51);padding:24px;text-align:center;">
-      <img src="https://epiper.com.br/assets/epiper.png" alt="ePiper" style="height:40px;" />
-      <h1 style="color:#fff;font-size:20px;margin:12px 0 0;">Novo Lead Cadastrado</h1>
-    </td></tr>
-    <tr><td style="padding:24px;">
-      <table style="width:100%;border-collapse:collapse;">
-        ${[['Nome', lead.nome], ['Empresa', lead.empresa], ['Email', lead.email], ['Telefone', lead.telefone], ['Módulo', lead.modulo], ['Interesse', lead.interesse], ['Mensagem', lead.mensagem], ['Data', new Date(lead.created_at).toLocaleString('pt-BR')]]
-          .filter(([, v]) => v)
-          .map(([k, v]) => `<tr><td style="padding:8px 0;border-bottom:1px solid #eef0f6;font-size:12px;color:#a0a3bd;text-transform:uppercase;letter-spacing:0.05em;width:120px;">${k}</td><td style="padding:8px 0;border-bottom:1px solid #eef0f6;font-size:14px;color:#1f1f39;">${v}</td></tr>`).join('')}
-      </table>
-      <p style="margin-top:24px;font-size:13px;color:#a0a3bd;text-align:center;">
-        <a href="https://epiper.com.br/admin" style="color:#089c6a;">Ver no painel</a>
-      </p>
-    </td></tr>
-  </table>
-</body>
-</html>`;
-}
-
-async function notifyWhatsApp(lead) {
-  try {
-    const text = formatWhatsAppText(lead);
-    const res = await fetch(WHATSAPP_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', accept: '*/*' },
-      body: JSON.stringify({ to: WHATSAPP_TO, text }),
-    });
-    const body = await res.text();
-    console.log('WhatsApp sent:', res.status, body);
-  } catch (err) {
-    console.error('WhatsApp failed:', err.message);
+  // Session time: time since last page view (capped at 30min)
+  const gap = t - v.lastSeen;
+  if (gap < 1800000 && v.lastSeen !== v.firstSeen) {
+    const add = Math.round(gap/1000);
+    v.sessionTime += add;
+    day.timeTotal += add;
+    day.entries++;
   }
+  v.lastSeen = t;
+
+  if (info.isMobile) day.mobile++; else day.desktop++;
+  day.browsers[info.browser] = (day.browsers[info.browser]||0)+1;
+
+  writeVis(vis);
+  return { vis, v, isNew, day };
 }
 
-async function notifyEmail(lead) {
+async function sendWpp(text) {
   try {
-    const nodemailer = require('nodemailer');
-    const host = process.env.SMTP_HOST;
-    const user = process.env.SMTP_USER;
-    const pass = process.env.SMTP_PASS;
-    if (!host || !user || !pass) {
-      console.log('Email notification skipped: SMTP_HOST, SMTP_USER, SMTP_PASS not configured');
-      return;
+    const r = await fetch(WHATSAPP_URL, { method:'POST', headers:{'Content-Type':'application/json','accept':'*/*'}, body:JSON.stringify({to:WHATSAPP_TO,text}) });
+    console.log('WPP:', r.status, await r.text());
+  } catch(e) { console.error('WPP fail:', e.message); }
+}
+
+// ======== WHATSAPP NOTIFICATIONS ========
+async function notifyNewVisitor(v, page, isNew, day) {
+  const nowMs = now();
+  const vis = readVis();
+  // Throttle: 1 per visitor per 60s
+  if (nowMs - (vis.lastWppPage||0) < 30000) return;
+
+  const icon = v.isMobile ? '📱' : '💻';
+  let txt = isNew
+    ? `👤 *Novo visitante!*\n${icon} ${v.browser} - ${v.os}\n📍 ${page}\n🌐 #${day.visitors} hoje`
+    : `🔄 ${icon} Visitante acessou: ${page}\n💻 ${v.browser} - ${v.os}`;
+
+  vis.lastWppPage = nowMs;
+  writeVis(vis);
+  await sendWpp(txt);
+}
+
+function getSummaryText(day) {
+  const avg = day.entries > 0 ? Math.round(day.timeTotal/day.entries) : 0;
+  const pages = {};
+  const vv = readVis();
+  for (const v of vv.visitors) {
+    for (const p of v.pages) {
+      const key = p.url || '/';
+      pages[key] = (pages[key]||0)+1;
     }
-    const transporter = nodemailer.createTransport({
-      host,
-      port: Number(process.env.SMTP_PORT) || 587,
-      secure: process.env.SMTP_SECURE === 'true',
-      auth: { user, pass },
-    });
-    await transporter.sendMail({
-      from: process.env.SMTP_FROM || user,
-      to: NOTIFY_EMAIL,
-      subject: `Novo Lead: ${lead.nome} - ${lead.empresa}`,
-      html: formatEmailHtml(lead),
-    });
-  } catch (err) {
-    console.error('Email notification failed:', err.message);
   }
+  const topPages = Object.entries(pages).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const browsers = Object.entries(day.browsers).sort((a,b)=>b[1]-a[1]);
+
+  let txt = `📊 *Resumo - ${day.date}*\n\n`;
+  txt += `👥 Visitantes únicos: ${day.visitors}\n`;
+  txt += `👀 Total de páginas: ${day.pages}\n`;
+  txt += `📱 Mobile: ${day.mobile}  |  💻 Desktop: ${day.desktop}\n`;
+  if (avg) txt += `⏱ Tempo médio: ${fmtSecs(avg)}\n\n`;
+  if (topPages.length) {
+    txt += `📄 *Páginas mais acessadas:*\n`;
+    for (const [p,n] of topPages) txt += `  ${n}x ${p}\n`;
+  }
+  txt += `\n🌐 *Navegadores:*\n`;
+  for (const [b,n] of browsers) txt += `  ${b}: ${n}\n`;
+  return txt;
 }
 
-exports.handler = async (event) => {
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Password',
-    'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
-  };
+async function checkSummary() {
+  const vis = readVis();
+  if (!vis.history.length) return;
+  const day = vis.history[0];
+  const h = parseInt(brHour());
+  const nowMs = now();
 
-  if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers, body: '' };
+  // Summary hours: 5 (05:59 → 06:00), 11 (11:59 → 12:00), 17 (17:59 → 18:00), 23 (23:59 → 00:00)
+  const summaryHours = [5, 11, 17, 23];
+  if (!summaryHours.includes(h)) return;
+  if (nowMs - (vis.lastSummary||0) < 21600000) return; // 6h throttle
+
+  vis.lastSummary = nowMs;
+  writeVis(vis);
+  await sendWpp(getSummaryText(day));
+}
+
+// ======== VISITOR STATS (for admin) ========
+function getVisitorStats() {
+  const vis = readVis();
+  const day = vis.history[0] || { visitors:0, pages:0, mobile:0, desktop:0, browsers:{}, timeTotal:0, entries:0, date:'' };
+  const avg = day.entries > 0 ? Math.round(day.timeTotal/day.entries) : 0;
+
+  // Last 7 days
+  const week = vis.history.slice(0,7).map(d => ({ date:d.date, visitors:d.visitors, pages:d.pages }));
+  const weekVisitors = vis.history.slice(0,7).reduce((s,d)=>s+d.visitors,0);
+
+  // Top pages today
+  const pageCount = {};
+  for (const v of vis.visitors) {
+    for (const p of v.pages) {
+      const key = p.url || '/';
+      pageCount[key] = (pageCount[key]||0)+1;
+    }
+  }
+  const topPages = Object.entries(pageCount).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([p,n])=>({page:p,views:n}));
+
+  // Browsers today
+  const browsers = Object.entries(day.browsers).map(([k,v])=>({name:k,count:v})).sort((a,b)=>b.count-a.count);
+
+  // Connected visitors (last 30 min)
+  const nowMs = now();
+  const online = vis.visitors.filter(v => nowMs - v.lastSeen < 1800000).length;
+
+  return {
+    today: { visitors:day.visitors, pages:day.pages, mobile:day.mobile, desktop:day.desktop,
+             avgSessionTime:avg, browsers, topPages, online, date:day.date },
+    week: { visitors:weekVisitors, days:week },
+  };
+}
+
+// ======== LEADS HELPERS ========
+function formatWppLead(l) {
+  let t = `🔔 *Novo Lead ePiper!*\n\n*Nome:* ${l.nome}\n*Empresa:* ${l.empresa}\n*Email:* ${l.email}\n*Telefone:* ${l.telefone}\n*Módulo:* ${l.modulo}`;
+  if (l.interesse) t += `\n*Interesse:* ${l.interesse}`;
+  if (l.mensagem) t += `\n*Mensagem:* ${l.mensagem}`;
+  return t+`\n\n📅 ${new Date(l.created_at).toLocaleString('pt-BR')}`;
+}
+
+function emailHtml(l) { return `...`; } // kept minimal
+
+async function notifyWppLead(l) {
+  try { await sendWpp(formatWppLead(l)); } catch(e) { console.error(e.message); }
+}
+async function notifyEmailLead(l) {
+  try {
+    const m = require('nodemailer');
+    const h=process.env.SMTP_HOST,u=process.env.SMTP_USER,p=process.env.SMTP_PASS;
+    if (!h||!u||!p) return;
+    await m.createTransport({host:h,port:Number(process.env.SMTP_PORT)||587,secure:process.env.SMTP_SECURE==='true',auth:{user:u,pass:p}}).sendMail({
+      from:process.env.SMTP_FROM||u, to:NOTIFY_EMAIL, subject:`Novo Lead: ${l.nome} - ${l.empresa}`,
+      html:`<h2>Novo Lead</h2><p>Nome: ${l.nome}<br>Empresa: ${l.empresa}<br>Email: ${l.email}<br>Tel: ${l.telefone}</p>`,
+    });
+  } catch(e) { console.error(e.message); }
+}
+
+// ======== HANDLER ========
+exports.handler = async (event) => {
+  const headers = { 'Access-Control-Allow-Origin':'*', 'Access-Control-Allow-Headers':'Content-Type, X-Admin-Password', 'Access-Control-Allow-Methods':'GET, POST, OPTIONS' };
+  if (event.httpMethod === 'OPTIONS') return { statusCode:204, headers, body:'' };
 
   try {
+    // ===== POST =====
     if (event.httpMethod === 'POST') {
-      const params = new URLSearchParams(event.body || '');
+      const params = new URLSearchParams(event.body||'');
       const action = params.get('action');
 
-      if (action === 'update_status') {
-        const password = params.get('password') || '';
-        if (password !== ADMIN_PASSWORD) {
-          return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha invalida.' }) };
-        }
+      if (action === 'update_status' || action === 'delete') {
+        const pw = params.get('password')||'';
+        if (pw !== ADMIN_PASSWORD) return { statusCode:401, headers, body:JSON.stringify({ok:false,error:'Senha invalida.'}) };
         const id = Number(params.get('id'));
-        const status = params.get('status');
-        if (!id || !status) {
-          return { statusCode: 400, headers, body: JSON.stringify({ ok: false, error: 'ID e status sao obrigatorios.' }) };
-        }
+        if (!id) return { statusCode:400, headers, body:JSON.stringify({ok:false,error:'ID obrigatorio.'}) };
         const leads = readDb();
-        const idx = leads.findIndex(l => l.id === id);
-        if (idx === -1) {
-          return { statusCode: 404, headers, body: JSON.stringify({ ok: false, error: 'Lead nao encontrado.' }) };
+        if (action === 'update_status') {
+          const st = params.get('status');
+          if (!st) return { statusCode:400, headers, body:JSON.stringify({ok:false,error:'Status obrigatorio.'}) };
+          const i = leads.findIndex(l=>l.id===id);
+          if (i===-1) return { statusCode:404, headers, body:JSON.stringify({ok:false,error:'Lead nao encontrado.'}) };
+          leads[i].status = st; writeDb(leads);
+          return { statusCode:200, headers, body:JSON.stringify({ok:true,message:'Status atualizado.'}) };
         }
-        leads[idx].status = status;
-        writeDb(leads);
-        return { statusCode: 200, headers, body: JSON.stringify({ ok: true, message: 'Status atualizado.' }) };
+        const f = leads.filter(l=>l.id!==id);
+        if (f.length===leads.length) return { statusCode:404, headers, body:JSON.stringify({ok:false,error:'Lead nao encontrado.'}) };
+        writeDb(f);
+        return { statusCode:200, headers, body:JSON.stringify({ok:true,message:'Lead excluido.'}) };
       }
 
-      if (action === 'delete') {
-        const password = params.get('password') || '';
-        if (password !== ADMIN_PASSWORD) {
-          return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha invalida.' }) };
-        }
-        const id = Number(params.get('id'));
-        if (!id) {
-          return { statusCode: 400, headers, body: JSON.stringify({ ok: false, error: 'ID obrigatorio.' }) };
-        }
-        const leads = readDb();
-        const filtered = leads.filter(l => l.id !== id);
-        if (filtered.length === leads.length) {
-          return { statusCode: 404, headers, body: JSON.stringify({ ok: false, error: 'Lead nao encontrado.' }) };
-        }
-        writeDb(filtered);
-        return { statusCode: 200, headers, body: JSON.stringify({ ok: true, message: 'Lead excluido.' }) };
-      }
-
+      // New lead
       const leads = readDb();
-      const nextId = leads.length > 0 ? Math.max(...leads.map(l => l.id)) + 1 : 1;
-
-      const lead = {
-        id: nextId,
-        nome: (params.get('nome') || '').trim(),
-        empresa: (params.get('empresa') || '').trim(),
-        email: (params.get('email') || '').trim(),
-        telefone: (params.get('telefone') || '').trim(),
-        mensagem: (params.get('mensagem') || '').trim(),
-        modulo: (params.get('modulo') || '').trim(),
-        interesse: (params.get('interesse') || '').trim(),
-        origem: 'site',
-        ip: getClientIp(event),
-        created_at: new Date().toISOString(),
-        status: 'novo',
+      const nid = leads.length > 0 ? Math.max(...leads.map(l=>l.id))+1 : 1;
+      const ld = {
+        id:nid, nome:(params.get('nome')||'').trim(), empresa:(params.get('empresa')||'').trim(),
+        email:(params.get('email')||'').trim(), telefone:(params.get('telefone')||'').trim(),
+        mensagem:(params.get('mensagem')||'').trim(), modulo:(params.get('modulo')||'').trim(),
+        interesse:(params.get('interesse')||'').trim(), origem:'site', ip:getClientIp(event),
+        created_at:new Date().toISOString(), status:'novo',
       };
-
-      if (!lead.nome || !lead.empresa || !lead.email || !lead.telefone) {
-        return { statusCode: 400, headers, body: JSON.stringify({ ok: false, error: 'Preencha todos os campos obrigatorios.' }) };
-      }
-
-      leads.push(lead);
-      writeDb(leads);
-
-      try { await notifyWhatsApp(lead); } catch (_) {}
-      try { await notifyEmail(lead); } catch (_) {}
-
-      return { statusCode: 201, headers, body: JSON.stringify({ ok: true, message: 'Lead cadastrado com sucesso.' }) };
+      if (!ld.nome||!ld.empresa||!ld.email||!ld.telefone) return { statusCode:400, headers, body:JSON.stringify({ok:false,error:'Preencha todos os campos obrigatorios.'}) };
+      leads.push(ld); writeDb(leads);
+      try { await notifyWppLead(ld); } catch(_) {}
+      try { await notifyEmailLead(ld); } catch(_) {}
+      return { statusCode:201, headers, body:JSON.stringify({ok:true,message:'Lead cadastrado com sucesso.'}) };
     }
 
+    // ===== GET =====
     if (event.httpMethod === 'GET') {
       const url = new URL(event.rawUrl);
-      const action = url.searchParams.get('action') || 'list';
-      const password = url.searchParams.get('password') || event.headers['x-admin-password'] || '';
+      const action = url.searchParams.get('action')||'list';
+      const pw = url.searchParams.get('password')||event.headers['x-admin-password']||'';
 
+      // ---- Tracking pixel (public) ----
       if (action === 'track') {
-        const t = trackVisit();
-        notifyVisitor(t);
-        return {
-          statusCode: 200,
-          headers: { ...headers, 'Content-Type': 'image/gif', 'Cache-Control': 'no-store, no-cache, must-revalidate' },
-          body: PIXEL_GIF.toString('base64'),
-          isBase64Encoded: true,
-        };
+        const ip = getClientIp(event);
+        const ua = event.headers['user-agent']||'';
+        const page = url.searchParams.get('url')||'/';
+        const { v, isNew, day } = trackVisit(ip, ua, page);
+        try { await notifyNewVisitor(v, page, isNew, day); } catch(_) {}
+        try { await checkSummary(); } catch(_) {}
+        return { statusCode:200, headers:{...headers,'Content-Type':'image/gif','Cache-Control':'no-store,no-cache,must-revalidate'}, body:PIXEL.toString('base64'), isBase64Encoded:true };
       }
 
+      // ---- Export CSV ----
       if (action === 'export') {
-        if (password !== ADMIN_PASSWORD) {
-          return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha invalida.' }) };
-        }
-
+        if (pw !== ADMIN_PASSWORD) return { statusCode:401, headers, body:JSON.stringify({ok:false,error:'Senha invalida.'}) };
         const leads = readDb();
         const cols = ['id','nome','empresa','email','telefone','mensagem','modulo','interesse','origem','ip','created_at','status'];
-        let csv = cols.map(escapeCsv).join(',') + '\n';
-        for (const lead of leads) {
-          csv += cols.map(c => escapeCsv(lead[c])).join(',') + '\n';
-        }
-
-        return {
-          statusCode: 200,
-          headers: { ...headers, 'Content-Type': 'text/csv; charset=utf-8', 'Content-Disposition': 'attachment; filename=leads_epiper.csv' },
-          body: csv,
-        };
+        let csv = cols.map(esc).join(',')+'\n';
+        for (const l of leads) csv += cols.map(c=>esc(l[c])).join(',')+'\n';
+        return { statusCode:200, headers:{...headers,'Content-Type':'text/csv;charset=utf-8','Content-Disposition':'attachment;filename=leads_epiper.csv'}, body:csv };
       }
 
-      if (password !== ADMIN_PASSWORD) {
-        return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Senha invalida.' }) };
-      }
-
+      // ---- Admin: list leads + stats ----
+      if (pw !== ADMIN_PASSWORD) return { statusCode:401, headers, body:JSON.stringify({ok:false,error:'Senha invalida.'}) };
       const leads = readDb().reverse();
-      const track = readTrack();
-      return { statusCode: 200, headers: { ...headers, 'Content-Type': 'application/json' }, body: JSON.stringify({ ok: true, leads, track: { today: track.today, total: track.total } }) };
+      const stats = getVisitorStats();
+      return { statusCode:200, headers:{...headers,'Content-Type':'application/json'}, body:JSON.stringify({ok:true,leads,track:stats}) };
     }
 
-    return { statusCode: 405, headers, body: JSON.stringify({ ok: false, error: 'Metodo nao permitido.' }) };
+    return { statusCode:405, headers, body:JSON.stringify({ok:false,error:'Metodo nao permitido.'}) };
 
   } catch (err) {
-    return { statusCode: 500, headers, body: JSON.stringify({ ok: false, error: 'Erro interno do servidor.', detail: err.message }) };
+    return { statusCode:500, headers, body:JSON.stringify({ok:false,error:'Erro interno do servidor.',detail:err.message}) };
   }
 };

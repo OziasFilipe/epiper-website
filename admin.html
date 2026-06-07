@@ -509,6 +509,43 @@
       to { opacity: 1; transform: translateX(0); }
     }
 
+    /* ========== TABS ========== */
+    .tabs { display:flex; gap:0; margin-bottom:1.5rem; background:#fff; border-radius:0.75rem; border:1px solid #eef0f6; overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,0.04); }
+    .tab { flex:1; padding:0.85rem; border:none; background:#fff; font-family:inherit; font-size:0.85rem; font-weight:500; cursor:pointer; transition:all 0.2s; color:#a0a3bd; }
+    .tab:hover { background:#f8faff; color:#1f1f39; }
+    .tab.active { background:#089c6a; color:#fff; font-weight:600; }
+    .tab-content { display:none; }
+    .tab-content.active { display:block; }
+
+    /* ========== VISITOR DASHBOARD ========== */
+    .visitor-grid { display:grid; gap:1.25rem; }
+    .visitor-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; }
+    .v-card { background:#fff; border-radius:0.875rem; padding:1.25rem; border:1px solid #eef0f6; box-shadow:0 1px 2px rgba(0,0,0,0.04); }
+    .v-card h3 { font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:#a0a3bd; margin-bottom:0.25rem; }
+    .v-card .num { font-size:1.75rem; font-weight:700; color:#1f1f39; }
+    .v-card .num.green { color:#089c6a; }
+    .v-card .num.blue { color:#1f5de8; }
+    .v-card .num.orange { color:#d4890a; }
+    .v-card .num.purple { color:#7c3aed; }
+    .v-card .num.neutral { color:#6e7191; }
+    .v-card .sub { font-size:0.78rem; color:#a0a3bd; margin-top:0.2rem; }
+    .v-section { background:#fff; border-radius:0.875rem; padding:1.25rem; border:1px solid #eef0f6; box-shadow:0 1px 2px rgba(0,0,0,0.04); }
+    .v-section h3 { font-size:0.8rem; font-weight:700; color:#1f1f39; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; }
+    .v-section h3 .badge { background:#eef4ff; color:#2d5bff; font-size:0.65rem; padding:0.15rem 0.5rem; border-radius:999px; font-weight:600; }
+    .v-row { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0; border-bottom:1px solid #f0f2f6; font-size:0.85rem; }
+    .v-row:last-child { border:none; }
+    .v-row .label { color:#6e7191; }
+    .v-row .value { font-weight:600; color:#1f1f39; }
+    .v-bar-wrap { background:#f0f2f6; border-radius:999px; height:6px; overflow:hidden; flex:1; margin:0 0.75rem; }
+    .v-bar { height:100%; border-radius:999px; background:linear-gradient(90deg,#089c6a,#06b07a); transition:width 0.5s; }
+    .v-bar.blue { background:linear-gradient(90deg,#1f5de8,#4a7aff); }
+    .v-bar.orange { background:linear-gradient(90deg,#d4890a,#f5a83b); }
+    .v-row-bar { display:flex; align-items:center; padding:0.4rem 0; font-size:0.85rem; }
+    .v-row-bar .label { color:#6e7191; min-width:100px; }
+    .v-row-bar .count { font-weight:600; color:#1f1f39; min-width:30px; text-align:right; }
+    .online-dot { width:8px; height:8px; border-radius:50%; background:#089c6a; display:inline-block; margin-right:0.4rem; animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
     @media (max-width: 768px) {
       .container { padding: 1rem; }
       .controls { flex-direction: column; align-items: stretch; }
@@ -562,83 +599,95 @@
   </div>
 
   <div class="container">
-    <div class="stats-grid" id="stats">
-      <div class="stat-card">
-        <h3>Total</h3>
-        <div class="value blue" id="totalLeads">0</div>
-      </div>
-      <div class="stat-card">
-        <h3>Novos</h3>
-        <div class="value" id="totalNovos">0</div>
-      </div>
-      <div class="stat-card">
-        <h3>Contatados</h3>
-        <div class="value green" id="totalContatados">0</div>
-      </div>
-      <div class="stat-card">
-        <h3>Qualificados</h3>
-        <div class="value orange" id="totalQualificados">0</div>
-      </div>
-      <div class="stat-card">
-        <h3>Perdidos</h3>
-        <div class="value red" id="totalPerdidos">0</div>
-      </div>
-      <div class="stat-card">
-        <h3>Visitantes hoje</h3>
-        <div class="value" id="totalVisitors" style="color:#6e7191;">0</div>
-      </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" data-tab="leads" onclick="switchTab('leads')">Leads</button>
+      <button class="tab" data-tab="visitors" onclick="switchTab('visitors')">Visitantes</button>
     </div>
 
-    <div class="controls">
-      <div class="controls-left">
-        <input type="text" class="search-input" id="searchInput" placeholder="Buscar nome, empresa ou email..." oninput="render()" />
-        <select class="filter-select" id="statusFilter" onchange="render()">
-          <option value="">Todos os status</option>
-          <option value="novo">Novo</option>
-          <option value="contatado">Contatado</option>
-          <option value="qualificado">Qualificado</option>
-          <option value="perdido">Perdido</option>
-        </select>
-        <select class="filter-select" id="moduloFilter" onchange="render()">
-          <option value="">Todos os Módulos</option>
-          <option value="Piper Pedido Eletrônico">Pedido Eletrônico</option>
-          <option value="Piper Integrações">Integrações</option>
-          <option value="Piper Contato">Contato</option>
-        </select>
-      </div>
-      <span style="font-size:0.82rem;color:#a0a3bd;white-space:nowrap;" id="leadCount">0 leads</span>
-    </div>
-
-    <div class="table-wrap">
-      <div class="loading" id="loading"><div class="loading-spinner"></div><p>Carregando leads...</p></div>
-      <div class="table-scroll">
-        <table id="leadsTable" style="display:none;">
-          <thead>
-            <tr>
-              <th onclick="sort('id')"># <span class="sort-icon" id="sId"></span></th>
-              <th onclick="sort('nome')">Nome <span class="sort-icon" id="sNome"></span></th>
-              <th onclick="sort('empresa')">Empresa <span class="sort-icon" id="sEmpresa"></span></th>
-              <th onclick="sort('email')">Email <span class="sort-icon" id="sEmail"></span></th>
-              <th onclick="sort('telefone')">Telefone <span class="sort-icon" id="sTelefone"></span></th>
-              <th onclick="sort('modulo')">Módulo <span class="sort-icon" id="sModulo"></span></th>
-              <th onclick="sort('created_at')">Data <span class="sort-icon" id="sCreated_at"></span></th>
-              <th>Status</th>
-              <th style="width:40px;"></th>
-            </tr>
-          </thead>
-          <tbody id="tableBody"></tbody>
-        </table>
-      </div>
-      <div class="empty-state" id="emptyState" style="display:none;">
-        <div class="empty-state-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2d5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 8H6"/><path d="M12 12H6"/><path d="M10 16H6"/><path d="M16 8h2"/><path d="M16 12h2"/><path d="M16 16h2"/><path d="M4 6v12a2 2 0 002 2h12a2 2 0 002-2V8l-4-4H6a2 2 0 00-2 2z"/></svg>
+    <!-- ===== LEADS TAB ===== -->
+    <div id="tabLeads" class="tab-content active">
+      <div class="stats-grid" id="stats">
+        <div class="stat-card">
+          <h3>Total</h3>
+          <div class="value blue" id="totalLeads">0</div>
         </div>
-        <h3>Nenhum lead encontrado</h3>
-        <p>Os leads aparecerão aqui após o primeiro cadastro no site.</p>
+        <div class="stat-card">
+          <h3>Novos</h3>
+          <div class="value" id="totalNovos">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Contatados</h3>
+          <div class="value green" id="totalContatados">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Qualificados</h3>
+          <div class="value orange" id="totalQualificados">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Perdidos</h3>
+          <div class="value red" id="totalPerdidos">0</div>
+        </div>
       </div>
+
+      <div class="controls">
+        <div class="controls-left">
+          <input type="text" class="search-input" id="searchInput" placeholder="Buscar nome, empresa ou email..." oninput="render()" />
+          <select class="filter-select" id="statusFilter" onchange="render()">
+            <option value="">Todos os status</option>
+            <option value="novo">Novo</option>
+            <option value="contatado">Contatado</option>
+            <option value="qualificado">Qualificado</option>
+            <option value="perdido">Perdido</option>
+          </select>
+          <select class="filter-select" id="moduloFilter" onchange="render()">
+            <option value="">Todos os Módulos</option>
+            <option value="Piper Pedido Eletrônico">Pedido Eletrônico</option>
+            <option value="Piper Integrações">Integrações</option>
+            <option value="Piper Contato">Contato</option>
+          </select>
+        </div>
+        <span style="font-size:0.82rem;color:#a0a3bd;white-space:nowrap;" id="leadCount">0 leads</span>
+      </div>
+
+      <div class="table-wrap">
+        <div class="loading" id="loading"><div class="loading-spinner"></div><p>Carregando leads...</p></div>
+        <div class="table-scroll">
+          <table id="leadsTable" style="display:none;">
+            <thead>
+              <tr>
+                <th onclick="sort('id')"># <span class="sort-icon" id="sId"></span></th>
+                <th onclick="sort('nome')">Nome <span class="sort-icon" id="sNome"></span></th>
+                <th onclick="sort('empresa')">Empresa <span class="sort-icon" id="sEmpresa"></span></th>
+                <th onclick="sort('email')">Email <span class="sort-icon" id="sEmail"></span></th>
+                <th onclick="sort('telefone')">Telefone <span class="sort-icon" id="sTelefone"></span></th>
+                <th onclick="sort('modulo')">Módulo <span class="sort-icon" id="sModulo"></span></th>
+                <th onclick="sort('created_at')">Data <span class="sort-icon" id="sCreated_at"></span></th>
+                <th>Status</th>
+                <th style="width:40px;"></th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+        <div class="empty-state" id="emptyState" style="display:none;">
+          <div class="empty-state-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2d5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 8H6"/><path d="M12 12H6"/><path d="M10 16H6"/><path d="M16 8h2"/><path d="M16 12h2"/><path d="M16 16h2"/><path d="M4 6v12a2 2 0 002 2h12a2 2 0 002-2V8l-4-4H6a2 2 0 00-2 2z"/></svg>
+          </div>
+          <h3>Nenhum lead encontrado</h3>
+          <p>Os leads aparecerão aqui após o primeiro cadastro no site.</p>
+        </div>
+      </div>
+
+      <div class="pagination" id="pagination"></div>
     </div>
 
-    <div class="pagination" id="pagination"></div>
+    <!-- ===== VISITORS TAB ===== -->
+    <div id="tabVisitors" class="tab-content">
+      <div class="visitor-grid" id="visitorStats"></div>
+    </div>
+
   </div>
 </div>
 
@@ -665,6 +714,7 @@ let page = 1;
 const PER_PAGE = 20;
 let leadCount = 0;
 let refreshTimer = null;
+let visitorTrack = null;
 
 function playNotification() {
   try {
@@ -771,15 +821,14 @@ async function load(silent) {
     const res = await fetch(`${API}?action=list&password=${TOKEN}`);
     const data = await res.json();
     allLeads = data.ok && Array.isArray(data.leads) ? data.leads : [];
-    if (data.track) {
-      document.getElementById('totalVisitors').textContent = data.track.today || 0;
-    }
+    visitorTrack = data.track || null;
   } catch { if (!silent) allLeads = []; }
   if (!silent) document.getElementById('loading').style.display = 'none';
   leadCount = allLeads.length;
   stats();
   render();
   document.title = `(${allLeads.filter(l => l.status === 'novo').length}) Leads | ePiper`;
+  if (document.querySelector('.tab[data-tab="visitors"]').classList.contains('active')) renderVisitors();
 }
 
 function stats() {
@@ -939,7 +988,69 @@ async function exportCSV() {
   finally { btn.disabled = false; btn.textContent = 'Exportar CSV'; }
 }
 
-function refresh() { load(); }
+function switchTab(name) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab'+name.charAt(0).toUpperCase()+name.slice(1)).classList.add('active');
+  document.querySelector(`.tab[data-tab="${name}"]`).classList.add('active');
+  if (name === 'visitors') renderVisitors();
+}
+
+function renderVisitors() {
+  const el = document.getElementById('visitorStats');
+  const t = visitorTrack;
+  if (!t || !t.today) { el.innerHTML = '<div class="v-section"><p style="color:#a0a3bd;text-align:center">Nenhum dado de visitante ainda.</p></div>'; return; }
+  const d = t.today;
+  const w = t.week || {};
+
+  let html = `<div class="visitor-cards">
+    <div class="v-card"><h3>Online agora</h3><div class="num blue">${d.online||0}</div><div class="sub"><span class="online-dot"></span>últimos 30 min</div></div>
+    <div class="v-card"><h3>Visitantes hoje</h3><div class="num green">${d.visitors}</div><div class="sub">${d.date}</div></div>
+    <div class="v-card"><h3>Total de páginas</h3><div class="num neutral">${d.pages}</div><div class="sub">${d.visitors>0?Math.round(d.pages/d.visitors)+' páginas/visitante':'-'}</div></div>
+    <div class="v-card"><h3>Tempo médio</h3><div class="num orange">${d.avgSessionTime?fmtTime(d.avgSessionTime):'-'}</div><div class="sub">${d.avgSessionTime?'por visita':'-'}</div></div>
+    <div class="v-card"><h3>Mobile</h3><div class="num purple">${d.mobile}</div><div class="sub">${d.visitors>0?Math.round(d.mobile/d.visitors*100)+'%':'-'}</div></div>
+    <div class="v-card"><h3>Desktop</h3><div class="num neutral">${d.desktop}</div><div class="sub">${d.visitors>0?Math.round(d.desktop/d.visitors*100)+'%':'-'}</div></div>
+  </div>`;
+
+  // Top pages
+  if (d.topPages && d.topPages.length) {
+    const maxV = Math.max(...d.topPages.map(p=>p.views));
+    html += `<div class="v-section"><h3>📄 Páginas mais acessadas</h3>`;
+    for (const p of d.topPages) {
+      const pct = (p.views/maxV*100).toFixed(0);
+      html += `<div class="v-row-bar"><span class="label">${p.page||'/'}</span><div class="v-bar-wrap"><div class="v-bar" style="width:${pct}%"></div></div><span class="count">${p.views}</span></div>`;
+    }
+    html += `</div>`;
+  }
+
+  // Browsers
+  if (d.browsers && d.browsers.length) {
+    const maxB = Math.max(...d.browsers.map(b=>b.count));
+    html += `<div class="v-section"><h3>🌐 Navegadores</h3>`;
+    for (const b of d.browsers) {
+      const pct = (b.count/maxB*100).toFixed(0);
+      html += `<div class="v-row-bar"><span class="label">${b.name}</span><div class="v-bar-wrap"><div class="v-bar blue" style="width:${pct}%"></div></div><span class="count">${b.count}</span></div>`;
+    }
+    html += `</div>`;
+  }
+
+  // Week
+  if (w.days && w.days.length) {
+    html += `<div class="v-section"><h3>📅 Últimos 7 dias <span class="badge">${w.visitors||0} visitantes</span></h3>`;
+    for (const day of w.days) {
+      html += `<div class="v-row"><span class="label">${day.date}</span><span class="value">${day.visitors} visitantes · ${day.pages} páginas</span></div>`;
+    }
+    html += `</div>`;
+  }
+
+  el.innerHTML = html;
+}
+
+function fmtTime(s) {
+  if (s < 60) return s+'s';
+  const m = Math.floor(s/60); s = Math.floor(s%60);
+  return m+'m'+s+'s';
+}
 
 function toast(msg, type) {
   const c = document.getElementById('toastContainer');
