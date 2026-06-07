@@ -20,6 +20,22 @@ function writeVis(d) { fs.writeFileSync(TRACK_PATH, JSON.stringify(d,null,2)); }
 function getClientIp(e) { return e.headers['x-forwarded-for']?.split(',')[0]?.trim()||e.headers['client-ip']||e.headers['x-real-ip']||'desconhecido'; }
 function esc(v) { const s=String(v??''); return s.includes(',')||s.includes('"')||s.includes('\n')?'"'+s.replace(/"/g,'""')+'"':s; }
 
+const geoCache = {};
+async function getGeo(ip) {
+  if (geoCache[ip]) return geoCache[ip];
+  if (ip === 'desconhecido' || !ip) return null;
+  if (/^(10\.|172\.(1[6-9]|2[0-9]|3[01])\.|192\.168\.|127\.|::1|localhost)/.test(ip)) return null;
+  try {
+    const r = await fetch(`http://ip-api.com/json/${ip}?fields=city,region,country,status`);
+    const d = await r.json();
+    if (d.status === 'success') {
+      geoCache[ip] = { city:d.city, region:d.region, country:d.country };
+      return geoCache[ip];
+    }
+  } catch(_) {}
+  return null;
+}
+
 function brHour() { return new Date().toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',hour12:false}).padStart(2,'0'); }
 function brDate() { return new Date().toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',day:'2-digit',month:'2-digit',year:'numeric'}).split(',')[0].trim(); }
 function now() { return Date.now(); }
@@ -49,7 +65,7 @@ function fmtSecs(s) {
 }
 
 // ======== TRACKING ========
-function trackVisit(ip, ua, page) {
+async function trackVisit(ip, ua, page) {
   const vis = readVis();
   const today = brDate();
   const info = parseUA(ua);
@@ -69,9 +85,20 @@ function trackVisit(ip, ua, page) {
   let v = vis.visitors.find(x => x.ip === ip);
   const isNew = !v;
   if (isNew) {
-    v = { ip, ua, isMobile:info.isMobile, browser:info.browser, os:info.os, pages:[], firstSeen:t, lastSeen:t, sessionTime:0, pageViews:0 };
+    const geo = await getGeo(ip);
+    v = { ip, ua, isMobile:info.isMobile, browser:info.browser, os:info.os, geo,
+          pages:[], firstSeen:t, lastSeen:t, sessionTime:0, pageViews:0, visitDays:[today], totalVisits:1 };
     vis.visitors.push(v);
     day.visitors++;
+  } else {
+    // Track return visits per day
+    if (!v.visitDays) v.visitDays = [];
+    if (!v.totalVisits) v.totalVisits = 0;
+    if (!v.visitDays.includes(today)) {
+      v.visitDays.push(today);
+      day.visitors++;
+    }
+    v.totalVisits++;
   }
 
   v.pages.push({ url:page, time:new Date().toISOString() });
@@ -211,7 +238,12 @@ function getVisitorStats(dateStr) {
       browser: v.browser,
       os: v.os,
       isMobile: v.isMobile,
+      geo: v.geo || null,
       pages: dayPages.length,
+      totalPages: v.pageViews || 0,
+      totalVisits: v.totalVisits || 1,
+      visitDays: (v.visitDays||[]).length,
+      firstSeen: v.firstSeen ? new Date(v.firstSeen).toLocaleDateString('pt-BR') : '-',
       firstPage: dayPages[0]?.time || '',
       lastPage: dayPages[dayPages.length-1]?.time || '',
     });
@@ -219,7 +251,7 @@ function getVisitorStats(dateStr) {
 
   return {
     today: { visitors:day.visitors, pages:day.pages, mobile:day.mobile, desktop:day.desktop,
-             avgSessionTime:avg, browsers, topPages, online, date:day.date, visitors:visitorList },
+             avgSessionTime:avg, browsers, topPages, online, date:day.date, list:visitorList },
     week: { visitors:weekVisitors, days:week },
   };
 }
@@ -309,7 +341,7 @@ exports.handler = async (event) => {
         const ip = getClientIp(event);
         const ua = event.headers['user-agent']||'';
         const page = url.searchParams.get('url')||'/';
-        const { v, isNew, day } = trackVisit(ip, ua, page);
+        const { v, isNew, day } = await trackVisit(ip, ua, page);
         try { await notifyNewVisitor(v, page, isNew, day); } catch(_) {}
         try { await checkSummary(); } catch(_) {}
         return { statusCode:200, headers:{...headers,'Content-Type':'image/gif','Cache-Control':'no-store,no-cache,must-revalidate'}, body:PIXEL.toString('base64'), isBase64Encoded:true };
