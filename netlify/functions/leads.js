@@ -189,8 +189,8 @@ exports.handler = async (event) => {
       leads.push(lead);
       writeDb(leads);
 
-      notifyWhatsApp(lead);
-      notifyEmail(lead);
+      try { await notifyWhatsApp(lead); } catch (_) {}
+      try { await notifyEmail(lead); } catch (_) {}
 
       return { statusCode: 201, headers, body: JSON.stringify({ ok: true, message: 'Lead cadastrado com sucesso.' }) };
     }
