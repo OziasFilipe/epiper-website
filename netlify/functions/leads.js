@@ -166,6 +166,6 @@ exports.handler = async (event) => {
     return { statusCode: 405, headers, body: JSON.stringify({ ok: false, error: 'Metodo nao permitido.' }) };
 
   } catch (err) {
-    return { statusCode: 500, headers, body: JSON.stringify({ ok: false, error: 'Erro interno do servidor.' }) };
+    return { statusCode: 500, headers, body: JSON.stringify({ ok: false, error: 'Erro interno do servidor.', detail: err.message }) };
   }
 };
