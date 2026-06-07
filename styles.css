@@ -79,6 +79,21 @@ video {
   display: block;
 }
 
+.header-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1f5de8;
+  text-decoration: none;
+  white-space: nowrap;
+  margin-left: auto;
+  margin-right: 0.5rem;
+}
+.header-phone:hover { color: #003b44; }
+.header-phone svg { flex-shrink: 0; }
+
 .logo-icon {
   width: 34px;
   height: 34px;
@@ -509,9 +524,9 @@ video {
 }
 
 .hero h1 {
-  font-size: clamp(2.8rem, 4vw, 3.8rem);
-  line-height: 1.02;
-  font-weight: 800;
+  font-size: clamp(2.4rem, 3.8vw, 3.2rem);
+  line-height: 1.08;
+  font-weight: 700;
   color: var(--text-main);
 }
 
@@ -3085,8 +3100,8 @@ video {
   }
 
   .hero h1 {
-    font-size: clamp(1.85rem, 9.5vw, 2.35rem);
-    line-height: 1.08;
+    font-size: clamp(1.5rem, 7vw, 1.85rem);
+    line-height: 1.12;
   }
 
   .hero h2 {
@@ -3502,3 +3517,36 @@ video {
     gap: 0.5rem;
   }
 }
+
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.9rem 1.5rem;
+  background: #0f1f35;
+  color: #d7e6f5;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.1);
+}
+.cookie-banner p { margin: 0; }
+.cookie-banner a { color: #7bc9f0; text-decoration: underline; }
+.cookie-banner button {
+  flex-shrink: 0;
+  padding: 0.45rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background: #1f5de8;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.82rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.cookie-banner button:hover { background: #003b44; }
