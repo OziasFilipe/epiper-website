@@ -73,11 +73,13 @@ function formatEmailHtml(lead) {
 async function notifyWhatsApp(lead) {
   try {
     const text = formatWhatsAppText(lead);
-    await fetch(WHATSAPP_URL, {
+    const res = await fetch(WHATSAPP_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', accept: '*/*' },
       body: JSON.stringify({ to: WHATSAPP_TO, text }),
     });
+    const result = await res.text();
+    console.log('WhatsApp response:', res.status, result);
   } catch (err) {
     console.error('WhatsApp notification failed:', err.message);
   }
