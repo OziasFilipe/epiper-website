@@ -543,7 +543,7 @@ video {
 .hero-balloon::after {
   content: '';
   position: absolute;
-  left: 1.5rem;
+  left: 50%;
   bottom: -0.5rem;
   transform: translateX(-50%);
   border-width: 0.5rem 0.55rem 0 0.55rem;
