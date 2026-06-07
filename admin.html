@@ -1061,14 +1061,14 @@ function renderVisitors() {
   const pv = d.visitors || 0;
   const pp = d.pages || 0;
 
-  let html = '<div class="visitor-cards">
-    <div class="v-card" data-accent="blue"><h3>Online agora</h3><div class="num blue">'+(d.online||0)+'</div><div class="sub"><span class="online-dot"></span>ultimos 30 min</div></div>
-    <div class="v-card"><h3>Visitantes hoje</h3><div class="num green">'+pv+'</div><div class="sub">'+esc(d.date)+'</div></div>
-    <div class="v-card" data-accent="orange"><h3>Total de paginas</h3><div class="num neutral">'+pp+'</div><div class="sub">'+(pv>0?Math.round(pp/pv)+' paginas/visitante':'-')+'</div></div>
-    <div class="v-card" data-accent="purple"><h3>Tempo medio</h3><div class="num orange">'+(d.avgSessionTime?fmtTime(d.avgSessionTime):'-')+'</div><div class="sub">'+(d.avgSessionTime?'por visita':'-')+'</div></div>
-    <div class="v-card" data-accent="blue"><h3>Mobile</h3><div class="num purple">'+d.mobile+'</div><div class="sub">'+(pv>0?Math.round(d.mobile/pv*100)+'%':'-')+'</div></div>
-    <div class="v-card"><h3>Desktop</h3><div class="num neutral">'+d.desktop+'</div><div class="sub">'+(pv>0?Math.round(d.desktop/pv*100)+'%':'-')+'</div></div>
-  </div>';
+  let html = `<div class="visitor-cards">
+    <div class="v-card" data-accent="blue"><h3>Online agora</h3><div class="num blue">${d.online||0}</div><div class="sub"><span class="online-dot"></span>ultimos 30 min</div></div>
+    <div class="v-card"><h3>Visitantes hoje</h3><div class="num green">${pv}</div><div class="sub">${esc(d.date)}</div></div>
+    <div class="v-card" data-accent="orange"><h3>Total de paginas</h3><div class="num neutral">${pp}</div><div class="sub">${pv>0?Math.round(pp/pv)+' paginas/visitante':'-'}</div></div>
+    <div class="v-card" data-accent="purple"><h3>Tempo medio</h3><div class="num orange">${d.avgSessionTime?fmtTime(d.avgSessionTime):'-'}</div><div class="sub">${d.avgSessionTime?'por visita':'-'}</div></div>
+    <div class="v-card" data-accent="blue"><h3>Mobile</h3><div class="num purple">${d.mobile}</div><div class="sub">${pv>0?Math.round(d.mobile/pv*100)+'%':'-'}</div></div>
+    <div class="v-card"><h3>Desktop</h3><div class="num neutral">${d.desktop}</div><div class="sub">${pv>0?Math.round(d.desktop/pv*100)+'%':'-'}</div></div>
+  </div>`;
 
   // Visitor table
   if (d.list && d.list.length) {
