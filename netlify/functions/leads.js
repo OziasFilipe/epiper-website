@@ -2,6 +2,11 @@ const fs = require('fs');
 const ADMIN_PASSWORD = '821760';
 const DB_PATH = '/tmp/leads.json';
 
+const WHATSAPP_TO = '5527996217169';
+const WHATSAPP_URL = 'https://whatsapp.conectaped.com/whatsapp/send?sessionId=site';
+
+const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || 'comercial@epiper.com.br';
+
 function readDb() {
   try {
     return JSON.parse(fs.readFileSync(DB_PATH, 'utf-8'));
@@ -24,6 +29,85 @@ function getClientIp(event) {
     || event.headers['client-ip']
     || event.headers['x-real-ip']
     || 'desconhecido';
+}
+
+function formatWhatsAppText(lead) {
+  let text = `🔔 *Novo Lead ePiper!*\n\n`;
+  text += `*Nome:* ${lead.nome}\n`;
+  text += `*Empresa:* ${lead.empresa}\n`;
+  text += `*Email:* ${lead.email}\n`;
+  text += `*Telefone:* ${lead.telefone}\n`;
+  text += `*Módulo:* ${lead.modulo}\n`;
+  if (lead.interesse) text += `*Interesse:* ${lead.interesse}\n`;
+  if (lead.mensagem) text += `*Mensagem:* ${lead.mensagem}\n`;
+  text += `\n📅 ${new Date(lead.created_at).toLocaleString('pt-BR')}`;
+  return text;
+}
+
+function formatEmailHtml(lead) {
+  return `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="font-family:'Inter',sans-serif;background:#f5f6fa;margin:0;padding:24px;">
+  <table style="max-width:560px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+    <tr><td style="background:linear-gradient(135deg,#089c6a,#067a51);padding:24px;text-align:center;">
+      <img src="https://epiper.com.br/assets/epiper.png" alt="ePiper" style="height:40px;" />
+      <h1 style="color:#fff;font-size:20px;margin:12px 0 0;">Novo Lead Cadastrado</h1>
+    </td></tr>
+    <tr><td style="padding:24px;">
+      <table style="width:100%;border-collapse:collapse;">
+        ${[['Nome', lead.nome], ['Empresa', lead.empresa], ['Email', lead.email], ['Telefone', lead.telefone], ['Módulo', lead.modulo], ['Interesse', lead.interesse], ['Mensagem', lead.mensagem], ['Data', new Date(lead.created_at).toLocaleString('pt-BR')]]
+          .filter(([, v]) => v)
+          .map(([k, v]) => `<tr><td style="padding:8px 0;border-bottom:1px solid #eef0f6;font-size:12px;color:#a0a3bd;text-transform:uppercase;letter-spacing:0.05em;width:120px;">${k}</td><td style="padding:8px 0;border-bottom:1px solid #eef0f6;font-size:14px;color:#1f1f39;">${v}</td></tr>`).join('')}
+      </table>
+      <p style="margin-top:24px;font-size:13px;color:#a0a3bd;text-align:center;">
+        <a href="https://epiper.com.br/admin" style="color:#089c6a;">Ver no painel</a>
+      </p>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
+
+async function notifyWhatsApp(lead) {
+  try {
+    const text = formatWhatsAppText(lead);
+    await fetch(WHATSAPP_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', accept: '*/*' },
+      body: JSON.stringify({ to: WHATSAPP_TO, text }),
+    });
+  } catch (err) {
+    console.error('WhatsApp notification failed:', err.message);
+  }
+}
+
+async function notifyEmail(lead) {
+  try {
+    const nodemailer = require('nodemailer');
+    const host = process.env.SMTP_HOST;
+    const user = process.env.SMTP_USER;
+    const pass = process.env.SMTP_PASS;
+    if (!host || !user || !pass) {
+      console.log('Email notification skipped: SMTP_HOST, SMTP_USER, SMTP_PASS not configured');
+      return;
+    }
+    const transporter = nodemailer.createTransport({
+      host,
+      port: Number(process.env.SMTP_PORT) || 587,
+      secure: process.env.SMTP_SECURE === 'true',
+      auth: { user, pass },
+    });
+    await transporter.sendMail({
+      from: process.env.SMTP_FROM || user,
+      to: NOTIFY_EMAIL,
+      subject: `Novo Lead: ${lead.nome} - ${lead.empresa}`,
+      html: formatEmailHtml(lead),
+    });
+  } catch (err) {
+    console.error('Email notification failed:', err.message);
+  }
 }
 
 exports.handler = async (event) => {
@@ -102,6 +186,9 @@ exports.handler = async (event) => {
 
       leads.push(lead);
       writeDb(leads);
+
+      notifyWhatsApp(lead);
+      notifyEmail(lead);
 
       return { statusCode: 201, headers, body: JSON.stringify({ ok: true, message: 'Lead cadastrado com sucesso.' }) };
     }

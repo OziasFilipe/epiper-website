@@ -5,5 +5,7 @@
   "scripts": {
     "dev": "npx netlify dev"
   },
-  "dependencies": {}
+  "dependencies": {
+    "nodemailer": "^6.9.0"
+  }
 }
