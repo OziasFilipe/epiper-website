@@ -1272,29 +1272,31 @@ async function initPush() {
 async function doSubscribe() {
   if (pushSub) return;
   try {
-    // Get VAPID key
     const res = await fetch(API + '?action=vapid-key');
     const data = await res.json();
-    if (!data.ok || !data.key) return;
+    if (!data.ok || !data.key) { toast('Erro ao obter chave de notificação.', 'error'); return; }
 
     const reg = await navigator.serviceWorker.ready;
+    if (!reg.active) { toast('Service worker não está ativo.', 'error'); return; }
+
     const sub = await reg.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(data.key)
     });
 
-    // Send subscription to server
     const body = new URLSearchParams();
     body.set('action', 'subscribe');
     body.set('password', TOKEN);
     body.set('subscription', JSON.stringify(sub));
-    await fetch(API, { method: 'POST', body });
+    const r2 = await fetch(API, { method: 'POST', body });
+    const r2j = await r2.json();
+    if (!r2j.ok) throw new Error(r2j.error || 'Erro ao salvar inscrição');
     pushSub = sub;
-
-    // Add toggle button to topbar
     addPushToggle();
+    toast('✅ Notificações push ativadas!', 'success');
   } catch(e) {
     console.error('Push subscribe error:', e);
+    toast('Erro ao ativar notificações: ' + e.message, 'error');
   }
 }
 
@@ -1302,10 +1304,15 @@ function addPushToggle() {
   const actions = document.querySelector('.topbar-actions');
   const existing = document.getElementById('pushToggle');
   if (existing) existing.remove();
+  const wrap = document.createElement('span');
+  wrap.id = 'pushToggle';
+  wrap.style.display = 'inline-flex';
+  wrap.style.alignItems = 'center';
+  wrap.style.gap = '0';
   const btn = document.createElement('button');
-  btn.id = 'pushToggle';
   btn.innerHTML = '🔔 ON';
-  btn.title = 'Notificações Push ativas';
+  btn.title = 'Notificações ativas — clique para desativar';
+  btn.style.cssText = 'border-top-right-radius:0 !important;border-bottom-right-radius:0 !important;border-right:0 !important;color:#089c6a !important;border-color:#089c6a !important;background:#e6faf0 !important';
   btn.onclick = async () => {
     if (pushSub) {
       const body = new URLSearchParams();
@@ -1319,7 +1326,26 @@ function addPushToggle() {
       toast('Notificações desativadas.', 'success');
     }
   };
-  actions.insertBefore(btn, actions.firstChild);
+  const testBtn = document.createElement('button');
+  testBtn.innerHTML = 'Testar';
+  testBtn.title = 'Enviar notificação de teste';
+  testBtn.style.cssText = 'border-top-left-radius:0 !important;border-bottom-left-radius:0 !important;color:#1f5de8 !important;border-color:#089c6a !important;background:#eef4ff !important;font-size:0.68rem !important';
+  testBtn.onclick = async () => {
+    testBtn.disabled = true;
+    testBtn.textContent = '...';
+    try {
+      const body = new URLSearchParams();
+      body.set('action', 'test-push');
+      body.set('password', TOKEN);
+      const r = await fetch(API, { method: 'POST', body });
+      const j = await r.json();
+      toast(j.ok ? '🔔 Notificação de teste enviada!' : 'Erro: '+j.error, j.ok ? 'success' : 'error');
+    } catch(e) { toast('Erro ao testar: '+e.message, 'error'); }
+    finally { testBtn.disabled = false; testBtn.innerHTML = 'Testar'; }
+  };
+  wrap.appendChild(btn);
+  wrap.appendChild(testBtn);
+  actions.insertBefore(wrap, actions.firstChild);
 }
 
 function urlBase64ToUint8Array(base64String) {

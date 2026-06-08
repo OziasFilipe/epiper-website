@@ -26,6 +26,7 @@ async function sendPush(title, body, tag) {
   for (const sub of subs) {
     try { await webpush.sendNotification(sub, payload); }
     catch(e) {
+      console.error('sendPush error:', e.statusCode, e.message);
       if (e.statusCode === 410 || e.statusCode === 404) {
         // Subscription expired — remove
         writeSubs(subs.filter(s => JSON.stringify(s) !== JSON.stringify(sub)));
@@ -376,8 +377,16 @@ exports.handler = async (event) => {
           const sub = JSON.parse(subRaw);
           const subs = readSubs();
           writeSubs(subs.filter(s => JSON.stringify(s) !== JSON.stringify(sub)));
-          return { statusCode:200, headers, body:JSON.stringify({ok:true,message:'Removido.'}) };
+          return { statusCode:200, headers, body:JSON.stringify({ok:false,message:'Removido.'}) };
         } catch(e) { return { statusCode:400, headers, body:JSON.stringify({ok:false,error:'Subscription invalida.'}) }; }
+      }
+
+      // ---- Test push ----
+      if (action === 'test-push') {
+        const pw = params.get('password')||'';
+        if (pw !== ADMIN_PASSWORD) return { statusCode:401, headers, body:JSON.stringify({ok:false,error:'Senha invalida.'}) };
+        try { await sendPush('🔔 Teste ePiper', 'Notificação push funcionando! ✅', 'test-'+now()); return { statusCode:200, headers, body:JSON.stringify({ok:true,message:'Notificação enviada.'}) }; }
+        catch(e) { return { statusCode:500, headers, body:JSON.stringify({ok:false,error:'Erro ao enviar: '+e.message}) }; }
       }
 
       // New lead
