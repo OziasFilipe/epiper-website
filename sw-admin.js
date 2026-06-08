@@ -24,12 +24,10 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
 
-  // API calls: network only
   if (url.pathname.includes('/.netlify/functions/') || url.pathname === '/api/auth') {
     return;
   }
 
-  // Static assets: cache-first
   if (ASSETS.some(a => e.request.url.includes(a))) {
     e.respondWith(
       caches.match(e.request).then(cached => cached || fetch(e.request).then(res => {
@@ -41,7 +39,6 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  // HTML pages: network-first, fallback to cache
   if (e.request.mode === 'navigate') {
     e.respondWith(
       fetch(e.request).then(res => {
@@ -52,4 +49,32 @@ self.addEventListener('fetch', e => {
     );
     return;
   }
+});
+
+self.addEventListener('push', e => {
+  let data = { title: 'ePiper Admin', body: '', icon: '/assets/icon-192.svg', badge: '/assets/icon-192.svg', tag: 'default', url: '/admin.html' };
+  try { data = Object.assign(data, JSON.parse(e.data.text())); } catch {}
+  e.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: data.icon,
+      badge: data.badge,
+      tag: data.tag,
+      vibrate: [200, 100, 200],
+      data: { url: data.url }
+    })
+  );
+});
+
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  const url = e.notification.data?.url || '/admin.html';
+  e.waitUntil(
+    clients.matchAll({ type: 'window' }).then(clients => {
+      for (const c of clients) {
+        if (c.url.includes(url) && 'focus' in c) return c.focus();
+      }
+      if (clients.openWindow) return clients.openWindow(url);
+    })
+  );
 });

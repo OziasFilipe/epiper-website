@@ -2,10 +2,37 @@ const fs = require('fs');
 const ADMIN_PASSWORD = '821760';
 const DB_PATH = '/tmp/leads.json';
 const TRACK_PATH = '/tmp/visitors.json';
+const SUBS_PATH = '/tmp/push-subs.json';
 const WHATSAPP_TO = '5527996217169';
 const WHATSAPP_URL = 'https://whatsapp.conectaped.com/whatsapp/send?sessionId=site';
 const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || 'comercial@epiper.com.br';
 const PIXEL = Buffer.from('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', 'base64');
+const webpush = require('web-push');
+
+const VAPID_PUBLIC = process.env.VAPID_PUBLIC_KEY || 'BHWWjXKi8ZFn4RhffjvEO9VAboiHncNaB7wixssnitk1buVYRHfbdDq_hhw2Ifm91OBC16SeDbpd9t7DWvTTgPg';
+const VAPID_PRIVATE = process.env.VAPID_PRIVATE_KEY || 'YRqjwUAOPYacU5JNwOqEI4_I3-tUBguIfrC5PSv8BBI';
+const VAPID_SUBJECT = process.env.VAPID_SUBJECT || 'mailto:comercial@epiper.com.br';
+if (VAPID_PUBLIC && VAPID_PRIVATE) {
+  webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC, VAPID_PRIVATE);
+}
+
+function readSubs() { try { return JSON.parse(fs.readFileSync(SUBS_PATH,'utf-8')); } catch { return []; } }
+function writeSubs(d) { fs.writeFileSync(SUBS_PATH, JSON.stringify(d,null,2)); }
+
+async function sendPush(title, body, tag) {
+  const subs = readSubs();
+  if (!subs.length) return;
+  const payload = JSON.stringify({ title, body, tag, icon:'/assets/icon-192.svg', badge:'/assets/icon-192.svg' });
+  for (const sub of subs) {
+    try { await webpush.sendNotification(sub, payload); }
+    catch(e) {
+      if (e.statusCode === 410 || e.statusCode === 404) {
+        // Subscription expired — remove
+        writeSubs(subs.filter(s => JSON.stringify(s) !== JSON.stringify(sub)));
+      }
+    }
+  }
+}
 
 // ======== HELPERS ========
 function readDb() { try { return JSON.parse(fs.readFileSync(DB_PATH,'utf-8')); } catch { return []; } }
@@ -322,6 +349,37 @@ exports.handler = async (event) => {
         return { statusCode:200, headers, body:JSON.stringify({ok:true,message:'Lead excluido.'}) };
       }
 
+      // ---- Push subscription ----
+      if (action === 'subscribe') {
+        const pw = params.get('password')||'';
+        if (pw !== ADMIN_PASSWORD) return { statusCode:401, headers, body:JSON.stringify({ok:false,error:'Senha invalida.'}) };
+        try {
+          const subRaw = params.get('subscription');
+          if (!subRaw) return { statusCode:400, headers, body:JSON.stringify({ok:false,error:'Subscription obrigatoria.'}) };
+          const sub = JSON.parse(subRaw);
+          const subs = readSubs();
+          // Avoid duplicates
+          if (!subs.some(s => JSON.stringify(s) === JSON.stringify(sub))) {
+            subs.push(sub);
+            writeSubs(subs);
+          }
+          return { statusCode:200, headers, body:JSON.stringify({ok:true,message:'Inscrito.'}) };
+        } catch(e) { return { statusCode:400, headers, body:JSON.stringify({ok:false,error:'Subscription invalida.'}) }; }
+      }
+
+      if (action === 'unsubscribe') {
+        const pw = params.get('password')||'';
+        if (pw !== ADMIN_PASSWORD) return { statusCode:401, headers, body:JSON.stringify({ok:false,error:'Senha invalida.'}) };
+        try {
+          const subRaw = params.get('subscription');
+          if (!subRaw) return { statusCode:400, headers, body:JSON.stringify({ok:false,error:'Subscription obrigatoria.'}) };
+          const sub = JSON.parse(subRaw);
+          const subs = readSubs();
+          writeSubs(subs.filter(s => JSON.stringify(s) !== JSON.stringify(sub)));
+          return { statusCode:200, headers, body:JSON.stringify({ok:true,message:'Removido.'}) };
+        } catch(e) { return { statusCode:400, headers, body:JSON.stringify({ok:false,error:'Subscription invalida.'}) }; }
+      }
+
       // New lead
       const leads = readDb();
       const nid = leads.length > 0 ? Math.max(...leads.map(l=>l.id))+1 : 1;
@@ -336,6 +394,7 @@ exports.handler = async (event) => {
       leads.push(ld); writeDb(leads);
       try { await notifyWppLead(ld); } catch(_) {}
       try { await notifyEmailLead(ld); } catch(_) {}
+      try { await sendPush('Novo lead', `${ld.nome} - ${ld.empresa}`, 'lead-'+ld.id); } catch(_) {}
       return { statusCode:201, headers, body:JSON.stringify({ok:true,message:'Lead cadastrado com sucesso.'}) };
     }
 
@@ -345,6 +404,11 @@ exports.handler = async (event) => {
       const action = url.searchParams.get('action')||'list';
       const pw = url.searchParams.get('password')||event.headers['x-admin-password']||'';
 
+      // ---- Public: VAPID key ----
+      if (action === 'vapid-key') {
+        return { statusCode:200, headers:{...headers,'Content-Type':'application/json'}, body:JSON.stringify({ok:true,key:VAPID_PUBLIC}) };
+      }
+
       // ---- Tracking pixel (public) ----
       if (action === 'track') {
         const ip = getClientIp(event);
@@ -352,6 +416,9 @@ exports.handler = async (event) => {
         const page = url.searchParams.get('url')||'/';
         const { v, isNew, day } = await trackVisit(ip, ua, page);
         try { await notifyNewVisitor(v, page, isNew, day); } catch(_) {}
+        try {
+          if (isNew) await sendPush('Novo visitante', `${v.browser} - ${v.os} acessou ${page}`, 'visitor-'+ip);
+        } catch(_) {}
         try { await checkSummary(); } catch(_) {}
         return { statusCode:200, headers:{...headers,'Content-Type':'image/gif','Cache-Control':'no-store,no-cache,must-revalidate'}, body:PIXEL.toString('base64'), isBase64Encoded:true };
       }

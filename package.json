@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "npx netlify dev"
+    "dev": "npx netlify dev",
+    "generate-vapid": "node -e \"const wp=require('web-push');const k=wp.generateVAPIDKeys();console.log('VAPID_PUBLIC_KEY='+k.publicKey);console.log('VAPID_PRIVATE_KEY='+k.privateKey);console.log('\\nAdd these to Netlify env vars:');console.log('netlify env:set VAPID_PUBLIC_KEY '+k.publicKey);console.log('netlify env:set VAPID_PRIVATE_KEY '+k.privateKey);console.log('netlify env:set VAPID_SUBJECT mailto:comercial@epiper.com.br')\""
   },
   "dependencies": {
-    "nodemailer": "^6.9.0"
+    "nodemailer": "^6.9.0",
+    "web-push": "^3.6.7"
   }
 }
