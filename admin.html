@@ -867,7 +867,7 @@ async function handleLogin(e) {
       sessionStorage.setItem('epiper_token', TOKEN);
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('app').classList.add('show');
-      setTodayDate(); load(); startAutoRefresh(); initPush();
+      setTodayDate(); load(); startAutoRefresh(); initPush(); addInstallBtn();
     } else {
       document.getElementById('loginError').classList.add('show');
     }
@@ -880,7 +880,7 @@ async function handleLogin(e) {
       sessionStorage.setItem('epiper_token', TOKEN);
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('app').classList.add('show');
-      setTodayDate(); load(); startAutoRefresh(); initPush();
+      setTodayDate(); load(); startAutoRefresh(); initPush(); addInstallBtn();
     } else {
       document.getElementById('loginError').textContent = 'CNPJ ou senha inválidos.';
       document.getElementById('loginError').classList.add('show');
@@ -905,6 +905,7 @@ function checkAuth() {
     load();
     startAutoRefresh();
     setTimeout(initPush, 1000);
+    setTimeout(addInstallBtn, 1500);
   }
 }
 
@@ -1220,25 +1221,65 @@ if ('serviceWorker' in navigator) {
 
 // PWA: install prompt
 let deferredPrompt = null;
+
+function addInstallBtn() {
+  if (window.matchMedia('(display-mode: standalone)').matches) return; // ja esta instalado
+  const actions = document.querySelector('.topbar-actions');
+  if (!actions || document.getElementById('installPwaBtn')) return;
+  const btn = document.createElement('button');
+  btn.id = 'installPwaBtn';
+  btn.innerHTML = '📲 App';
+  btn.title = 'Instalar ePiper Admin no seu celular';
+  btn.onclick = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt = null;
+      btn.remove();
+    } else {
+      showInstallHelp();
+    }
+  };
+  actions.insertBefore(btn, actions.firstChild);
+}
+
+function showInstallHelp() {
+  const prev = document.getElementById('modalOverlay').classList.contains('show');
+  if (prev) return;
+  document.getElementById('modalTitle').textContent = '📲 Instalar App';
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isAndroid = /android/i.test(navigator.userAgent);
+  document.getElementById('modalBody').innerHTML = `
+    <div style="text-align:center;padding:0.5rem 0">
+      <p style="margin-bottom:1rem;color:#1a1a2e;font-size:0.95rem">
+        ${isIOS
+          ? 'No Safari, toque no <strong>botão Compartilhar</strong> <span style="font-size:1.2rem">⎙</span> e depois em <strong>"Adicionar à Tela de Início"</strong>.'
+          : 'No Chrome, toque no <strong>menu ⋮</strong> e depois em <strong>"Instalar aplicativo"</strong> ou <strong>"Adicionar à tela inicial"</strong>.'}
+      </p>
+      <div style="background:#f0f4f9;border-radius:12px;padding:1rem;margin:1rem 0">
+        <p style="font-size:0.85rem;color:#6e7191">Com o app instalado você recebe notificações push de novos leads e visitantes mesmo com o navegador fechado.</p>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()" style="flex:1">Fechar</button>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
 window.addEventListener('beforeinstallprompt', e => {
   e.preventDefault();
   deferredPrompt = e;
-  setTimeout(() => {
-    if (!deferredPrompt) return;
-    const container = document.getElementById('toastContainer');
-    const t = document.createElement('div');
-    t.className = 'toast success';
-    t.style.cursor = 'pointer';
-    t.innerHTML = '📲 Instalar app &nbsp;<strong>Instalar</strong>';
-    t.onclick = () => {
-      deferredPrompt.prompt();
-      deferredPrompt = null;
-      t.remove();
-    };
-    container.appendChild(t);
-    setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.3s'; setTimeout(() => t.remove(), 300); }, 15000);
-  }, 5000);
+  addInstallBtn();
 });
+
+window.addEventListener('appinstalled', () => {
+  deferredPrompt = null;
+  const btn = document.getElementById('installPwaBtn');
+  if (btn) btn.remove();
+});
+
+// Also try to show after login in case beforeinstallprompt already fired
+// (Chrome only fires it once per visit)
 
 // ======== PUSH NOTIFICATIONS ========
 let pushSub = null;
