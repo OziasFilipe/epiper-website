@@ -800,7 +800,7 @@
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
-let TOKEN = sessionStorage.getItem('epiper_token') || '';
+let TOKEN = localStorage.getItem('epiper_token') || '';
 const API = '/.netlify/functions/leads';
 let allLeads = [];
 let sortField = 'created_at';
@@ -864,7 +864,7 @@ async function handleLogin(e) {
     const data = await res.json();
     if (data.ok) {
       TOKEN = data.token;
-      sessionStorage.setItem('epiper_token', TOKEN);
+      localStorage.setItem('epiper_token', TOKEN);
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('app').classList.add('show');
       setTodayDate(); load(); startAutoRefresh(); initPush(); addInstallBtn();
@@ -877,7 +877,7 @@ async function handleLogin(e) {
     const cnpjClean = cnpj.replace(/\D/g, '');
     if (cnpjClean === ADMIN_PASSWORD || senha === ADMIN_PASSWORD) {
       TOKEN = ADMIN_PASSWORD;
-      sessionStorage.setItem('epiper_token', TOKEN);
+      localStorage.setItem('epiper_token', TOKEN);
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('app').classList.add('show');
       setTodayDate(); load(); startAutoRefresh(); initPush(); addInstallBtn();
@@ -912,7 +912,7 @@ function checkAuth() {
 function logout() {
   if (refreshTimer) clearInterval(refreshTimer);
   TOKEN = '';
-  sessionStorage.removeItem('epiper_token');
+  localStorage.removeItem('epiper_token');
   document.getElementById('loginScreen').style.display = 'flex';
   document.getElementById('app').classList.remove('show');
   document.title = 'Entrar | ePiper';
@@ -1286,65 +1286,93 @@ let pushSub = null;
 
 async function initPush() {
   if (!('Notification' in window) || !('serviceWorker' in navigator)) return;
-  if (Notification.permission === 'denied') return;
-
-  if (Notification.permission === 'granted') {
-    await doSubscribe();
-    return;
-  }
-  // Show permission request button in topbar
-  const actions = document.querySelector('.topbar-actions');
-  const btn = document.createElement('button');
-  btn.innerHTML = '🔔 Ativar notificações';
-  btn.id = 'pushBtn';
-  btn.onclick = async () => {
-    const perm = await Notification.requestPermission();
-    if (perm === 'granted') {
-      btn.remove();
-      await doSubscribe();
-      toast('Notificações ativadas!', 'success');
-    } else {
-      toast('Notificações bloqueadas.', 'error');
-    }
-  };
-  actions.insertBefore(btn, actions.firstChild);
+  const perm = Notification.permission;
+  if (perm === 'denied') { addPushCheckBtn('🔕 Bloqueado', 'Notificações bloqueadas nas configurações do navegador.'); return; }
+  if (perm === 'granted') { await trySubscribe(); return; }
+  addPushRequestBtn();
 }
 
-async function doSubscribe() {
-  if (pushSub) return;
+async function trySubscribe() {
   try {
-    const res = await fetch(API + '?action=vapid-key');
-    const data = await res.json();
-    if (!data.ok || !data.key) { toast('Erro ao obter chave de notificação.', 'error'); return; }
-
     const reg = await navigator.serviceWorker.ready;
-    if (!reg.active) { toast('Service worker não está ativo.', 'error'); return; }
-
+    const existing = await reg.pushManager.getSubscription();
+    if (existing) {
+      pushSub = existing;
+      const body = new URLSearchParams();
+      body.set('action', 'subscribe');
+      body.set('password', TOKEN);
+      body.set('subscription', JSON.stringify(existing));
+      const r = await fetch(API, { method: 'POST', body });
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || 'Erro ao salvar no servidor');
+      addPushToggle();
+      return;
+    }
+    const res = await fetch(API + '?action=vapid-key');
+    if (!res.ok) throw new Error('Erro ao obter chave VAPID');
+    const data = await res.json();
+    if (!data.ok || !data.key) throw new Error('Chave VAPID inválida do servidor');
     const sub = await reg.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(data.key)
     });
-
-    const body = new URLSearchParams();
-    body.set('action', 'subscribe');
-    body.set('password', TOKEN);
-    body.set('subscription', JSON.stringify(sub));
-    const r2 = await fetch(API, { method: 'POST', body });
-    const r2j = await r2.json();
-    if (!r2j.ok) throw new Error(r2j.error || 'Erro ao salvar inscrição');
+    const body2 = new URLSearchParams();
+    body2.set('action', 'subscribe');
+    body2.set('password', TOKEN);
+    body2.set('subscription', JSON.stringify(sub));
+    const r2 = await fetch(API, { method: 'POST', body: body2 });
+    const j2 = await r2.json();
+    if (!j2.ok) throw new Error(j2.error || 'Erro ao salvar inscrição no servidor');
     pushSub = sub;
     addPushToggle();
-    toast('✅ Notificações push ativadas!', 'success');
   } catch(e) {
-    console.error('Push subscribe error:', e);
-    toast('Erro ao ativar notificações: ' + e.message, 'error');
+    console.error('Push error:', e);
+    addPushCheckBtn('⚠️ Push ERRO', e.message);
+    toast('Notificação push: ' + e.message, 'error');
   }
+}
+
+function addPushRequestBtn() {
+  const actions = document.querySelector('.topbar-actions');
+  if (!actions || document.getElementById('pushStatusBtn')) return;
+  const btn = document.createElement('button');
+  btn.id = 'pushStatusBtn';
+  btn.innerHTML = '🔔 Ativar notificações';
+  btn.onclick = async () => {
+    try {
+      const perm = await Notification.requestPermission();
+      if (perm === 'granted') {
+        btn.remove();
+        await trySubscribe();
+      } else {
+        btn.innerHTML = '🔕 Bloqueado';
+        btn.title = 'Notificações bloqueadas pelo navegador';
+        btn.onclick = null;
+        toast('Permissão negada. Ative nas configurações do navegador.', 'error');
+      }
+    } catch(e) { toast('Erro: ' + e.message, 'error'); }
+  };
+  actions.insertBefore(btn, actions.firstChild);
+}
+
+function addPushCheckBtn(label, title) {
+  const actions = document.querySelector('.topbar-actions');
+  if (!actions || document.getElementById('pushStatusBtn')) return;
+  const btn = document.createElement('button');
+  btn.id = 'pushStatusBtn';
+  btn.innerHTML = label;
+  btn.title = title || label;
+  btn.style.opacity = '0.7';
+  actions.insertBefore(btn, actions.firstChild);
 }
 
 function addPushToggle() {
   const actions = document.querySelector('.topbar-actions');
-  const existing = document.getElementById('pushToggle');
-  if (existing) existing.remove();
+  if (!actions) return;
+  ['pushStatusBtn','pushToggle','pushBtn'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.remove();
+  });
   const wrap = document.createElement('span');
   wrap.id = 'pushToggle';
   wrap.style.display = 'inline-flex';
@@ -1353,24 +1381,26 @@ function addPushToggle() {
   const btn = document.createElement('button');
   btn.innerHTML = '🔔 ON';
   btn.title = 'Notificações ativas — clique para desativar';
-  btn.style.cssText = 'border-top-right-radius:0 !important;border-bottom-right-radius:0 !important;border-right:0 !important;color:#089c6a !important;border-color:#089c6a !important;background:#e6faf0 !important';
+  btn.style.cssText = 'border-top-right-radius:0!important;border-bottom-right-radius:0!important;border-right:0!important;color:#089c6a!important;border-color:#089c6a!important;background:#e6faf0!important';
   btn.onclick = async () => {
-    if (pushSub) {
+    if (!pushSub) return;
+    try {
       const body = new URLSearchParams();
       body.set('action', 'unsubscribe');
       body.set('password', TOKEN);
       body.set('subscription', JSON.stringify(pushSub));
       await fetch(API, { method: 'POST', body });
+      await pushSub.unsubscribe();
       pushSub = null;
-      btn.innerHTML = '🔕 OFF';
-      btn.title = 'Notificações desativadas';
-      toast('Notificações desativadas.', 'success');
-    }
+      wrap.remove();
+      addPushRequestBtn();
+      toast('🔕 Notificações desativadas.', 'success');
+    } catch(e) { toast('Erro: ' + e.message, 'error'); }
   };
   const testBtn = document.createElement('button');
   testBtn.innerHTML = 'Testar';
-  testBtn.title = 'Enviar notificação de teste';
-  testBtn.style.cssText = 'border-top-left-radius:0 !important;border-bottom-left-radius:0 !important;color:#1f5de8 !important;border-color:#089c6a !important;background:#eef4ff !important;font-size:0.68rem !important';
+  testBtn.title = 'Enviar notificação de teste agora';
+  testBtn.style.cssText = 'border-top-left-radius:0!important;border-bottom-left-radius:0!important;color:#1f5de8!important;border-color:#089c6a!important;background:#eef4ff!important;font-size:0.68rem!important';
   testBtn.onclick = async () => {
     testBtn.disabled = true;
     testBtn.textContent = '...';
@@ -1380,13 +1410,14 @@ function addPushToggle() {
       body.set('password', TOKEN);
       const r = await fetch(API, { method: 'POST', body });
       const j = await r.json();
-      toast(j.ok ? '🔔 Notificação de teste enviada!' : 'Erro: '+j.error, j.ok ? 'success' : 'error');
-    } catch(e) { toast('Erro ao testar: '+e.message, 'error'); }
+      toast(j.ok ? '🔔 Notificação de teste enviada!' : 'Erro: ' + (j.error || 'desconhecido'), j.ok ? 'success' : 'error');
+    } catch(e) { toast('Erro ao testar: ' + e.message, 'error'); }
     finally { testBtn.disabled = false; testBtn.innerHTML = 'Testar'; }
   };
   wrap.appendChild(btn);
   wrap.appendChild(testBtn);
   actions.insertBefore(wrap, actions.firstChild);
+  toast('✅ Notificações push ativadas!', 'success');
 }
 
 function urlBase64ToUint8Array(base64String) {
