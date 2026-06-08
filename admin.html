@@ -1,4 +1,4 @@
-?<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -7,13 +7,18 @@
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Entrar | ePiper</title>
+  <meta name="theme-color" content="#089c6a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="ePiper Admin" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/assets/icon-192.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -21,7 +26,21 @@
       background: #f0f4f9;
       color: #1a1a2e;
       min-height: 100vh;
+      min-height: -webkit-fill-available;
       -webkit-font-smoothing: antialiased;
+      overscroll-behavior: none;
+    }
+    /* PWA app-like padding */
+    .pwa-safe {
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      padding-left: env(safe-area-inset-left, 0px);
+      padding-right: env(safe-area-inset-right, 0px);
+    }
+    @media (display-mode: standalone) {
+      .topbar { padding-top: calc(0px + env(safe-area-inset-top, 0px)); }
+      .login-screen { padding-top: calc(1rem + env(safe-area-inset-top, 0px)); }
+      .toast-container { bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)); }
     }
     ::selection { background: rgba(8,156,106,0.15); color: #067a51; }
     a { color: #089c6a; text-decoration: none; }
@@ -1189,6 +1208,34 @@ function toast(msg, type) {
   c.appendChild(t);
   setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.3s'; setTimeout(() => t.remove(), 300); }, 3000);
 }
+
+// PWA: register service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw-admin.js').catch(() => {});
+}
+
+// PWA: install prompt
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Show install toast after a short delay
+  setTimeout(() => {
+    if (!deferredPrompt) return;
+    const container = document.getElementById('toastContainer');
+    const t = document.createElement('div');
+    t.className = 'toast success';
+    t.style.cursor = 'pointer';
+    t.innerHTML = '📲 Instalar app &nbsp;<strong>Instalar</strong>';
+    t.onclick = () => {
+      deferredPrompt.prompt();
+      deferredPrompt = null;
+      t.remove();
+    };
+    container.appendChild(t);
+    setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.3s'; setTimeout(() => t.remove(), 300); }, 15000);
+  }, 5000);
+});
 
 checkAuth();
 </script>
