@@ -1,0 +1,69 @@
+# Epiper Site — V17 Produção
+
+Versão refinada para publicação.
+
+## Páginas
+- `index.html` — Home
+- `pedido-eletronico.html` — Pedido Eletrônico
+- `televendas.html` — Televendas
+- `integracoes.html` — ERPs e Integrações
+- `privacidade.html` — política básica de privacidade
+- `termos.html` — termos básicos de uso
+
+## Principais melhorias
+- Nova identidade visual Epiper aplicada no header/footer.
+- Favicon completo com o ícone roxo da folha digital.
+- Home mais curta e objetiva; seções redundantes removidas.
+- Headline da Home mais clara: Pedido Eletrônico + Televendas conectados ao ERP.
+- Campo de e-mail removido; CTAs simplificados.
+- Botão falso **Entrar** removido.
+- Hub de recursos com ícones semânticos padronizados.
+- Nova área técnica de integração e implantação.
+- Imagens secundárias próprias para Pedido Eletrônico e Televendas.
+- SEO básico, Open Graph, Twitter Card, canonical, sitemap e robots.
+- Manifest e ícones para navegador/celular.
+- Política de Privacidade e Termos adicionados como modelos básicos.
+
+## WhatsApp
+Abra `js/main.js` e configure:
+
+```js
+const EPIPER_WHATSAPP_NUMBER = '55DDDNUMERO';
+```
+
+Enquanto o número estiver vazio, os botões usam `contato@epiper.com.br` como fallback.
+
+## Antes de publicar
+- Confirmar domínio final (`https://epiper.com.br/`).
+- Configurar o número oficial de WhatsApp.
+- Revisar Política de Privacidade e Termos com assessoria jurídica.
+- Confirmar que nomes/logos de ERPs e parceiros podem ser exibidos publicamente.
+
+
+## V18 — ícones padronizados
+Todos os ícones visuais do site foram padronizados no mesmo estilo: fundo roxo circular e símbolo branco central, inspirados na referência enviada.
+
+
+## V19 — posicionamento de integrações
+O site agora apresenta a Epiper como plataforma de integração flexível para diferentes ERPs. WinThor TOTVS permanece em destaque por ser um cenário de integração trabalhado pela Epiper, sem transmitir dependência exclusiva desse ERP. A compatibilidade com outros sistemas é apresentada como sujeita à análise técnica de APIs, banco, arquivos e conectores disponíveis.
+
+
+## V20 — Hub de recursos
+Os ícones do bloco "Hub de recursos Epiper" foram reduzidos para ficarem mais proporcionais: círculo menor, símbolo menor e espaçamento mais equilibrado.
+
+
+## V21 — Navbar e footer
+- Link “Contato” removido do navbar principal.
+- Indicador textual `⌄` substituído por um ícone visual de submenu (+ em bloco roxo claro), que gira ao abrir.
+- Footer atualizado para exibir folha roxa e palavra “epiper” em branco.
+
+
+## V22 — Integrações e Dúvidas
+- Navbar: `ERPs` passou a `Integrações`.
+- Navbar: `Como funciona` passou a `Dúvidas`.
+- Criada a página `duvidas.html` com FAQ sobre negócio, produtos, ERPs, implantação e operação.
+- Sitemap atualizado com a nova página.
+
+
+## V23 — Integrações mais visuais
+A página `integracoes.html` ganhou uma seção visual de cenários de ERP, destacando WinThor TOTVS e mostrando de forma intuitiva que a Epiper também pode se adaptar a outros ERPs, APIs, sistemas próprios e legados.
