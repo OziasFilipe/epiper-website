@@ -95,3 +95,7 @@ Aplicadas três melhorias visuais inspiradas nas referências aprovadas:
 3. Bloco de integração pensada para a operação real com logos nativas de ERP, destacando TOTVS WinThor e exemplos de outros ERPs.
 
 Também foram trocados os ícones genéricos de ERP por logos nativas sempre que um ERP específico é citado.
+
+
+## V27 — correção de bugs visuais
+Corrigidos os cards Pedido Eletrônico/Televendas e o bloco WinThor/Outros ERPs. As áreas agora usam HTML/CSS isolado, sem sobreposição de ícone, e as logos nativas de ERP possuem áreas próprias para não quebrar o texto.
