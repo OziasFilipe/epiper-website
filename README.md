@@ -103,3 +103,14 @@ Corrigidos os cards Pedido Eletrônico/Televendas e o bloco WinThor/Outros ERPs.
 
 ## V28 — Logo branca no footer
 O footer de todas as páginas agora utiliza a nova logo Epiper com símbolo roxo e wordmark branco, em `assets/branding/logo-epiper-footer-branca.png`, com fundo transparente. A logo do header não foi alterada.
+
+
+## V29 — Plataforma Epiper com páginas próprias
+O menu **Plataforma** agora aponta para páginas dedicadas:
+- `plataforma.html` — visão geral
+- `hub-epiper.html`
+- `operacao-conectada.html`
+- `implantacao-guiada.html`
+- `evolucao-modulos.html`
+
+O mega menu foi atualizado em todas as páginas e cada página mantém o mesmo header, footer, identidade visual e CTA da Epiper.
