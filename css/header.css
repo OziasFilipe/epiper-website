@@ -131,3 +131,88 @@
   .site-header.is-scrolled .brand-logo{width:100px;max-height:33px}
   .site-header.is-open .nav-shell{top:calc(100% + 4px)}
 }
+
+/* V31 - correção do menu mobile durante scroll/estado ativo */
+@media (max-width:900px){
+  /* O cabeçalho mantém uma base sólida quando está rolado ou com o menu aberto. */
+  .site-header.is-scrolled,
+  .site-header.is-open{
+    background:#fff !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+    box-shadow:0 1px 0 rgba(88,63,170,.06);
+  }
+
+  .site-header.is-scrolled .header__row,
+  .site-header.is-open .header__row{
+    background:#fff !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+    box-shadow:none !important;
+  }
+
+  /* O painel mobile passa a possuir um único fundo branco persistente. */
+  .site-header.is-open .nav-shell{
+    left:10px;
+    right:10px;
+    padding:8px;
+    gap:7px;
+    border-radius:20px;
+    background:#fff !important;
+    box-shadow:0 16px 38px rgba(58,38,120,.14),0 0 0 1px rgba(88,63,170,.08);
+    overflow:hidden;
+  }
+
+  .site-header.is-open .nav-pill{
+    margin:0;
+    padding:4px;
+    gap:2px;
+    background:#fff !important;
+    box-shadow:none !important;
+  }
+
+  .site-header.is-open .nav-pill>a,
+  .site-header.is-open .nav-top-trigger{
+    min-height:43px;
+    padding:10px 12px;
+    border-radius:12px;
+    background:#fff;
+    color:#3e3372;
+  }
+
+  /* Item selecionado continua legível sobre o fundo branco. */
+  .site-header.is-open .nav-pill>a.active,
+  .site-header.is-open .nav-top-trigger.is-active,
+  .site-header.is-open .nav-pill>a:active,
+  .site-header.is-open .nav-top-trigger:active{
+    background:#f1ecff !important;
+    color:#5f3fd1 !important;
+  }
+
+  .site-header.is-open .nav-actions{
+    margin:0;
+    padding:4px;
+    background:#fff !important;
+    box-shadow:none !important;
+  }
+
+  .site-header.is-open .nav-actions .btn{
+    width:100%;
+    justify-content:center;
+  }
+
+  /* Hamburger permanece sobre fundo sólido nos dois estados. */
+  .site-header.is-scrolled .hamburger,
+  .site-header.is-open .hamburger{
+    background:#fff !important;
+    box-shadow:0 0 0 1px rgba(88,63,170,.10) !important;
+  }
+}
+
+@media (max-width:620px){
+  .site-header.is-open .nav-shell{
+    left:8px;
+    right:8px;
+    border-radius:18px;
+  }
+}

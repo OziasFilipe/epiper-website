@@ -111,3 +111,15 @@ const syncStickyHeader = () => {
 };
 syncStickyHeader();
 window.addEventListener('scroll', syncStickyHeader, { passive: true });
+
+// V31 — estabilidade visual do menu mobile durante a rolagem
+if (header && hamburger) {
+  const syncMobileMenuSurface = () => {
+    const mobile = window.innerWidth <= 900;
+    header.classList.toggle('mobile-menu-surface', mobile && header.classList.contains('is-open'));
+  };
+  hamburger.addEventListener('click', () => requestAnimationFrame(syncMobileMenuSurface));
+  window.addEventListener('scroll', syncMobileMenuSurface, { passive: true });
+  window.addEventListener('resize', syncMobileMenuSurface);
+  syncMobileMenuSurface();
+}

@@ -1657,3 +1657,22 @@
   .footer-logo-white,.footer__brand .footer-logo-white{width:142px;}
   .footer__product-brand .footer-logo-white{width:132px;}
 }
+
+
+/* V30 - cards de ERP limpos com logo centralizada */
+.tech-proof--erp-showcase{padding:30px 0 8px;background:linear-gradient(180deg,#fbf9ff 0%,#f7f3ff 100%)}
+.tech-proof__intro--erp-showcase{display:grid;grid-template-columns:1.12fr .88fr;gap:34px;align-items:start;margin-bottom:20px}
+.tech-proof__intro--erp-showcase .tech-proof__copy h2{font-size:20px;line-height:1.28;letter-spacing:-.03em;color:#2f2358;max-width:660px;margin:10px 0 0}
+.tech-proof__intro--erp-showcase p{margin:0;max-width:500px;font-size:12.6px;line-height:1.8;color:#766f88}
+.erp-showcase-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.erp-showcase-card{display:flex;flex-direction:column;justify-content:flex-start;min-height:188px;padding:18px 16px 18px;border-radius:18px;background:#fff;box-shadow:0 0 0 1px rgba(96,72,177,.08),0 12px 26px rgba(73,54,138,.05)}
+.erp-showcase-card__logo{height:68px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.erp-showcase-card__logo img{display:block;max-width:122px;max-height:34px;width:auto;height:auto;object-fit:contain}
+.erp-showcase-card__logo--multi{gap:10px;justify-content:center}
+.erp-showcase-card__logo--multi img{max-width:46px;max-height:22px;opacity:.95}
+.erp-showcase-card__body{display:flex;flex-direction:column;gap:6px;text-align:left}
+.erp-showcase-card__body strong{font-size:12px;line-height:1.3;color:#2e245b}
+.erp-showcase-card__body p{margin:0;font-size:10.9px;line-height:1.62;color:#79728e}
+.erp-showcase-card--others .erp-showcase-card__logo{height:68px}
+@media(max-width:980px){.tech-proof__intro--erp-showcase{grid-template-columns:1fr}.erp-showcase-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.tech-proof--erp-showcase{padding-top:22px}.erp-showcase-grid{grid-template-columns:1fr}.erp-showcase-card{min-height:auto;padding:16px}.erp-showcase-card__logo{height:60px;margin-bottom:14px}.erp-showcase-card__logo img{max-width:110px;max-height:30px}.erp-showcase-card__logo--multi img{max-width:40px;max-height:20px}}

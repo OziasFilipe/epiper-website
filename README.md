@@ -114,3 +114,10 @@ O menu **Plataforma** agora aponta para páginas dedicadas:
 - `evolucao-modulos.html`
 
 O mega menu foi atualizado em todas as páginas e cada página mantém o mesmo header, footer, identidade visual e CTA da Epiper.
+
+
+## V30 — cards de ERP refinados
+Na Home, a seção de integração pensada para a operação real foi atualizada para 4 cards: WinThor TOTVS, Linx, Bling e Outros ERPs. As logos agora aparecem sem card interno e centralizadas dentro do card principal, seguindo a referência aprovada.
+
+## V31 — correção do menu mobile
+O header mobile agora mantém fundo branco sólido quando o usuário rola a página ou deixa o menu aberto. O painel de navegação, itens ativos, botão e hamburger permanecem legíveis sem transparência sobre o conteúdo.
