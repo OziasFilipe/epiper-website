@@ -1,0 +1,38 @@
+
+:root{--faq-purple:#7650ef;--faq-dark:#26184d;--faq-soft:#f7f4ff;--faq-muted:#716b88}
+.faq-page{background:#fff;color:#2b2152}
+.faq-hero{padding:72px 0 64px;background:radial-gradient(circle at 82% 20%,rgba(132,91,255,.15),transparent 28%),linear-gradient(180deg,#fbfaff,#f7f4ff)}
+.faq-hero__grid{display:grid;grid-template-columns:1.02fr .98fr;gap:64px;align-items:center}
+.faq-kicker{display:inline-flex;align-items:center;padding:7px 11px;border-radius:999px;background:#efeaff;color:#6947d7;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.faq-kicker--light{background:rgba(255,255,255,.11);color:#ded2ff}
+.faq-hero h1{margin:17px 0 14px;max-width:690px;font-size:clamp(34px,4vw,52px);line-height:1.08;letter-spacing:-.04em;color:#271b50}
+.faq-hero h1 strong{color:#7350e8}
+.faq-hero p{max-width:650px;margin:0;color:var(--faq-muted);font-size:14px;line-height:1.78}
+.faq-hero__actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.faq-hero__visual{position:relative;min-height:370px;display:grid;place-items:center}
+.faq-center{position:relative;z-index:3;width:112px;height:112px;border-radius:32px;display:grid;place-items:center;background:linear-gradient(135deg,#6842e4,#936cff);box-shadow:0 25px 50px rgba(83,48,169,.2)}
+.faq-center span{font-size:48px;color:#fff;font-weight:700}
+.faq-orbit{position:absolute;border:1px dashed rgba(110,75,211,.25);border-radius:50%}.faq-orbit--one{width:260px;height:260px}.faq-orbit--two{width:340px;height:340px}
+.faq-bubble{position:absolute;z-index:4;display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:14px;background:#fff;box-shadow:0 14px 34px rgba(57,35,112,.12);font-size:11px;font-weight:750;color:#43356d}
+.faq-bubble img{width:28px;height:28px}.faq-bubble--1{top:34px;left:30px}.faq-bubble--2{right:16px;top:104px}.faq-bubble--3{left:58px;bottom:32px}
+.faq-nav-section{padding:18px 0;border-top:1px solid #eeeaf7;border-bottom:1px solid #eeeaf7;background:#fff;position:sticky;top:0;z-index:8}
+.faq-category-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.faq-category-row a{padding:8px 12px;border-radius:12px;background:#f7f4ff;color:#5c4b87;font-size:11px;font-weight:750}
+.faq-section{padding:72px 0;background:#fff}.faq-section--soft{background:#f8f6fc}
+.faq-layout{display:grid;grid-template-columns:.72fr 1.28fr;gap:64px;align-items:start}.faq-section__intro{position:sticky;top:92px}.faq-section__intro h2{margin:14px 0 10px;font-size:clamp(27px,3vw,38px);line-height:1.12;letter-spacing:-.035em;color:#281d50}.faq-section__intro p{margin:0;max-width:420px;font-size:13px;line-height:1.75;color:#77708d}
+.faq-list{display:grid;gap:10px}.faq-list details{border:1px solid #ece7f7;border-radius:17px;background:#fff;overflow:hidden;box-shadow:0 6px 20px rgba(67,42,124,.035)}.faq-section--soft .faq-list details{border-color:#e9e3f5}
+.faq-list summary{list-style:none;cursor:pointer;padding:17px 50px 17px 18px;position:relative;font-size:13px;font-weight:750;color:#30255b}.faq-list summary::-webkit-details-marker{display:none}.faq-list summary:after{content:'+';position:absolute;right:18px;top:50%;transform:translateY(-50%);width:25px;height:25px;border-radius:9px;display:grid;place-items:center;background:#efeaff;color:#704bdc;font-size:17px;font-weight:600}.faq-list details[open] summary:after{content:'−'}.faq-list details[open] summary{padding-bottom:10px}.faq-answer{padding:0 18px 17px}.faq-answer p{margin:0;color:#756f89;font-size:12px;line-height:1.75}.faq-answer strong{color:#45356e}
+.faq-cta{padding:0 0 76px;background:#fff}.faq-cta__box{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;padding:42px;border-radius:28px;background:linear-gradient(135deg,#291c55,#5939bb);color:#fff}.faq-cta h2{margin:12px 0 8px;font-size:29px;letter-spacing:-.03em}.faq-cta p{max-width:670px;margin:0;color:#d8cfeb;font-size:12.5px;line-height:1.7}
+@media(max-width:900px){.faq-hero__grid,.faq-layout{grid-template-columns:1fr}.faq-hero__visual{min-height:320px}.faq-section__intro{position:static}.faq-cta__box{grid-template-columns:1fr}.faq-nav-section{position:static}}
+@media(max-width:620px){.faq-hero{padding:48px 0 52px}.faq-hero h1{font-size:34px}.faq-hero__visual{min-height:290px}.faq-orbit--two{width:285px;height:285px}.faq-orbit--one{width:220px;height:220px}.faq-center{width:88px;height:88px;border-radius:26px}.faq-center span{font-size:38px}.faq-bubble{font-size:10px;padding:7px 9px}.faq-bubble img{width:23px;height:23px}.faq-bubble--1{left:0}.faq-bubble--2{right:0}.faq-bubble--3{left:18px}.faq-section{padding:56px 0}.faq-layout{gap:26px}.faq-list summary{font-size:12px}.faq-cta__box{padding:29px}.faq-cta h2{font-size:24px}}
+
+
+/* V28 - nova logo branca da Epiper no footer */
+.footer-logo-link{display:inline-flex;align-items:center;text-decoration:none;line-height:0;margin:0 0 10px;}
+.footer-logo-white{display:block;width:154px;max-width:100%;height:auto;object-fit:contain;object-position:left center;}
+.footer__brand .footer-logo-white{width:158px;}
+.footer__product-brand .footer-logo-link{margin-bottom:5px;}
+.footer__product-brand .footer-logo-white{width:142px;}
+@media(max-width:620px){
+  .footer-logo-white,.footer__brand .footer-logo-white{width:142px;}
+  .footer__product-brand .footer-logo-white{width:132px;}
+}
