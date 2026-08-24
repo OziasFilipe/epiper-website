@@ -86,3 +86,12 @@ A página `integracoes.html` ganhou uma seção visual de cenários de ERP, dest
 
 ## V25 — Redesign da área de dados conectados
 A seção “O que pode ser conectado” da página de Integrações foi redesenhada com fundo suave, ramificação visual do ERP para os dados, cards compactos e ícones proporcionais, seguindo o conceito visual aprovado.
+
+
+## V26 — seções visuais suavizadas
+Aplicadas três melhorias visuais inspiradas nas referências aprovadas:
+1. Seção de plataforma (Home) mais refinada e suave para Pedido Eletrônico e Televendas.
+2. Bloco "Uma camada comercial moderna..." redesenhado com aparência mais natural e menos "AI".
+3. Bloco de integração pensada para a operação real com logos nativas de ERP, destacando TOTVS WinThor e exemplos de outros ERPs.
+
+Também foram trocados os ícones genéricos de ERP por logos nativas sempre que um ERP específico é citado.
