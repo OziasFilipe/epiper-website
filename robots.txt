@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://epiper.com.br/sitemap.xml
