@@ -82,3 +82,7 @@ A página `integracoes.html` ganhou uma seção visual de cenários de ERP, dest
 - Omie: Sala de Imprensa oficial.
 - Bling: domínio oficial `bling.com.br`.
 - SAP: SAP Digital Design System / domínio oficial `sap.com`.
+
+
+## V25 — Redesign da área de dados conectados
+A seção “O que pode ser conectado” da página de Integrações foi redesenhada com fundo suave, ramificação visual do ERP para os dados, cards compactos e ícones proporcionais, seguindo o conceito visual aprovado.

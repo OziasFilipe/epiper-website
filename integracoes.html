@@ -89,14 +89,31 @@
 <article class="erp-brand-card"><div class="erp-brand-logo"><img src="assets/images/erps/bling.webp" alt="Bling"></div><h3>Bling</h3><p>Plataforma de gestão para varejo e comércio digital, sujeita à validação de integração.</p></article>
 <article class="erp-brand-card"><div class="erp-brand-logo"><img src="assets/images/erps/sap.svg" alt="SAP"></div><h3>SAP</h3><p>Ambientes SAP também podem ser avaliados conforme arquitetura, escopo e interfaces disponíveis.</p></article>
 </div><div class="erp-brand-note"><strong>Não encontrou seu ERP?</strong><span>A Epiper pode avaliar outros sistemas, inclusive ERPs próprios e legados. As marcas exibidas pertencem aos seus respectivos titulares e sua presença aqui não implica parceria, certificação ou integração pronta, exceto quando expressamente indicado.</span></div></div></section>
-<section class="integration-section" id="como-integra"><div class="container"><div class="integration-head"><span class="kicker">O que pode ser conectado</span><h2>Os dados que sustentam a venda continuam vindo da sua operação.</h2><p>O escopo final depende do ERP e do projeto, mas a camada de integração pode trabalhar com os principais dados comerciais necessários aos produtos Epiper.</p></div><div class="sync-grid">
-<article class="sync-card"><img alt="" src="assets/icons/menu/clientes.svg"/><h3>Clientes</h3><p>Cadastro, situação e informações necessárias ao atendimento e ao pedido.</p></article>
-<article class="sync-card"><img alt="" src="assets/icons/menu/produto.svg"/><h3>Produtos</h3><p>Itens, descrições e informações comerciais usadas pelos canais digitais.</p></article>
-<article class="sync-card"><img alt="" src="assets/icons/menu/estoque.svg"/><h3>Estoque</h3><p>Disponibilidade comercial conforme o cenário e as regras da empresa.</p></article>
-<article class="sync-card"><img alt="" src="assets/icons/icone-preco-estoque.svg"/><h3>Preços e condições</h3><p>Tabelas, condições e regras que precisam acompanhar a venda.</p></article>
-<article class="sync-card"><img alt="" src="assets/icons/menu/pedido.svg"/><h3>Pedidos</h3><p>Envio do pedido para processamento no ambiente da empresa.</p></article>
-<article class="sync-card"><img alt="" src="assets/icons/menu/status.svg"/><h3>Status e retorno</h3><p>Acompanhamento do processamento e retorno das informações do pedido.</p></article>
-</div></div></section>
+<section class="integration-section connected-data" id="como-integra">
+  <div class="container connected-data__inner">
+    <div class="integration-head connected-data__head">
+      <span class="kicker">O que pode ser conectado</span>
+      <h2>Os dados que sustentam a venda continuam vindo da sua operação.</h2>
+      <p>O escopo final depende do ERP e do projeto, mas a camada de integração pode trabalhar com os principais dados comerciais necessários aos produtos Epiper.</p>
+    </div>
+    <div class="connected-data__map" aria-hidden="true">
+      <div class="connected-data__source"><img src="assets/icons/menu/erp.svg" alt=""></div>
+      <div class="connected-data__line connected-data__line--horizontal"></div>
+      <div class="connected-data__line connected-data__line--vertical"></div>
+      <span class="connected-data__dot connected-data__dot--left"></span>
+      <span class="connected-data__dot connected-data__dot--center"></span>
+      <span class="connected-data__dot connected-data__dot--right"></span>
+    </div>
+    <div class="sync-grid sync-grid--connected">
+      <article class="sync-card sync-card--connected"><img alt="" src="assets/icons/menu/clientes.svg"/><div><h3>Clientes</h3><p>Cadastro, situação e informações necessárias ao atendimento e ao pedido.</p></div></article>
+      <article class="sync-card sync-card--connected"><img alt="" src="assets/icons/menu/produto.svg"/><div><h3>Produtos</h3><p>Itens, descrições e informações comerciais usadas pelos canais digitais.</p></div></article>
+      <article class="sync-card sync-card--connected"><img alt="" src="assets/icons/menu/estoque.svg"/><div><h3>Estoque</h3><p>Disponibilidade comercial conforme o cenário e as regras da empresa.</p></div></article>
+      <article class="sync-card sync-card--connected"><img alt="" src="assets/icons/icone-preco-estoque.svg"/><div><h3>Preços e condições</h3><p>Tabelas, condições e regras que precisam acompanhar a venda.</p></div></article>
+      <article class="sync-card sync-card--connected"><img alt="" src="assets/icons/menu/pedido.svg"/><div><h3>Pedidos</h3><p>Envio do pedido para processamento no ambiente da empresa.</p></div></article>
+      <article class="sync-card sync-card--connected"><img alt="" src="assets/icons/menu/status.svg"/><div><h3>Status e retorno</h3><p>Acompanhamento do processamento e retorno das informações do pedido.</p></div></article>
+    </div>
+  </div>
+</section>
 <section class="integration-section integration-section--soft"><div class="container"><div class="integration-head"><span class="kicker">Formas de integração</span><h2>A conexão é desenhada de acordo com o ambiente disponível.</h2><p>Nem todo ERP possui a mesma arquitetura. Por isso, a Epiper avalia o cenário técnico e define a estratégia adequada para cada implantação.</p></div><div class="integration-methods"><article class="method"><img alt="" src="assets/icons/menu/api.svg"/><h3>API</h3><p>Integrações via serviços e endpoints quando o ERP ou a infraestrutura oferece APIs para troca de dados.</p></article><article class="method"><img alt="" src="assets/icons/menu/erp.svg"/><h3>Banco de dados</h3><p>Conectores controlados para leitura e sincronização conforme permissões e arquitetura do ambiente.</p></article><article class="method"><img alt="" src="assets/icons/menu/fluxo.svg"/><h3>Conectores e arquivos</h3><p>Outros formatos podem ser avaliados quando fazem parte do processo atual da empresa.</p></article></div></div></section>
 <section class="integration-section"><div class="container"><div class="integration-head"><span class="kicker">Fluxo</span><h2>ERP e Epiper trabalhando como partes do mesmo processo.</h2></div><div class="flow-line"><article class="flow-step"><b>01</b><h3>ERP disponibiliza dados</h3><p>Clientes, produtos, preço, estoque e regras comerciais.</p></article><article class="flow-step"><b>02</b><h3>Epiper organiza o canal</h3><p>Os dados são apresentados ao Pedido Eletrônico ou ao Televendas.</p></article><article class="flow-step"><b>03</b><h3>Pedido é criado</h3><p>O usuário trabalha em um fluxo moderno e padronizado.</p></article><article class="flow-step"><b>04</b><h3>Informação retorna</h3><p>Pedido, processamento e status voltam a conversar com a operação.</p></article></div></div></section>
 <section class="integration-section integration-section--soft"><div class="container"><div class="compat-box"><div><span class="kicker">Compatibilidade</span><h2>WinThor TOTVS é um destaque, mas a Epiper foi pensada para conversar com diferentes ERPs.</h2><p>A integração é adaptada ao cenário técnico de cada empresa. Na maioria dos ambientes em que o ERP disponibiliza meios seguros de troca de dados, é possível estudar uma conexão por API, banco, arquivos ou conectores específicos.</p><div class="compat-list"><div>✓ WinThor TOTVS como integração de destaque</div><div>✓ Arquitetura preparada para diferentes ERPs e arquiteturas</div><div>✓ Compatibilidade validada por análise técnica antes da implantação</div><div>✓ Conectores podem evoluir conforme novos módulos e necessidades forem adicionados</div></div></div><div class="compat-art"><img alt="Integração de sistemas" src="assets/icons/icone-integracao.svg"/></div></div></div></section>
