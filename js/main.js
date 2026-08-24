@@ -102,3 +102,12 @@ document.querySelectorAll('[data-whatsapp]').forEach(link => {
 });
 document.addEventListener('keydown', event => { if(event.key === 'Escape' && typeof closeMegaMenus === 'function') closeMegaMenus(); });
 document.querySelectorAll('.mega-menu-wrap a,.nav-pill>a').forEach(link => link.addEventListener('click', () => { if(typeof closeMegaMenus === 'function') closeMegaMenus(); }));
+
+
+// V24 — header acompanha a rolagem e incorpora a logo na barra
+const syncStickyHeader = () => {
+  if (!header) return;
+  header.classList.toggle('is-scrolled', window.scrollY > 18);
+};
+syncStickyHeader();
+window.addEventListener('scroll', syncStickyHeader, { passive: true });
