@@ -237,3 +237,95 @@
 .whatsapp-float{position:fixed;right:20px;bottom:20px;width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,#6f46ff,#9b6eff);box-shadow:0 14px 34px rgba(72,45,148,.28);z-index:120;transition:.18s ease}.whatsapp-float:hover{transform:translateY(-2px) scale(1.02)}.whatsapp-float svg{width:24px;height:24px;fill:#fff}
 @media(max-width:1000px){.footer-v32__grid{grid-template-columns:1.4fr 1fr 1fr}.footer-v32__brand{grid-row:span 2}.footer-v32__bottom{align-items:flex-start;flex-direction:column}}
 @media(max-width:620px){.footer-v32{padding:42px 0 16px}.footer-v32__grid{grid-template-columns:1fr 1fr;gap:28px 20px}.footer-v32__brand{grid-column:1/-1;max-width:none}.footer-v32__brand .footer-logo-white{width:145px}.footer-v32__bottom{margin-top:28px}.whatsapp-float{right:14px;bottom:14px;width:46px;height:46px;border-radius:15px}}
+
+
+/* V33 - correção definitiva do menu responsivo */
+/* Painéis do accordion existem no DOM, mas NUNCA participam do layout desktop. */
+.mobile-accordion-panel{
+  display:none !important;
+}
+
+@media (min-width:901px){
+  .site-header .mobile-accordion-panel{
+    display:none !important;
+    width:0 !important;
+    height:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+    overflow:hidden !important;
+    border:0 !important;
+  }
+  .site-header .nav-shell{
+    display:flex !important;
+  }
+  .site-header .nav-pill{
+    flex-direction:row !important;
+    align-items:center !important;
+  }
+}
+
+@media (max-width:900px){
+  .site-header{
+    isolation:isolate;
+  }
+  .site-header.is-open{
+    z-index:300 !important;
+  }
+  .site-header.is-open .nav-shell{
+    position:absolute !important;
+    top:calc(100% + 4px) !important;
+    left:10px !important;
+    right:10px !important;
+    width:auto !important;
+    max-height:calc(100dvh - 78px) !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch;
+    background:#fff !important;
+    opacity:1 !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+  }
+  .site-header.is-open .nav-pill{
+    width:100% !important;
+    background:#fff !important;
+  }
+  .site-header.is-open .nav-pill > a,
+  .site-header.is-open .nav-pill > .nav-top-trigger{
+    flex:0 0 auto;
+    width:100% !important;
+    background:#fff;
+  }
+  .site-header.is-open .mobile-accordion-panel{
+    display:none !important;
+    width:100% !important;
+    height:auto !important;
+  }
+  .site-header.is-open .mobile-accordion-panel.is-open{
+    display:grid !important;
+    gap:2px;
+  }
+  .site-header.is-open .mobile-accordion-panel a{
+    width:100%;
+    box-sizing:border-box;
+  }
+  .site-header.is-scrolled,
+  .site-header.is-open,
+  .site-header.is-scrolled .header__row,
+  .site-header.is-open .header__row{
+    background:#fff !important;
+  }
+  .mega-menu-wrap,
+  .mega-menu-backdrop{
+    display:none !important;
+  }
+}
+
+@media (max-width:620px){
+  .site-header.is-open .nav-shell{
+    left:8px !important;
+    right:8px !important;
+  }
+}
+
+@media(max-width:900px){html.mobile-nav-open{overflow:hidden}}

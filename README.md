@@ -136,3 +136,11 @@ O header mobile agora mantém fundo branco sólido quando o usuário rola a pág
 
 ### Pendente para publicação
 Google Analytics e Search Console exigem IDs/códigos da sua conta e verificação externa do domínio; o projeto está pronto para recebê-los, mas nenhum identificador fictício foi inserido.
+
+
+## V33 — menu corrigido
+- Corrigido conflito dos accordions mobile com o menu desktop.
+- Painéis mobile ficam totalmente fora do layout acima de 900px.
+- Fundo branco persiste no header e no painel enquanto o menu mobile está aberto ou durante scroll.
+- Estados do menu são resetados ao alternar entre mobile e desktop.
+- Rolagem da página é bloqueada enquanto o menu mobile está aberto, evitando deslocamentos visuais.

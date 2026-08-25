@@ -36,6 +36,7 @@ hamburger?.addEventListener('click', () => {
   const open = header.classList.toggle('is-open');
   hamburger.setAttribute('aria-expanded', String(open));
   header.classList.toggle('mobile-menu-surface', open && isMobile());
+  document.documentElement.classList.toggle('mobile-nav-open', open && isMobile());
   if(!open) closeMobileAccordions();
 });
 
@@ -79,7 +80,16 @@ megaBackdrop?.addEventListener('click',closeMegaMenus);
 document.addEventListener('click', e => {
   if(!isMobile() && !e.target.closest('.nav-pill') && !e.target.closest('.mega-menu-wrap')) closeMegaMenus();
 });
-window.addEventListener('resize', () => { if(isMobile()) closeMegaMenus(); else closeMobileAccordions(); });
+window.addEventListener('resize', () => {
+  if(isMobile()) {
+    closeMegaMenus();
+  } else {
+    closeMobileAccordions();
+    header?.classList.remove('is-open','mobile-menu-surface');
+    hamburger?.setAttribute('aria-expanded','false');
+    document.documentElement.classList.remove('mobile-nav-open');
+  }
+});
 
 document.querySelectorAll('[data-whatsapp]').forEach(link => {
   link.href=`https://wa.me/${EPIPER_WHATSAPP_NUMBER}?text=${encodeURIComponent(EPIPER_WHATSAPP_TEXT)}`;
@@ -93,8 +103,8 @@ if(!document.querySelector('.whatsapp-float')) {
   document.body.appendChild(a);
 }
 
-document.addEventListener('keydown', e => { if(e.key==='Escape') { closeMegaMenus(); closeMobileAccordions(); header?.classList.remove('is-open'); hamburger?.setAttribute('aria-expanded','false'); } });
-document.querySelectorAll('.mega-menu-wrap a,.nav-pill>a,.mobile-accordion-panel a').forEach(link => link.addEventListener('click', () => { closeMegaMenus(); closeMobileAccordions(); if(isMobile()) { header?.classList.remove('is-open'); hamburger?.setAttribute('aria-expanded','false'); } }));
+document.addEventListener('keydown', e => { if(e.key==='Escape') { closeMegaMenus(); closeMobileAccordions(); header?.classList.remove('is-open','mobile-menu-surface'); hamburger?.setAttribute('aria-expanded','false'); document.documentElement.classList.remove('mobile-nav-open'); } });
+document.querySelectorAll('.mega-menu-wrap a,.nav-pill>a,.mobile-accordion-panel a').forEach(link => link.addEventListener('click', () => { closeMegaMenus(); closeMobileAccordions(); if(isMobile()) { header?.classList.remove('is-open','mobile-menu-surface'); hamburger?.setAttribute('aria-expanded','false'); document.documentElement.classList.remove('mobile-nav-open'); } }));
 
 const syncStickyHeader=() => { if(header) header.classList.toggle('is-scrolled',window.scrollY>18); };
 syncStickyHeader(); window.addEventListener('scroll',syncStickyHeader,{passive:true});
