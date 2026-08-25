@@ -121,3 +121,18 @@ Na Home, a seção de integração pensada para a operação real foi atualizada
 
 ## V31 — correção do menu mobile
 O header mobile agora mantém fundo branco sólido quando o usuário rola a página ou deixa o menu aberto. O painel de navegação, itens ativos, botão e hamburger permanecem legíveis sem transparência sobre o conteúdo.
+
+
+## V32 — acabamento de produção
+- WhatsApp comercial configurado: +55 27 99621-7169 (`5527996217169`).
+- Menu mobile transformado em accordion com fundo branco persistente.
+- Footer reorganizado em Plataforma, Produtos, Empresa e Legal.
+- Home com mensagens mais orientadas a benefício e seção "A plataforma em prática" usando telas reais do projeto.
+- Botão flutuante de WhatsApp adicionado de forma discreta.
+- Organization Schema atualizado com telefone e ContactPoint.
+- SoftwareApplication Schema enriquecido com featureList.
+- Página Dúvidas recebeu FAQPage Schema.
+- Não foram adicionados logos/depoimentos de clientes sem autorização.
+
+### Pendente para publicação
+Google Analytics e Search Console exigem IDs/códigos da sua conta e verificação externa do domínio; o projeto está pronto para recebê-los, mas nenhum identificador fictício foi inserido.
