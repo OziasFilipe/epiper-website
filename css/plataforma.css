@@ -1,40 +1,58 @@
 @import url("plataforma-base.css");
 
-/* Navegação secundária removida das páginas da Plataforma */
+/* Páginas internas da Plataforma — padrão visual profissional */
 .platform-subnav{display:none!important}
+.platform-hero{padding:64px 0 72px}
+.platform-hero__grid{grid-template-columns:minmax(0,1fr) minmax(420px,.98fr);gap:48px}
+.platform-hero__copy{max-width:690px}
+.platform-hero__copy>p{max-width:620px}
+.platform-hero__visual{min-height:390px;display:grid;place-items:center}
+.platform-orbit{width:min(100%,610px)!important;height:auto!important;aspect-ratio:4/3;border-radius:0!important;background-color:transparent!important;background-position:center!important;background-repeat:no-repeat!important;background-size:contain!important;box-shadow:none!important;border:0!important;filter:none;transform:none!important}
+.platform-orbit:before,.platform-orbit:after,.platform-orbit__core,.platform-orbit__node{display:none!important}
 
-/* Visuais sem card/fundo em todas as páginas da Plataforma */
-.platform-hero__visual{min-height:auto}
-.platform-orbit{
-  width:min(100%,520px)!important;
-  height:auto!important;
-  aspect-ratio:1/1;
-  border-radius:0!important;
-  background-color:transparent!important;
-  background-size:contain!important;
-  background-repeat:no-repeat!important;
-  background-position:center!important;
-  box-shadow:none!important;
-  border:0!important;
-}
-.platform-visual-card{
-  background-color:transparent!important;
-  box-shadow:none!important;
-  border:0!important;
-}
-body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card{
-  padding:0!important;
-  border-radius:0!important;
-  background-color:transparent!important;
-  background-size:contain!important;
-  background-repeat:no-repeat!important;
-  background-position:center!important;
-  box-shadow:none!important;
-  border:0!important;
-  overflow:visible!important;
+/* Cada página representa o seu próprio assunto */
+html:has(link[rel="canonical"][href$="/plataforma.html"]) .platform-orbit{background-image:url("../assets/images/plataforma-overview.svg")!important}
+html:has(link[rel="canonical"][href$="/hub-epiper.html"]) .platform-orbit{width:min(100%,690px)!important;aspect-ratio:1909/1012;background-image:url("../assets/images/hub-epiper-dashboard.webp")!important}
+html:has(link[rel="canonical"][href$="/operacao-conectada.html"]) .platform-orbit{background-image:url("../assets/images/operacao-conectada-diagrama.svg")!important}
+html:has(link[rel="canonical"][href$="/implantacao-guiada.html"]) .platform-orbit{background-image:url("../assets/images/implantacao-guiada-diagrama.svg")!important}
+html:has(link[rel="canonical"][href$="/evolucao-modulos.html"]) .platform-orbit{background-image:url("../assets/images/evolucao-modulos-diagrama.svg")!important}
+
+/* Ritmo, tipografia e componentes */
+.platform-section{padding:68px 0}
+.platform-head{max-width:780px;margin-bottom:30px}
+.platform-head h2,.platform-split h2{max-width:760px}
+.platform-grid{gap:16px}
+.platform-card{min-height:220px;padding:21px;border-radius:20px;box-shadow:0 0 0 1px rgba(98,72,178,.07),0 14px 32px rgba(74,52,140,.04)}
+.platform-card__icon{width:48px;height:48px;border-radius:14px}
+.platform-split{gap:48px}
+.platform-checks{gap:8px}
+.platform-checks div{border-radius:12px;background:rgba(255,255,255,.72)}
+.platform-visual-card{background:transparent!important;box-shadow:none!important;border:0!important;padding:0!important}
+.platform-visual-card__flow{background:rgba(255,255,255,.58);box-shadow:inset 0 0 0 1px rgba(98,72,178,.06)}
+.platform-visual-card__lines span{background:#eae3f8}
+
+/* Hub: a tela real continua sendo a referência principal */
+body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card{padding:0!important;min-height:0;aspect-ratio:920/600;border-radius:0!important;background-color:transparent!important;background-size:contain!important;background-repeat:no-repeat!important;background-position:center!important;box-shadow:none!important;border:0!important;overflow:visible!important}
+body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card__top,body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card__flow,body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card__lines{display:none}
+
+@media(max-width:1000px){
+  .platform-hero__grid{grid-template-columns:1fr;gap:28px}
+  .platform-hero__copy{max-width:760px}
+  .platform-hero__visual{min-height:0}
+  .platform-orbit{width:min(100%,680px)!important}
+  html:has(link[rel="canonical"][href$="/hub-epiper.html"]) .platform-orbit{width:min(100%,760px)!important}
+  .platform-section{padding:62px 0}
+  .platform-split{gap:34px}
 }
 
 @media(max-width:620px){
-  .platform-orbit{width:min(92vw,390px)!important}
+  .platform-hero{padding:46px 0 52px}
+  .platform-hero h1{font-size:34px}
+  .platform-orbit{width:min(96vw,500px)!important}
+  html:has(link[rel="canonical"][href$="/hub-epiper.html"]) .platform-orbit{width:min(96vw,540px)!important}
+  .platform-section{padding:50px 0}
+  .platform-head{margin-bottom:24px}
+  .platform-card{padding:18px;border-radius:18px}
+  .platform-split{gap:26px}
   body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card{width:100%;border-radius:0!important}
 }
