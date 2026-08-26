@@ -1688,3 +1688,15 @@
 .operation-proof__card--integration{display:flex;background:linear-gradient(150deg,#2d205c,#5031a8);color:#fff}.operation-proof__integration{padding:24px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}.operation-proof__integration>img{max-width:116px;max-height:36px;width:auto;height:auto;object-fit:contain;background:#fff;padding:8px 10px;border-radius:12px;margin-bottom:18px}.operation-proof__integration strong{font-size:18px;line-height:1.25}.operation-proof__integration p{margin:9px 0 15px;color:#d6cdeb;font-size:11px;line-height:1.65}.operation-proof__methods{display:flex;gap:6px;flex-wrap:wrap}.operation-proof__methods span{padding:6px 8px;border-radius:9px;background:rgba(255,255,255,.09);font-size:9px;font-weight:700}.operation-proof__integration a{margin-top:18px;color:#fff;font-size:10.5px;font-weight:800;text-decoration:none}
 @media(max-width:980px){.operation-proof__grid{grid-template-columns:1fr 1fr}.operation-proof__card--integration{grid-column:1/-1}.operation-proof__integration{min-height:230px}}
 @media(max-width:620px){.operation-proof{padding:56px 0}.operation-proof__head{text-align:left}.operation-proof__grid{grid-template-columns:1fr}.operation-proof__card--integration{grid-column:auto}.operation-proof__image{height:190px}}
+
+
+/* V34 - cards Pedido Eletrônico e Televendas com mockups visuais */
+.platform-solution__visual--image{display:block;margin-top:28px;padding:0;background:transparent;box-shadow:none}
+.platform-solution__media-card{position:relative;overflow:hidden;border-radius:28px;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.08));box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),0 16px 34px rgba(28,15,75,.16);padding:16px 16px 0;min-height:260px}
+.platform-solution__media-card--light{background:linear-gradient(180deg,#f8f4ff,#f3edff);box-shadow:inset 0 0 0 1px rgba(109,80,194,.08),0 14px 30px rgba(73,54,138,.08)}
+.platform-solution__media-img{display:block;width:100%;height:220px;object-fit:cover;object-position:top center;border-radius:22px 22px 0 0;box-shadow:0 10px 26px rgba(25,18,52,.22)}
+.platform-solution__media-chip{position:absolute;left:20px;bottom:16px;display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;background:rgba(53,34,117,.82);backdrop-filter:blur(10px);color:#fff;font-size:12px;font-weight:700;box-shadow:0 8px 20px rgba(21,9,65,.18)}
+.platform-solution__media-chip img{width:22px;height:22px;display:block;object-fit:contain;filter:brightness(0) invert(1)}
+.platform-solution__media-chip--light{background:rgba(255,255,255,.92);color:#5537c9;box-shadow:0 10px 20px rgba(85,55,201,.12)}
+.platform-solution__media-chip--light img{filter:none}
+@media(max-width:620px){.platform-solution__visual--image{margin-top:22px}.platform-solution__media-card{border-radius:22px;padding:12px 12px 0;min-height:220px}.platform-solution__media-img{height:180px;border-radius:18px 18px 0 0}.platform-solution__media-chip{left:14px;bottom:12px;padding:8px 12px;font-size:11px}.platform-solution__media-chip img{width:18px;height:18px}}

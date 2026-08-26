@@ -144,3 +144,7 @@ Google Analytics e Search Console exigem IDs/códigos da sua conta e verificaç�
 - Fundo branco persiste no header e no painel enquanto o menu mobile está aberto ou durante scroll.
 - Estados do menu são resetados ao alternar entre mobile e desktop.
 - Rolagem da página é bloqueada enquanto o menu mobile está aberto, evitando deslocamentos visuais.
+
+
+## V34 — Soluções com imagens
+Na seção Plataforma Epiper da Home, os cards de Pedido Eletrônico e Televendas foram atualizados para usar imagens reais/previews do sistema no lugar do bloco abstrato, com moldura visual e selo contextual.
