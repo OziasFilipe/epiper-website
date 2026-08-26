@@ -108,3 +108,46 @@ document.querySelectorAll('.mega-menu-wrap a,.nav-pill>a,.mobile-accordion-panel
 
 const syncStickyHeader=() => { if(header) header.classList.toggle('is-scrolled',window.scrollY>18); };
 syncStickyHeader(); window.addEventListener('scroll',syncStickyHeader,{passive:true});
+
+// Hub Epiper: apresenta uma captura real da central do sistema na página dedicada.
+if (document.body && location.pathname.endsWith('/hub-epiper.html') || location.pathname.endsWith('hub-epiper.html')) {
+  const detailsSection = document.getElementById('detalhes');
+  if (detailsSection && !document.querySelector('.hub-real-showcase')) {
+    const style = document.createElement('style');
+    style.textContent = `
+      .hub-real-showcase{padding:78px 0 86px;background:linear-gradient(180deg,#fff 0%,#fbf9ff 100%);overflow:hidden}
+      .hub-real-showcase__intro{max-width:820px;margin:0 auto 34px;text-align:center}
+      .hub-real-showcase__intro h2{margin:13px 0 10px;font-size:clamp(29px,3.5vw,44px);line-height:1.08;letter-spacing:-.045em;color:#2b2054}
+      .hub-real-showcase__intro p{margin:0 auto;max-width:760px;color:#756e89;font-size:13px;line-height:1.75}
+      .hub-real-showcase__frame{position:relative;margin:0;padding:11px;border-radius:28px;background:#fff;box-shadow:0 26px 70px rgba(69,46,134,.14),0 0 0 1px rgba(98,72,178,.08);overflow:hidden}
+      .hub-real-showcase__bar{display:flex;align-items:center;gap:6px;padding:3px 4px 12px}.hub-real-showcase__bar span{width:8px;height:8px;border-radius:50%;background:#d8cff0}
+      .hub-real-showcase__frame img{display:block;width:100%;height:auto;border-radius:18px;background:#f6f3fb}
+      .hub-real-showcase__chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+      .hub-real-showcase__chip{display:flex;align-items:center;justify-content:center;min-height:50px;padding:12px 14px;border-radius:15px;background:#f6f2ff;color:#554b73;font-size:11px;font-weight:750;text-align:center;box-shadow:inset 0 0 0 1px rgba(98,72,178,.06)}
+      @media(max-width:720px){.hub-real-showcase{padding:56px 0 60px}.hub-real-showcase__intro{text-align:left}.hub-real-showcase__frame{padding:7px;border-radius:20px}.hub-real-showcase__frame img{border-radius:14px}.hub-real-showcase__chips{grid-template-columns:1fr}.hub-real-showcase__chip{justify-content:flex-start;text-align:left}}
+    `;
+    document.head.appendChild(style);
+
+    const section = document.createElement('section');
+    section.className = 'hub-real-showcase';
+    section.setAttribute('aria-labelledby','hub-real-title');
+    section.innerHTML = `
+      <div class="container">
+        <div class="hub-real-showcase__intro">
+          <span class="platform-kicker">O Hub na prática</span>
+          <h2 id="hub-real-title">A central da operação Epiper em uma única tela.</h2>
+          <p>Veja o ambiente real do Hub Epiper, onde produtos, canais de venda, clientes, pedidos, indicadores e integrações ficam organizados para a equipe acessar cada solução com mais contexto.</p>
+        </div>
+        <figure class="hub-real-showcase__frame">
+          <div class="hub-real-showcase__bar" aria-hidden="true"><span></span><span></span><span></span></div>
+          <img src="assets/images/hub-epiper-dashboard.webp" alt="Tela real do Hub Epiper com acesso ao Pedido Eletrônico, E-commerce, Televendas, Inteligência de Vendas, clientes, pedidos, produtos e integrações." loading="lazy" width="900" height="477" />
+        </figure>
+        <div class="hub-real-showcase__chips" aria-label="Benefícios do Hub Epiper">
+          <div class="hub-real-showcase__chip">Soluções em um só lugar</div>
+          <div class="hub-real-showcase__chip">Visão centralizada da operação</div>
+          <div class="hub-real-showcase__chip">Integração com o ERP</div>
+        </div>
+      </div>`;
+    detailsSection.insertAdjacentElement('afterend', section);
+  }
+}
