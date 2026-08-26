@@ -1,2 +1,40 @@
 @import url("plataforma-base.css");
+
+/* Navegação secundária removida das páginas da Plataforma */
 .platform-subnav{display:none!important}
+
+/* Visuais sem card/fundo em todas as páginas da Plataforma */
+.platform-hero__visual{min-height:auto}
+.platform-orbit{
+  width:min(100%,520px)!important;
+  height:auto!important;
+  aspect-ratio:1/1;
+  border-radius:0!important;
+  background-color:transparent!important;
+  background-size:contain!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  box-shadow:none!important;
+  border:0!important;
+}
+.platform-visual-card{
+  background-color:transparent!important;
+  box-shadow:none!important;
+  border:0!important;
+}
+body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card{
+  padding:0!important;
+  border-radius:0!important;
+  background-color:transparent!important;
+  background-size:contain!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  box-shadow:none!important;
+  border:0!important;
+  overflow:visible!important;
+}
+
+@media(max-width:620px){
+  .platform-orbit{width:min(92vw,390px)!important}
+  body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card{width:100%;border-radius:0!important}
+}
