@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Fale com um especialista | Epiper</title>
+  <meta name="description" content="Conte um pouco sobre sua operação e fale com um especialista da Epiper sobre Pedido Eletrônico, Televendas, Hub e integrações."/>
+  <link rel="preconnect" href="https://api.fontshare.com"/>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet"/>
+  <link href="css/especialista.css" rel="stylesheet"/>
+  <link rel="canonical" href="https://epiper.com.br/fale-com-especialista.html"/>
+  <link href="assets/icons/favicon.ico" rel="icon"/>
+  <link href="assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+  <meta name="theme-color" content="#6f46ff"/>
+</head>
+<body>
+<header class="contact-header">
+  <div class="contact-container contact-header__row">
+    <a href="index.html" class="contact-brand" aria-label="Voltar para Epiper"><img src="assets/images/logo-epiper-principal.webp" alt="Epiper Tecnologia"/></a>
+    <a class="contact-back" href="javascript:history.length>1?history.back():location.href='index.html'">← Voltar</a>
+  </div>
+</header>
+<main>
+  <section class="contact-hero">
+    <div class="contact-container contact-grid">
+      <div class="contact-copy">
+        <span class="contact-kicker">Fale com um especialista</span>
+        <h1>Vamos entender sua operação e indicar o melhor caminho.</h1>
+        <p>Preencha as informações abaixo. No final, você será direcionado ao WhatsApp da Epiper com a mensagem já organizada para agilizar o atendimento.</p>
+        <div class="contact-points">
+          <div><b>1</b><span>Você informa o cenário atual</span></div>
+          <div><b>2</b><span>A Epiper entende ERP, canais e prioridades</span></div>
+          <div><b>3</b><span>O especialista orienta a solução adequada</span></div>
+        </div>
+        <div class="contact-note"><strong>Sem compromisso.</strong> As informações servem para tornar a conversa mais objetiva e evitar perguntas repetidas no primeiro contato.</div>
+      </div>
+
+      <form class="contact-form" id="specialistForm">
+        <div class="contact-form__head">
+          <span>Conte sobre sua empresa</span>
+          <small>Campos com * são obrigatórios</small>
+        </div>
+
+        <div class="form-grid">
+          <label class="field"><span>Nome *</span><input name="nome" autocomplete="name" required placeholder="Seu nome"/></label>
+          <label class="field"><span>Empresa *</span><input name="empresa" autocomplete="organization" required placeholder="Nome da empresa"/></label>
+          <label class="field"><span>WhatsApp *</span><input name="telefone" inputmode="tel" autocomplete="tel" required placeholder="(27) 99999-9999"/></label>
+          <label class="field"><span>E-mail *</span><input type="email" name="email" autocomplete="email" required placeholder="voce@empresa.com.br"/></label>
+          <label class="field"><span>Segmento *</span><select name="segmento" required><option value="">Selecione</option><option>Varejo</option><option>Atacado</option><option>Distribuição</option><option>Indústria</option><option>Outro</option></select></label>
+          <label class="field"><span>ERP atual</span><input name="erp" placeholder="Ex.: WinThor TOTVS, SAP, Sankhya..."/></label>
+          <label class="field field--full"><span>Principal interesse *</span><select name="interesse" required><option value="">Selecione</option><option>Pedido Eletrônico</option><option>Televendas</option><option>Hub Epiper</option><option>Integrações com ERP</option><option>Operação conectada</option><option>Implantação e evolução por módulos</option><option>Quero entender qual solução faz sentido</option></select></label>
+          <label class="field field--full"><span>O que você quer melhorar na operação?</span><textarea name="mensagem" rows="5" placeholder="Ex.: reduzir digitação de pedidos, integrar vendedores ao ERP, melhorar atendimento, criar canal B2B..."></textarea></label>
+        </div>
+
+        <label class="consent"><input type="checkbox" required/><span>Concordo em enviar essas informações para que a Epiper entre em contato sobre as soluções apresentadas.</span></label>
+        <input type="hidden" name="origem" id="formOrigin"/>
+        <button class="submit-btn" type="submit">Continuar no WhatsApp <span>→</span></button>
+        <p class="form-helper" id="formHelper">Você poderá revisar a mensagem antes de enviar no WhatsApp.</p>
+      </form>
+    </div>
+  </section>
+</main>
+<footer class="contact-footer"><div class="contact-container"><span>Epiper Tecnologia</span><a href="privacidade.html">Política de Privacidade</a></div></footer>
+<script src="js/especialista.js"></script>
+</body>
+</html>
