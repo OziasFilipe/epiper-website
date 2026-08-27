@@ -35,6 +35,14 @@ html:has(link[rel="canonical"][href$="/evolucao-modulos.html"]) .platform-orbit{
 body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card{padding:0!important;min-height:0;aspect-ratio:920/600;border-radius:0!important;background-color:transparent!important;background-size:contain!important;background-repeat:no-repeat!important;background-position:center!important;box-shadow:none!important;border:0!important;overflow:visible!important}
 body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card__top,body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card__flow,body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card__lines{display:none}
 
+/* Explicadores visuais: aparecem como parte da seção, sem card externo */
+.platform-grid::after{content:"";grid-column:1/-1;display:block;width:min(100%,980px);aspect-ratio:1200/760;margin:32px auto 4px;background-position:center;background-repeat:no-repeat;background-size:contain}
+html:has(link[rel="canonical"][href$="/plataforma.html"]) .platform-grid::after{background-image:url("../assets/images/plataforma-detalhes.svg")}
+html:has(link[rel="canonical"][href$="/hub-epiper.html"]) .platform-grid::after{background-image:url("../assets/images/hub-epiper-detalhes.svg")}
+html:has(link[rel="canonical"][href$="/operacao-conectada.html"]) .platform-grid::after{background-image:url("../assets/images/operacao-conectada-detalhes.svg")}
+html:has(link[rel="canonical"][href$="/implantacao-guiada.html"]) .platform-grid::after{background-image:url("../assets/images/implantacao-guiada-detalhes.svg")}
+html:has(link[rel="canonical"][href$="/evolucao-modulos.html"]) .platform-grid::after{background-image:url("../assets/images/evolucao-modulos-detalhes.svg")}
+
 @media(max-width:1000px){
   .platform-hero__grid{grid-template-columns:1fr;gap:28px}
   .platform-hero__copy{max-width:760px}
@@ -43,6 +51,7 @@ body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card__top,
   html:has(link[rel="canonical"][href$="/hub-epiper.html"]) .platform-orbit{width:min(100%,760px)!important}
   .platform-section{padding:62px 0}
   .platform-split{gap:34px}
+  .platform-grid::after{width:min(100%,900px);margin-top:26px}
 }
 
 @media(max-width:620px){
@@ -54,5 +63,6 @@ body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card__top,
   .platform-head{margin-bottom:24px}
   .platform-card{padding:18px;border-radius:18px}
   .platform-split{gap:26px}
+  .platform-grid::after{width:100%;margin-top:18px}
   body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card{width:100%;border-radius:0!important}
 }
