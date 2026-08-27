@@ -165,3 +165,17 @@ if ((document.body && location.pathname.endsWith('/hub-epiper.html')) || locatio
     detailsSection.insertAdjacentElement('afterend', section);
   }
 }
+
+// Acabamento editorial e conteúdo adicional somente nas páginas internas de produto/plataforma.
+const internalPremiumPages = new Set([
+  'plataforma.html','hub-epiper.html','operacao-conectada.html','implantacao-guiada.html','evolucao-modulos.html',
+  'pedido-eletronico.html','televendas.html','integracoes.html','duvidas.html'
+]);
+const internalPremiumFile = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+if (internalPremiumPages.has(internalPremiumFile) && !document.querySelector('script[data-internal-premium]')) {
+  const premiumScript=document.createElement('script');
+  premiumScript.src='js/internal-premium.js';
+  premiumScript.defer=true;
+  premiumScript.dataset.internalPremium='1';
+  document.body.appendChild(premiumScript);
+}
