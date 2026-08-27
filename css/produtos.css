@@ -25,9 +25,15 @@ body:has(.hero img[src*="pedido-eletronico-mockup-topo"]) #recursos .head .kicke
 body:has(.hero img[src*="pedido-eletronico-mockup-topo"]) #recursos .head h2{font-size:clamp(22px,2.15vw,29px);line-height:1.12;margin-bottom:8px}
 body:has(.hero img[src*="pedido-eletronico-mockup-topo"]) #recursos .head p{max-width:550px;font-size:12.2px;line-height:1.65}
 
+/* Imagens explicativas adicionais, integradas ao conteúdo e sem moldura externa */
+.feature-grid::after{content:"";grid-column:1/-1;display:block;width:min(100%,980px);aspect-ratio:1200/760;margin:30px auto 0;background-position:center;background-repeat:no-repeat;background-size:contain}
+body:has(.hero img[src*="pedido-eletronico-mockup-topo"]) .feature-grid::after{background-image:url("../assets/images/pedido-eletronico-detalhes.svg")}
+body:has(.hero img[src*="televendas-mockup-topo"]) .feature-grid::after{background-image:url("../assets/images/televendas-detalhes.svg")}
+
 @media(max-width:960px){
   .hero__grid{gap:32px}
   .visual--photo{min-height:360px}
+  .feature-grid::after{width:min(100%,900px);margin-top:24px}
 }
 
 @media(max-width:620px){
@@ -40,6 +46,7 @@ body:has(.hero img[src*="pedido-eletronico-mockup-topo"]) #recursos .head p{max-
   .product-image-strip{padding-bottom:50px}
   .product-image-strip__card{padding:16px;border-radius:20px}
   .cta{padding-bottom:50px}
+  .feature-grid::after{width:100%;margin-top:18px}
   body:has(.hero img[src*="pedido-eletronico-mockup-topo"]) #recursos{padding:42px 0}
   body:has(.hero img[src*="pedido-eletronico-mockup-topo"]) #recursos .head{margin-bottom:20px}
   body:has(.hero img[src*="pedido-eletronico-mockup-topo"]) #recursos .head h2{font-size:23px}
