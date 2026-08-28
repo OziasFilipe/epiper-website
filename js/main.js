@@ -179,3 +179,50 @@ if (internalPremiumPages.has(internalPremiumFile) && !document.querySelector('sc
   premiumScript.dataset.internalPremium='1';
   document.body.appendChild(premiumScript);
 }
+
+// Home: nas Soluções 01 e 02 mostramos somente o produto, sem captura da página do site.
+if (internalPremiumFile === 'index.html') {
+  const homeSolutionMockups = [
+    ['.platform-solution--primary','assets/images/pedido-eletronico-mockup-topo.png','Pedido Eletrônico Epiper'],
+    ['.platform-solution--secondary','assets/images/televendas-mockup-topo.png','Televendas Epiper']
+  ];
+
+  homeSolutionMockups.forEach(([selector,src,alt]) => {
+    const solution=document.querySelector(selector);
+    const img=solution?.querySelector('.platform-solution__media-img');
+    const mediaCard=solution?.querySelector('.platform-solution__media-card');
+    if (!img || !mediaCard) return;
+    img.src=src;
+    img.alt=alt;
+    img.removeAttribute('aria-hidden');
+    mediaCard.querySelector('.platform-solution__media-chip')?.remove();
+    mediaCard.classList.add('platform-solution__media-card--product-only');
+  });
+
+  const homeSolutionStyle=document.createElement('style');
+  homeSolutionStyle.dataset.homeSolutionProductOnly='1';
+  homeSolutionStyle.textContent=`
+    .platform-solution__media-card--product-only{
+      min-height:0!important;
+      padding:0!important;
+      overflow:visible!important;
+      border-radius:0!important;
+      background:transparent!important;
+      box-shadow:none!important;
+    }
+    .platform-solution__media-card--product-only .platform-solution__media-img{
+      width:100%!important;
+      height:auto!important;
+      max-height:390px!important;
+      object-fit:contain!important;
+      object-position:center!important;
+      border-radius:0!important;
+      background:transparent!important;
+      box-shadow:none!important;
+    }
+    @media(max-width:620px){
+      .platform-solution__media-card--product-only .platform-solution__media-img{max-height:310px!important}
+    }
+  `;
+  document.head.appendChild(homeSolutionStyle);
+}
