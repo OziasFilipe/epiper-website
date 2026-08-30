@@ -148,3 +148,11 @@ Google Analytics e Search Console exigem IDs/códigos da sua conta e verificaç�
 
 ## V34 — Soluções com imagens
 Na seção Plataforma Epiper da Home, os cards de Pedido Eletrônico e Televendas foram atualizados para usar imagens reais/previews do sistema no lugar do bloco abstrato, com moldura visual e selo contextual.
+
+## V35 — Conteúdo alinhado ao produto real
+- A Home preserva a proposta de Pedido Eletrônico + Televendas, mas passa a apresentar o ecossistema completo.
+- E-commerce B2B e Inteligência de Vendas entram no portfólio com recursos confirmados no sistema.
+- O Hub agora explica os quatro produtos, o núcleo compartilhado, filiais e permissões por usuário.
+- Capturas reais do Hub, Televendas, Pedido Eletrônico e Central de Integrações substituem parte dos mockups genéricos.
+- Navegação desktop, menu mobile e footer passam a listar o portfólio completo.
+- SEO e FAQ foram atualizados para refletir a solução atual.
