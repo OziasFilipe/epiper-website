@@ -17,7 +17,7 @@ function buildMobileAccordions() {
       ['Visão geral da plataforma','plataforma.html'],['Hub Epiper','hub-epiper.html'],['Operação conectada','operacao-conectada.html'],['Implantação guiada','implantacao-guiada.html'],['Evolução por módulos','evolucao-modulos.html']
     ],
     solucoes: [
-      ['Pedido Eletrônico','pedido-eletronico.html'],['Televendas','televendas.html'],['E-commerce B2B','hub-epiper.html#produtos'],['Inteligência de Vendas','hub-epiper.html#produtos'],['Hub Epiper','hub-epiper.html'],['Integrações','integracoes.html'],['Falar com especialista','fale-com-especialista.html']
+      ['Pedido Eletrônico','pedido-eletronico.html'],['Televendas','televendas.html'],['E-commerce B2B','ecommerce.html'],['Inteligência de Vendas','inteligencia-vendas.html'],['Hub Epiper','hub-epiper.html'],['Integrações','integracoes.html'],['Falar com especialista','fale-com-especialista.html']
     ],
     recursos: [
       ['Catálogo e Pedido','pedido-eletronico.html'],['Clientes e atendimento','televendas.html'],['Integração com ERP','integracoes.html'],['Dúvidas frequentes','duvidas.html']
@@ -37,15 +37,15 @@ const solutionMenuGrid = document.querySelector('[data-menu-panel="solucoes"] .s
 if (solutionMenuGrid && !solutionMenuGrid.querySelector('[data-ecosystem-product]')) {
   const hubCard = [...solutionMenuGrid.querySelectorAll('.solution-menu-card')].find(card => card.href?.includes('hub-epiper.html'));
   const productCards = [
-    ['E-commerce B2B','Loja digital com catálogo por filial, carrinho, pedidos e landing pages para campanhas.','assets/icons/menu/varejo.svg'],
-    ['Inteligência de Vendas','Conteúdos, promoções, treinamentos e App Comercial para manter a equipe informada.','assets/icons/menu/evolucao.svg']
+    ['E-commerce B2B','Loja digital com catálogo por filial, carrinho, pedidos e landing pages para campanhas.','assets/icons/menu/varejo.svg','ecommerce.html'],
+    ['Inteligência de Vendas','Conteúdos, promoções, treinamentos e App Comercial para manter a equipe informada.','assets/icons/menu/evolucao.svg','inteligencia-vendas.html']
   ];
-  productCards.forEach(([title,description,icon]) => {
+  productCards.forEach(([title,description,icon,href]) => {
     const card = document.createElement('a');
-    card.href = 'hub-epiper.html#produtos';
+    card.href = href;
     card.className = 'solution-menu-card';
     card.dataset.ecosystemProduct = '1';
-    card.innerHTML = `<div class="solution-menu-card__head"><span class="solution-menu-card__icon"><img alt="" src="${icon}"/></span><h5>${title}</h5></div><p>${description}</p><strong>Conhecer no Hub →</strong>`;
+    card.innerHTML = `<div class="solution-menu-card__head"><span class="solution-menu-card__icon"><img alt="" src="${icon}"/></span><h5>${title}</h5></div><p>${description}</p><strong>Conhecer produto →</strong>`;
     solutionMenuGrid.insertBefore(card, hubCard || null);
   });
 }
@@ -61,14 +61,40 @@ if (solutionMenuGrid && !solutionMenuGrid.querySelector('[data-specialist-card]'
 // Os footers antigos passam a listar todo o portfólio sem duplicar a marcação em cada página.
 document.querySelectorAll('nav[aria-label="Produtos"]').forEach(productsNav => {
   const products = [
-    ['E-commerce B2B','hub-epiper.html#produtos'],
-    ['Inteligência de Vendas','hub-epiper.html#produtos']
+    ['E-commerce B2B','ecommerce.html'],
+    ['Inteligência de Vendas','inteligencia-vendas.html']
   ];
   products.forEach(([label,href]) => {
     if ([...productsNav.querySelectorAll('a')].some(link => link.textContent.trim() === label)) return;
     const link = document.createElement('a'); link.href = href; link.textContent = label; productsNav.appendChild(link);
   });
 });
+
+// Páginas legais: resumo e navegação local para leitura mais rápida, sem alterar o conteúdo jurídico.
+const legalWrap = document.querySelector('.legal-page .legal-wrap');
+if (legalWrap && !legalWrap.querySelector('.legal-summary')) {
+  const sections = [...legalWrap.querySelectorAll(':scope > section')];
+  const summary = document.createElement('div');
+  summary.className = 'legal-summary';
+  summary.innerHTML = `
+    <div><small>Documento</small><b>${document.querySelector('.legal-lead')?.textContent || 'Informação institucional'}</b></div>
+    <div><small>Contato</small><b>contato@epiper.com.br</b></div>
+    <div><small>Leitura</small><b>${sections.length} pontos principais</b></div>`;
+  const nav = document.createElement('nav');
+  nav.className = 'legal-nav';
+  nav.setAttribute('aria-label','Nesta página');
+  sections.forEach((section,index) => {
+    const title = section.querySelector('h2')?.textContent?.trim();
+    if (!title) return;
+    section.id ||= `ponto-${index+1}`;
+    const link = document.createElement('a');
+    link.href = `#${section.id}`;
+    link.textContent = title;
+    nav.appendChild(link);
+  });
+  legalWrap.querySelector('.legal-lead')?.insertAdjacentElement('afterend',summary);
+  summary.insertAdjacentElement('afterend',nav);
+}
 
 hamburger?.addEventListener('click', () => {
   const open = header.classList.toggle('is-open');
@@ -196,12 +222,18 @@ if ((document.body && location.pathname.endsWith('/hub-epiper.html')) || locatio
 // Acabamento editorial e conteúdo adicional somente nas páginas internas de produto/plataforma.
 const internalPremiumPages = new Set([
   'plataforma.html','hub-epiper.html','operacao-conectada.html','implantacao-guiada.html','evolucao-modulos.html',
-  'pedido-eletronico.html','televendas.html','integracoes.html','duvidas.html'
+  'pedido-eletronico.html','televendas.html','ecommerce.html','inteligencia-vendas.html','integracoes.html','duvidas.html'
 ]);
 const internalPremiumFile = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+const platformLayoutPages = new Set(['plataforma.html','hub-epiper.html','operacao-conectada.html','implantacao-guiada.html','evolucao-modulos.html','ecommerce.html','inteligencia-vendas.html']);
+if (platformLayoutPages.has(internalPremiumFile) && !document.querySelector('link[data-platform-v36]')) {
+  const platformStyle=document.createElement('link');
+  platformStyle.rel='stylesheet'; platformStyle.href='css/plataforma.css?v=36'; platformStyle.dataset.platformV36='1';
+  document.head.appendChild(platformStyle);
+}
 if (internalPremiumPages.has(internalPremiumFile) && !document.querySelector('script[data-internal-premium]')) {
   const premiumScript=document.createElement('script');
-  premiumScript.src='js/internal-premium.js';
+  premiumScript.src='js/internal-premium.js?v=36';
   premiumScript.defer=true;
   premiumScript.dataset.internalPremium='1';
   document.body.appendChild(premiumScript);
@@ -211,7 +243,9 @@ if (internalPremiumPages.has(internalPremiumFile) && !document.querySelector('sc
 if (internalPremiumFile === 'index.html') {
   const homeSolutionMockups = [
     ['.platform-solution--primary','assets/produto-real/pedido-eletronico.png','Tela real do Pedido Eletrônico Epiper'],
-    ['.platform-solution--secondary','assets/produto-real/televendas-dashboard.png','Tela real do Televendas Epiper']
+    ['.platform-solution--secondary','assets/produto-real/televendas-dashboard.png','Tela real do Televendas Epiper'],
+    ['.platform-solution--commerce','assets/produto-real/ecommerce.png','Tela real do E-commerce B2B Epiper'],
+    ['.platform-solution--intelligence','assets/produto-real/inteligencia-vendas.png','Tela real da Inteligência de Vendas Epiper']
   ];
 
   homeSolutionMockups.forEach(([selector,src,alt]) => {

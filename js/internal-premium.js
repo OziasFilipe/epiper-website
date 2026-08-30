@@ -9,7 +9,7 @@
       title:'Uma plataforma comercial organizada em camadas claras.',
       intro:'A Epiper separa responsabilidades para que cada parte da operação tenha um papel definido: o ERP mantém a base e as regras, os produtos cuidam da experiência de venda e o Hub organiza o acesso ao ecossistema.',
       cards:[
-        ['pedido','Canais de venda','Pedido Eletrônico e Televendas atendem jornadas diferentes sem criar duas estruturas isoladas.','Experiência comercial'],
+        ['pedido','Quatro produtos','Pedido Eletrônico, Televendas, E-commerce B2B e Inteligência de Vendas atendem jornadas diferentes sobre o mesmo núcleo.','Experiência comercial'],
         ['produto','Dados comerciais','Clientes, produtos, preço, estoque e condições podem abastecer os canais conforme o escopo da integração.','Base operacional'],
         ['erp','Integração com ERP','APIs, banco, arquivos ou conectores são avaliados conforme o ambiente técnico disponível.','Integração'],
         ['hub','Hub e gestão','O Hub aproxima módulos, acessos, indicadores e recursos para reduzir dispersão na rotina.','Governança']
@@ -29,7 +29,7 @@
       title:'O Hub organiza o ecossistema sem substituir os produtos.',
       intro:'Ele funciona como a porta de entrada da experiência Epiper: centraliza acessos, aproxima informações importantes e ajuda a equipe a entender quais soluções estão disponíveis para cada operação ou empresa.',
       cards:[
-        ['hub','Soluções e acessos','Pedido Eletrônico, E-commerce, Televendas e outros módulos podem ficar acessíveis a partir da mesma central.','Centralização'],
+        ['hub','Soluções e acessos','Pedido Eletrônico, Televendas, E-commerce B2B e Inteligência de Vendas ficam acessíveis a partir da mesma central.','Centralização'],
         ['clientes','Operação comercial','Clientes, pedidos, produtos, títulos e carteiras podem compor a visão operacional conforme o escopo habilitado.','Contexto'],
         ['status','Indicadores','Status dos serviços, utilização e indicadores ajudam a equipe a identificar rapidamente o que merece atenção.','Visibilidade'],
         ['erp','Integrações','O Hub também aproxima o contexto das integrações e conexões que sustentam os módulos comerciais.','Ecossistema']
@@ -51,7 +51,7 @@
       cards:[
         ['erp','Origem dos dados','O ERP ou a estrutura central continua sendo a principal referência para cadastros, condições e regras.','Origem'],
         ['automacao','Sincronização','A atualização pode ocorrer por APIs, banco, arquivos ou conectores, conforme o cenário técnico.','Atualização'],
-        ['pedido','Execução da venda','Pedido Eletrônico e Televendas usam os dados disponíveis para montar e registrar pedidos de forma mais consistente.','Venda'],
+        ['pedido','Execução comercial','Pedido Eletrônico, Televendas e E-commerce usam os dados disponíveis para vender, enquanto Inteligência de Vendas organiza a comunicação com a equipe.','Canais'],
         ['status','Retorno e acompanhamento','Quando o ERP fornece os retornos necessários, a equipe pode acompanhar validação, processamento e status.','Retorno']
       ],
       visual:['assets/images/operacao-conectada-detalhes.svg','Do dado ao retorno','O fluxo evidencia a responsabilidade de cada camada e mostra por que a integração precisa considerar a jornada completa, não apenas o envio do pedido.',['Dados comerciais chegam aos canais','Pedido segue regras e validações previstas','Retorno melhora acompanhamento e atendimento']],
@@ -91,8 +91,8 @@
       cards:[
         ['pedido','Primeiro canal','Pedido Eletrônico pode ser a prioridade quando o objetivo é criar um canal B2B mais organizado.','Exemplo'],
         ['televendas','Venda assistida','Televendas pode entrar primeiro quando o gargalo está na produtividade e no contexto da equipe interna.','Exemplo'],
-        ['erp','Integrações e retornos','Novos dados, conectores e retornos podem ampliar a automação e a visibilidade operacional.','Evolução'],
-        ['status','Indicadores e novos módulos','A maturidade da operação pode abrir espaço para inteligência, automações e recursos adicionais.','Expansão']
+        ['varejo','Loja B2B','E-commerce pode entrar quando a prioridade é publicar catálogo, receber pedidos e criar campanhas em uma vitrine própria.','Exemplo'],
+        ['evolucao','Comunicação comercial','Inteligência de Vendas pode organizar promoções, materiais, treinamentos e leituras no App Comercial.','Exemplo']
       ],
       visual:['assets/images/evolucao-modulos-detalhes.svg','Uma base que pode crescer sem recomeçar','A evolução funciona melhor quando cada fase tem objetivo, escopo e resultado esperado. Assim o próximo módulo entra sobre uma base já validada.',['Prioridade comercial antes de quantidade de recursos','Integração planejada para suportar novas fases','Adoção medida antes da próxima expansão']],
       decision:[
@@ -109,10 +109,10 @@
       title:'O Pedido Eletrônico precisa facilitar a compra sem ignorar as regras comerciais.',
       intro:'O valor do canal B2B está em aproximar catálogo, informação comercial e fechamento do pedido. A experiência fica mais simples para o usuário, enquanto regras e processamento continuam alinhados ao ambiente da empresa.',
       cards:[
-        ['produto','Catálogo e mix','Produtos podem ser organizados para facilitar busca, consulta e seleção durante a compra.','Descoberta'],
+        ['produto','Lista e mix','O canal permite selecionar o cliente, pesquisar produtos e adicionar quantidades em uma jornada objetiva.','Descoberta'],
         ['estoque','Preço e disponibilidade','Informações comerciais podem ser apresentadas conforme dados e regras fornecidos pela integração.','Decisão'],
-        ['pedido','Carrinho e fechamento','Quantidade, itens e condições formam um pedido padronizado antes do envio ao fluxo operacional.','Conversão'],
-        ['status','Acompanhamento','Quando os retornos estão disponíveis, o usuário pode ter mais clareza sobre processamento e situação do pedido.','Pós-pedido']
+        ['pedido','Condição e fechamento','Quantidade, itens, condição comercial e prazo formam um pedido padronizado antes do envio.','Conversão'],
+        ['status','Acesso por cliente','Links específicos podem simplificar o acesso de cada cliente ao canal autorizado.','Distribuição']
       ],
       visual:['assets/images/pedido-eletronico-detalhes.svg','O que o usuário encontra durante a jornada','A experiência foi organizada em torno das decisões que acontecem antes, durante e depois do fechamento do pedido.',['Catálogo, preço e estoque no mesmo contexto','Condições comerciais aplicadas ao fluxo','Pedido e retorno conectados à operação']],
       decision:[
@@ -129,10 +129,10 @@
       title:'Televendas é mais do que registrar um pedido durante uma ligação.',
       intro:'A proposta é organizar a venda assistida: trazer contexto antes da abordagem, agilizar a consulta durante o atendimento e manter o registro do pedido dentro do mesmo fluxo comercial.',
       cards:[
-        ['clientes','Contexto do cliente','Cadastro, histórico e informações comerciais podem ficar acessíveis durante o atendimento.','Preparação'],
-        ['produto','Consulta de produtos','Busca, estoque, preço e condições ajudam a equipe a responder sem alternar entre várias fontes.','Atendimento'],
-        ['pedido','Registro do pedido','O operador monta a venda dentro de um processo padronizado e conectado ao fluxo da empresa.','Execução'],
-        ['status','Gestão comercial','Metas, produtividade e acompanhamento ajudam a liderança a entender a rotina da equipe.','Gestão']
+        ['clientes','Carteira, agenda e CRM','Cliente, histórico, funil e próximos contatos ficam próximos durante a rotina comercial.','Preparação'],
+        ['produto','Consulta comercial','Busca, estoque, preço, títulos e condições ajudam a equipe sem alternar entre várias fontes.','Atendimento'],
+        ['pedido','Pedido e conversas','O operador monta a venda e pode organizar contatos por WhatsApp e chat interno no mesmo ambiente.','Execução'],
+        ['status','Metas e relatórios','Dashboard, produtividade e relatórios ajudam a liderança a acompanhar a equipe.','Gestão']
       ],
       visual:['assets/images/televendas-detalhes.svg','Uma jornada de atendimento com mais contexto','O fluxo aproxima informação, execução e gestão para que a equipe comercial concentre energia no atendimento em vez de procurar dados espalhados.',['Contexto antes de iniciar a venda','Consulta e pedido durante o atendimento','Indicadores para acompanhar a rotina comercial']],
       decision:[
@@ -143,23 +143,61 @@
       note:['Televendas não precisa ficar limitado ao telefone','A solução representa venda assistida e pode apoiar outros canais de atendimento quando o processo exige contexto do cliente, consulta comercial e montagem do pedido pela equipe interna.'],
       related:[['pedido-eletronico.html','Pedido Eletrônico','Veja a alternativa de autoatendimento B2B.'],['integracoes.html','Integrações','Entenda como o contexto comercial chega à equipe.'],['hub-epiper.html','Hub Epiper','Veja como os canais convivem no mesmo ecossistema.']]
     },
+    'ecommerce.html': {
+      context:[['varejo','Vitrine B2B','Um endereço público para o cliente comprar no catálogo autorizado.'],['produto','Catálogo por filial','A empresa decide o mix que será publicado em cada contexto.'],['pedido','Pedidos no núcleo','As compras chegam identificadas pela origem E-commerce.']],
+      kicker:'E-commerce na prática',
+      title:'Uma vitrine digital só gera valor quando continua ligada à operação.',
+      intro:'A Epiper aproxima publicação de produtos, experiência de compra, pedidos e campanhas. O cliente encontra uma loja simples; a empresa administra o canal no mesmo ecossistema comercial.',
+      cards:[
+        ['produto','Publicação de produtos','Selecione o catálogo que aparece na loja e mantenha o controle por filial.','Catálogo'],
+        ['varejo','Vitrine pública','Apresente a marca, os produtos e o carrinho em um endereço próprio para compra.','Experiência'],
+        ['pedido','Pedidos recebidos','Acompanhe compras recentes e mantenha o canal de origem identificado no núcleo.','Operação'],
+        ['evolucao','Páginas de campanha','Crie landing pages para ofertas e ações comerciais conectadas à mesma gestão.','Campanhas']
+      ],
+      decision:[
+        ['Antes de publicar',['Definir filial, mix e disponibilidade','Validar preços, estoque e regras exibidas','Configurar identidade, contatos e endereço da loja']],
+        ['Durante a compra',['Escolher a jornada de identificação do cliente','Definir campos, condições e validações do checkout','Confirmar meios de pagamento previstos no escopo']],
+        ['Depois do pedido',['Determinar processamento e retorno no ERP','Acompanhar status e ocorrências necessárias','Medir pedidos, vendas e produtos publicados']]
+      ],
+      note:['Checkout e pagamento dependem da configuração do projeto','PIX, boleto, faturado, confirmação e retorno de status só devem ser considerados disponíveis depois de validar gateway, ERP, regras comerciais e homologação do fluxo.'],
+      related:[['pedido-eletronico.html','Pedido Eletrônico','Compare com a jornada B2B em lista.'],['integracoes.html','Integrações','Entenda como catálogo e pedidos se conectam à operação.'],['hub-epiper.html','Hub Epiper','Veja os quatro produtos no mesmo ecossistema.']]
+    },
+    'inteligencia-vendas.html': {
+      context:[['produto','Conteúdo organizado','Campanhas, promoções, materiais, treinamentos e avisos em uma central.'],['clientes','Público definido','Publicações podem considerar segmentação e vigência.'],['status','Leitura acompanhada','Indicadores mostram visualizações e confirmações no App Comercial.']],
+      kicker:'Comunicação comercial na prática',
+      title:'A equipe recebe conteúdo útil em um canal criado para a rotina de vendas.',
+      intro:'A área administrativa dá controle à empresa e o App Comercial entrega uma experiência direta ao vendedor. Isso reduz a dependência de grupos e mensagens que se perdem ao longo do dia.',
+      cards:[
+        ['produto','Publicações por tipo','Separe comunicados, campanhas, promoções, treinamentos e materiais.','Organização'],
+        ['clientes','Vendedores e públicos','Controle usuários do aplicativo e direcione o que faz sentido para cada grupo.','Segmentação'],
+        ['status','Visualizações e confirmações','Acompanhe leitura para identificar conteúdos que ainda precisam de reforço.','Acompanhamento'],
+        ['varejo','App Comercial','Ofereça ao vendedor uma central simples para consultar e favoritar conteúdos.','Adoção']
+      ],
+      decision:[
+        ['Conteúdo',['Quem pode publicar e revisar','Quais tipos precisam de validade','Quais materiais devem ficar disponíveis por mais tempo']],
+        ['Público',['Quais vendedores e filiais recebem cada comunicação','Como o acesso ao App Comercial será liberado','Quando a segmentação precisa ser atualizada']],
+        ['Acompanhamento',['Qual leitura precisa de confirmação','Quais indicadores serão acompanhados','Como reforçar conteúdos pouco visualizados']]
+      ],
+      note:['A ferramenta organiza a comunicação, mas o processo continua importante','Responsáveis, critérios de publicação, segmentação e rotina de acompanhamento precisam ser definidos para o App Comercial manter conteúdo relevante para a equipe.'],
+      related:[['televendas.html','Televendas','Leve o conteúdo para perto da venda assistida.'],['ecommerce.html','E-commerce B2B','Conheça o canal de venda digital.'],['hub-epiper.html','Hub Epiper','Veja os quatro produtos compartilhando a mesma base.']]
+    },
     'integracoes.html': {
-      context:[['erp','ERP continua no centro','A integração aproxima a camada comercial sem obrigar a troca do sistema principal.'],['api','Método conforme o ambiente','APIs, banco, arquivos e conectores são avaliados tecnicamente.'],['status','Ida e volta de dados','Além de enviar pedidos, o projeto pode considerar status e retornos quando disponíveis.']],
+      context:[['erp','WinThor já conectado','O ambiente atual da Epiper opera conectado ao WinThor TOTVS.'],['api','Outros ERPs sob avaliação','SAP, Bling, Omie, Olist e outros cenários exigem análise e desenvolvimento do conector adequado.'],['status','Ida e volta de dados','Além de enviar pedidos, o projeto pode considerar status e retornos quando disponíveis.']],
       kicker:'Integração bem definida',
       title:'A melhor integração é a que respeita o processo e as limitações reais do ERP.',
-      intro:'Não existe um conector universal que resolva todos os cenários. A análise técnica considera dados disponíveis, forma de autenticação, frequência de atualização, regras do pedido e retorno esperado pela operação comercial.',
+      intro:'A Epiper já possui operação conectada ao WinThor TOTVS. Para outros ERPs, a análise técnica considera dados disponíveis, autenticação, frequência de atualização, regras do pedido e o conector que precisa ser implementado ou adaptado.',
       cards:[
         ['api','APIs','Preferíveis quando o ERP disponibiliza endpoints adequados, autenticação e regras compatíveis com o fluxo necessário.','Método'],
         ['erp','Banco de dados','Pode ser considerado quando existe acesso controlado, estrutura conhecida e uma estratégia segura de leitura ou integração.','Método'],
         ['automacao','Arquivos e rotinas','Importação, exportação ou processamento por arquivos pode atender cenários específicos e sistemas legados.','Método'],
-        ['fluxo','Conectores específicos','Adaptadores podem ser utilizados quando o ecossistema exige uma ponte própria entre a Epiper e o sistema existente.','Método']
+        ['fluxo','Conectores específicos','WinThor está conectado; os demais ERPs entram após confirmar viabilidade e implementar ou adaptar a ponte necessária.','Situação real']
       ],
       decision:[
         ['Dados normalmente avaliados',['Clientes e cadastro comercial','Produtos, preços, estoque e condições','Pedidos, status, ocorrências e retornos']],
         ['Critérios técnicos',['Disponibilidade e documentação das interfaces','Permissões, autenticação e segurança','Volume, frequência e tolerância a indisponibilidade']],
         ['Critérios operacionais',['Quem mantém cada dado','Quando a informação precisa estar atualizada','Como tratar rejeições, divergências e reprocessamento']]
       ],
-      note:['Compatibilidade é validada antes de prometer automação','A arquitetura da Epiper é flexível, mas cada ERP e infraestrutura precisam ser avaliados. A disponibilidade de APIs, banco, arquivos, permissões e retornos define o que pode ser automatizado.'],
+      note:['WinThor é a integração operacional atual','A arquitetura aceita outros conectores, mas disponibilidade no site não significa integração pronta. Cada ERP e infraestrutura precisam ser avaliados antes de confirmar prazo, escopo e automações.'],
       related:[['operacao-conectada.html','Operação conectada','Veja como a integração participa do fluxo completo.'],['implantacao-guiada.html','Implantação guiada','Entenda como a análise técnica entra no projeto.'],['fale-com-especialista.html','Avaliar meu ERP','Informe seu sistema e o fluxo atual para iniciar a análise.']]
     },
     'duvidas.html': {
@@ -168,7 +206,7 @@
       title:'As perguntas mais importantes são sobre processo, integração e uso real.',
       intro:'Além das dúvidas sobre funcionalidades, vale entender de onde vêm os dados, como o pedido entra no fluxo da empresa e quais usuários precisam participar. Esses pontos definem boa parte do projeto.',
       cards:[
-        ['pedido','Produto certo para o canal','Pedido Eletrônico atende melhor o autoatendimento B2B; Televendas organiza a venda assistida pela equipe interna.','Escolha'],
+        ['pedido','Produto certo para a jornada','Pedido Eletrônico atende o pedido B2B, Televendas a venda assistida, E-commerce a vitrine digital e Inteligência de Vendas a comunicação com a equipe.','Escolha'],
         ['erp','ERP e compatibilidade','WinThor TOTVS é um cenário de destaque, mas outros ERPs dependem de avaliação das interfaces e permissões disponíveis.','Viabilidade'],
         ['implantacao','Implantação','Mapeamento, configuração, integração, homologação e acompanhamento ajudam a reduzir risco na entrada em produção.','Projeto'],
         ['evolucao','Evolução','É possível começar por uma prioridade e ampliar o ecossistema conforme a operação ganha maturidade.','Crescimento']
@@ -189,7 +227,7 @@
   document.body.classList.add('internal-premium',`internal-${file.replace('.html','')}`);
   if (!document.querySelector('link[data-internal-premium]')) {
     const link = document.createElement('link');
-    link.rel='stylesheet'; link.href='css/internal-premium.css'; link.dataset.internalPremium='1';
+    link.rel='stylesheet'; link.href='css/internal-premium.css?v=36'; link.dataset.internalPremium='1';
     document.head.appendChild(link);
   }
 

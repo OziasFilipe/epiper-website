@@ -14,6 +14,8 @@
   const originInterest = [
     ['pedido-eletronico','Pedido Eletrônico'],
     ['televendas','Televendas'],
+    ['ecommerce','E-commerce B2B'],
+    ['inteligencia-vendas','Inteligência de Vendas'],
     ['hub-epiper','Hub Epiper'],
     ['integracoes','Integrações com ERP'],
     ['operacao-conectada','Operação conectada'],
@@ -45,7 +47,7 @@
         <div class="contact-assurance__grid">
           <article><b>1</b><h3>ERP e estrutura atual</h3><p>Qual sistema sustenta clientes, produtos, preço, estoque e pedidos hoje.</p></article>
           <article><b>2</b><h3>Fluxo comercial</h3><p>Quem vende, como o pedido é montado e onde aparecem as principais etapas manuais.</p></article>
-          <article><b>3</b><h3>Prioridade</h3><p>Qual problema deve melhorar primeiro: canal B2B, atendimento, integração, retorno ou organização do ecossistema.</p></article>
+          <article><b>3</b><h3>Prioridade</h3><p>Qual problema deve melhorar primeiro: pedido B2B, atendimento, loja digital, comunicação comercial ou integração.</p></article>
         </div>
         <div class="contact-assurance__note"><strong>Importante:</strong> compatibilidade com ERP, automações e retornos são confirmados depois da análise técnica do ambiente — sem prometer integração automática antes de avaliar APIs, banco, arquivos, permissões e processo.</div>
       </div>`;

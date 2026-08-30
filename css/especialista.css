@@ -8,6 +8,9 @@
 .contact-points div{padding:10px 0;border-bottom:1px solid rgba(98,72,178,.07)}
 .contact-points div:last-child{border-bottom:0}
 .contact-note{background:#fff;border:1px solid rgba(98,72,178,.07);box-shadow:none}
+.contact-products{display:flex;flex-wrap:wrap;gap:7px;margin-top:21px}
+.contact-products span{padding:8px 10px;border:1px solid rgba(98,72,178,.08);border-radius:999px;background:rgba(255,255,255,.78);color:#5e527f;font-size:10px;font-weight:800}
+.consent a{color:#5f36df;font-weight:750}
 .contact-assurance{padding:70px 0 76px;background:#fff}
 .contact-assurance__head{max-width:780px;margin:0 auto 30px;text-align:center}
 .contact-assurance__head>span{display:inline-flex;padding:6px 10px;border-radius:999px;background:#eee8ff;color:#6847d7;font-size:9.5px;font-weight:850;letter-spacing:.06em;text-transform:uppercase}

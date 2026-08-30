@@ -16,6 +16,10 @@ html:has(link[rel="canonical"][href$="/hub-epiper.html"]) .platform-orbit{width:
 html:has(link[rel="canonical"][href$="/operacao-conectada.html"]) .platform-orbit{background-image:url("../assets/images/operacao-conectada-diagrama.svg")!important}
 html:has(link[rel="canonical"][href$="/implantacao-guiada.html"]) .platform-orbit{background-image:url("../assets/images/implantacao-guiada-diagrama.svg")!important}
 html:has(link[rel="canonical"][href$="/evolucao-modulos.html"]) .platform-orbit{background-image:url("../assets/images/evolucao-modulos-diagrama.svg")!important}
+html:has(link[rel="canonical"][href$="/ecommerce.html"]) .platform-orbit,
+html:has(link[rel="canonical"][href$="/inteligencia-vendas.html"]) .platform-orbit{width:min(100%,690px)!important;aspect-ratio:16/9;border-radius:20px!important;background-color:#eef0f7!important;box-shadow:0 24px 70px rgba(47,36,94,.16)!important}
+html:has(link[rel="canonical"][href$="/ecommerce.html"]) .platform-orbit{background-image:url("../assets/produto-real/ecommerce.png")!important}
+html:has(link[rel="canonical"][href$="/inteligencia-vendas.html"]) .platform-orbit{background-image:url("../assets/produto-real/inteligencia-vendas.png")!important}
 
 /* Ritmo, tipografia e componentes */
 .platform-section{padding:68px 0}
@@ -30,6 +34,8 @@ html:has(link[rel="canonical"][href$="/evolucao-modulos.html"]) .platform-orbit{
 .platform-visual-card{background:transparent!important;box-shadow:none!important;border:0!important;padding:0!important}
 .platform-visual-card__flow{background:rgba(255,255,255,.58);box-shadow:inset 0 0 0 1px rgba(98,72,178,.06)}
 .platform-visual-card__lines span{background:#eae3f8}
+.product-real-frame{margin:0;padding:9px;border-radius:23px;background:#fff;box-shadow:0 24px 64px rgba(62,43,122,.14),0 0 0 1px rgba(98,72,178,.08);overflow:hidden}
+.product-real-frame img{display:block;width:100%;height:auto;border-radius:15px;background:#f2f3f8}
 
 /* Hub: a tela real continua sendo a referência principal */
 body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card{padding:0!important;min-height:0;aspect-ratio:920/600;border-radius:0!important;background-color:transparent!important;background-size:contain!important;background-repeat:no-repeat!important;background-position:center!important;box-shadow:none!important;border:0!important;overflow:visible!important}
@@ -42,6 +48,8 @@ html:has(link[rel="canonical"][href$="/hub-epiper.html"]) .platform-grid::after{
 html:has(link[rel="canonical"][href$="/operacao-conectada.html"]) .platform-grid::after{background-image:url("../assets/images/operacao-conectada-detalhes.svg")}
 html:has(link[rel="canonical"][href$="/implantacao-guiada.html"]) .platform-grid::after{background-image:url("../assets/images/implantacao-guiada-detalhes.svg")}
 html:has(link[rel="canonical"][href$="/evolucao-modulos.html"]) .platform-grid::after{background-image:url("../assets/images/evolucao-modulos-detalhes.svg")}
+html:has(link[rel="canonical"][href$="/ecommerce.html"]) .platform-grid::after,
+html:has(link[rel="canonical"][href$="/inteligencia-vendas.html"]) .platform-grid::after{display:none}
 
 @media(max-width:1000px){
   .platform-hero__grid{grid-template-columns:1fr;gap:28px}
@@ -59,10 +67,13 @@ html:has(link[rel="canonical"][href$="/evolucao-modulos.html"]) .platform-grid::
   .platform-hero h1{font-size:34px}
   .platform-orbit{width:min(96vw,500px)!important}
   html:has(link[rel="canonical"][href$="/hub-epiper.html"]) .platform-orbit{width:min(96vw,540px)!important}
+  html:has(link[rel="canonical"][href$="/ecommerce.html"]) .platform-orbit,
+  html:has(link[rel="canonical"][href$="/inteligencia-vendas.html"]) .platform-orbit{width:100%!important;border-radius:14px!important}
   .platform-section{padding:50px 0}
   .platform-head{margin-bottom:24px}
   .platform-card{padding:18px;border-radius:18px}
   .platform-split{gap:26px}
   .platform-grid::after{width:100%;margin-top:18px}
   body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card{width:100%;border-radius:0!important}
+  .product-real-frame{padding:5px;border-radius:16px}.product-real-frame img{border-radius:11px}
 }
