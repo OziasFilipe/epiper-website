@@ -1757,3 +1757,6 @@
   .operation-proof__grid{grid-template-columns:1fr}
   .operation-proof__card:last-child{grid-column:auto}
 }
+
+/* Hero no celular: apenas o cartão de status, sem cortar nas bordas */
+@media(max-width:640px){.floating-box--product,.floating-box--sales{display:none}.floating-box--notes{left:12px;right:12px;bottom:12px;max-width:none;width:auto}}

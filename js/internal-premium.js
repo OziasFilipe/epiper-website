@@ -182,12 +182,14 @@
   };
 
   const cfg = pages[file];
-  if (!cfg || document.querySelector('.ip-section[data-ip-generated]')) return;
+  if (!cfg) return;
+  // Seções complementares podem já estar no HTML estático (melhor para SEO); nesse caso só aplicamos o visual.
+  const baked = !!document.querySelector('.ip-section[data-ip-generated]');
 
   document.body.classList.add('internal-premium',`internal-${file.replace('.html','')}`);
   if (!document.querySelector('link[data-internal-premium]')) {
     const link = document.createElement('link');
-    link.rel='stylesheet'; link.href='css/internal-premium.css?v=38'; link.dataset.internalPremium='1';
+    link.rel='stylesheet'; link.href='css/internal-premium.css?v=40'; link.dataset.internalPremium='1';
     document.head.appendChild(link);
   }
 
@@ -196,42 +198,47 @@
   const card = ([ico,title,text,tag]) => `<article class="ip-card"><span class="ip-card__icon"><img src="${icon(ico)}" alt=""/></span><h3>${title}</h3><p>${text}</p>${tag?`<span class="ip-card__tag">${tag}</span>`:''}</article>`;
   const list = (items) => items.map(item=>`<li>${item}</li>`).join('');
 
-  const hero = main.querySelector(':scope > section');
-  if (hero && !document.querySelector('.ip-context')) {
-    const context = document.createElement('section');
-    context.className='ip-context';
-    context.setAttribute('aria-label','Resumo da página');
-    context.innerHTML=`<div class="container ip-context__inner">${cfg.context.map(([ico,title,text])=>`<div class="ip-context__item"><span class="ip-context__icon"><img src="${icon(ico)}" alt=""/></span><div><b>${title}</b><span>${text}</span></div></div>`).join('')}</div>`;
-    hero.insertAdjacentElement('afterend',context);
+  if (!baked) {
+    const hero = main.querySelector(':scope > section');
+    if (hero && !document.querySelector('.ip-context')) {
+      const context = document.createElement('section');
+      context.className='ip-context';
+      context.setAttribute('aria-label','Resumo da página');
+      context.innerHTML=`<div class="container ip-context__inner">${cfg.context.map(([ico,title,text])=>`<div class="ip-context__item"><span class="ip-context__icon"><img src="${icon(ico)}" alt=""/></span><div><b>${title}</b><span>${text}</span></div></div>`).join('')}</div>`;
+      hero.insertAdjacentElement('afterend',context);
+    }
+
+    const overview = document.createElement('section');
+    overview.className='ip-section'; overview.dataset.ipGenerated='1';
+    overview.innerHTML=`<div class="container"><div class="ip-section__head"><span class="ip-kicker">${cfg.kicker}</span><h2>${cfg.title}</h2><p>${cfg.intro}</p></div><div class="ip-overview">${cfg.cards.map(card).join('')}</div></div>`;
+
+    let anchor = document.querySelector('.hub-real-showcase') || document.getElementById('detalhes') || document.getElementById('recursos') || document.getElementById('como-integra') || main.querySelector('.faq-section') || main.children[1] || hero;
+    // Dúvidas: o conteúdo complementar entra depois de todos os grupos de perguntas, sem interrompê-los.
+    if (file==='duvidas.html') anchor = [...main.querySelectorAll('.faq-section')].pop() || anchor;
+    if (anchor) anchor.insertAdjacentElement('afterend',overview); else main.appendChild(overview);
+    let last = overview;
+
+    if (cfg.visual) {
+      const [src,title,text,points] = cfg.visual;
+      const visual = document.createElement('section');
+      visual.className='ip-visual';
+      visual.innerHTML=`<div class="container"><div class="ip-visual__wrap"><div class="ip-visual__copy"><span class="ip-kicker">Visão explicativa</span><h2>${title}</h2><p>${text}</p><div class="ip-visual__points">${points.map(p=>`<div>${p}</div>`).join('')}</div></div><figure class="ip-visual__media"><img src="${src}" alt="${title}" loading="lazy"/><figcaption class="ip-visual__caption">Representação funcional para facilitar o entendimento do fluxo.</figcaption></figure></div></div>`;
+      last.insertAdjacentElement('afterend',visual); last=visual;
+    }
+
+    const decision = document.createElement('section');
+    decision.className='ip-section ip-section--soft';
+    decision.innerHTML=`<div class="container"><div class="ip-section__head"><span class="ip-kicker">Pontos para avaliar</span><h2>O que precisa estar claro para a solução funcionar bem.</h2><p>Funcionalidade, integração e processo precisam caminhar juntos. Estes são os pontos que mais influenciam a qualidade do projeto e a adoção da equipe.</p></div><div class="ip-decision">${cfg.decision.map(([title,items],i)=>`<article class="ip-decision__card"><small>${String(i+1).padStart(2,'0')}</small><h3>${title}</h3><ul>${list(items)}</ul></article>`).join('')}</div><div class="ip-note"><span class="ip-note__icon">i</span><div><b>${cfg.note[0]}</b><p>${cfg.note[1]}</p></div></div></div>`;
+    last.insertAdjacentElement('afterend',decision); last=decision;
+
+    const related = document.createElement('section');
+    related.className='ip-related';
+    related.innerHTML=`<div class="container"><div class="ip-related__head"><div><span class="ip-kicker">Próximo passo</span><h2>Continue pelo ponto que faz mais sentido para sua operação.</h2></div><p>As páginas se complementam, mas cada uma responde a uma decisão diferente: produto, integração, implantação ou evolução.</p></div><div class="ip-related__grid">${cfg.related.map(([href,title,text])=>`<a class="ip-related__card" href="${href}"><b>${title}</b><span>${text}</span><em>Continuar →</em></a>`).join('')}</div></div>`;
+    const ctas = [...main.querySelectorAll('.cta,.platform-cta,.faq-cta,.integration-cta')];
+    const finalCta = ctas[ctas.length-1];
+    if (finalCta && !finalCta.contains(last)) finalCta.insertAdjacentElement('beforebegin',related); else main.appendChild(related);
+
   }
-
-  const overview = document.createElement('section');
-  overview.className='ip-section'; overview.dataset.ipGenerated='1';
-  overview.innerHTML=`<div class="container"><div class="ip-section__head"><span class="ip-kicker">${cfg.kicker}</span><h2>${cfg.title}</h2><p>${cfg.intro}</p></div><div class="ip-overview">${cfg.cards.map(card).join('')}</div></div>`;
-
-  let anchor = document.querySelector('.hub-real-showcase') || document.getElementById('detalhes') || document.getElementById('recursos') || document.getElementById('como-integra') || main.querySelector('.faq-section') || main.children[1] || hero;
-  if (anchor) anchor.insertAdjacentElement('afterend',overview); else main.appendChild(overview);
-  let last = overview;
-
-  if (cfg.visual) {
-    const [src,title,text,points] = cfg.visual;
-    const visual = document.createElement('section');
-    visual.className='ip-visual';
-    visual.innerHTML=`<div class="container"><div class="ip-visual__wrap"><div class="ip-visual__copy"><span class="ip-kicker">Visão explicativa</span><h2>${title}</h2><p>${text}</p><div class="ip-visual__points">${points.map(p=>`<div>${p}</div>`).join('')}</div></div><figure class="ip-visual__media"><img src="${src}" alt="${title}" loading="lazy"/><figcaption class="ip-visual__caption">Representação funcional para facilitar o entendimento do fluxo.</figcaption></figure></div></div>`;
-    last.insertAdjacentElement('afterend',visual); last=visual;
-  }
-
-  const decision = document.createElement('section');
-  decision.className='ip-section ip-section--soft';
-  decision.innerHTML=`<div class="container"><div class="ip-section__head"><span class="ip-kicker">Pontos para avaliar</span><h2>O que precisa estar claro para a solução funcionar bem.</h2><p>Funcionalidade, integração e processo precisam caminhar juntos. Estes são os pontos que mais influenciam a qualidade do projeto e a adoção da equipe.</p></div><div class="ip-decision">${cfg.decision.map(([title,items],i)=>`<article class="ip-decision__card"><small>${String(i+1).padStart(2,'0')}</small><h3>${title}</h3><ul>${list(items)}</ul></article>`).join('')}</div><div class="ip-note"><span class="ip-note__icon">i</span><div><b>${cfg.note[0]}</b><p>${cfg.note[1]}</p></div></div></div>`;
-  last.insertAdjacentElement('afterend',decision); last=decision;
-
-  const related = document.createElement('section');
-  related.className='ip-related';
-  related.innerHTML=`<div class="container"><div class="ip-related__head"><div><span class="ip-kicker">Próximo passo</span><h2>Continue pelo ponto que faz mais sentido para sua operação.</h2></div><p>As páginas se complementam, mas cada uma responde a uma decisão diferente: produto, integração, implantação ou evolução.</p></div><div class="ip-related__grid">${cfg.related.map(([href,title,text])=>`<a class="ip-related__card" href="${href}"><b>${title}</b><span>${text}</span><em>Continuar →</em></a>`).join('')}</div></div>`;
-  const ctas = [...main.querySelectorAll('.cta,.platform-cta,.faq-cta,.integration-cta')];
-  const finalCta = ctas[ctas.length-1];
-  if (finalCta && !finalCta.contains(last)) finalCta.insertAdjacentElement('beforebegin',related); else main.appendChild(related);
 
   // Acabamento dos componentes já existentes sem reescrever o conteúdo original.
   main.querySelectorAll('.platform-card,.feature,.step,.benefit,.sync-card,.erp-brand-card').forEach((el,i)=>{
@@ -248,7 +255,8 @@
       const search = document.createElement('div');
       search.className='ip-faq-search';
       search.innerHTML='<input type="search" aria-label="Buscar nas dúvidas" placeholder="Busque por ERP, integração, pedido, implantação..."/><span aria-hidden="true">⌕</span>';
-      firstList.parentElement.insertBefore(search,firstList);
+      const band = document.createElement('section'); band.className='faq-search-band'; band.innerHTML='<div class="container"></div>'; band.firstChild.appendChild(search);
+      const navSection = document.querySelector('.faq-nav-section'); (navSection||firstList.closest('section')).insertAdjacentElement(navSection?'afterend':'beforebegin',band);
       const input=search.querySelector('input');
       input.addEventListener('input',()=>{
         const q=input.value.trim().toLocaleLowerCase('pt-BR');

@@ -164,3 +164,11 @@ Na seção Plataforma Epiper da Home, os cards de Pedido Eletrônico e Televenda
 - Formulário comercial ganhou os dois produtos (Pedido Eletrônico e Televendas), contexto automático de origem e link para a Política de Privacidade.
 - Política de Privacidade e Termos ganharam resumo e navegação local para melhorar a leitura.
 - Sitemap atualizado com as duas novas páginas de produto.
+
+
+## Revisão de SEO, layout e conteúdo
+- Títulos, descrições, canonical, Open Graph e Twitter Cards únicos por página; JSON-LD de Organization/WebSite (home), BreadcrumbList (internas), SoftwareApplication (Pedido Eletrônico e Televendas) e FAQPage (Dúvidas).
+- Conteúdo complementar das páginas internas agora está no HTML estático (indexável sem JavaScript).
+- Hero de Plataforma, Operação conectada, Implantação, Evolução e Integrações usam o componente `css/hero-flow.css` (texto real em vez de diagramas SVG).
+- Skip link, `main#conteudo`, `width/height` e `loading="lazy"` nas imagens, `404.html`, `_headers` (segurança/cache) e `sitemap.xml` atualizado.
+- Portfólio: Pedido Eletrônico, Televendas e Hub Epiper.

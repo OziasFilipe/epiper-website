@@ -1,0 +1,19 @@
+/* Cartão de fluxo dos hero (Plataforma, Operação, Implantação, Evolução e Integrações):
+   texto real e legível, em vez de diagramas SVG com letras minúsculas. */
+.hero-flow{width:min(100%,520px);padding:30px 30px 24px;border-radius:30px;background:#fff;box-shadow:0 30px 80px rgba(72,47,139,.15),0 0 0 1px rgba(100,76,175,.08);text-align:left}
+.hero-flow__kicker{display:inline-flex;padding:6px 12px;border-radius:999px;background:#efeaff;color:#6947d7;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+.hero-flow__title{margin:14px 0 20px;color:#271b50;font-size:clamp(20px,2vw,24px);line-height:1.2;letter-spacing:-.02em}
+.hero-flow__steps{position:relative;display:grid;gap:14px;margin:0;padding:0;list-style:none}
+.hero-flow__steps li{position:relative;display:flex;align-items:flex-start;gap:14px;padding:14px 16px;border:1px solid #ece7f7;border-radius:18px;background:#faf8ff}
+.hero-flow__steps:not(.hero-flow__steps--grid) li:not(:last-child)::after{content:'';position:absolute;left:34px;bottom:-15px;width:2px;height:15px;background:linear-gradient(#b9a6f5,#e4dcfb)}
+.hero-flow__icon{display:grid;flex:0 0 40px;width:40px;height:40px;place-items:center}
+.hero-flow__icon img{width:40px;height:40px;object-fit:contain}
+.hero-flow__num{display:grid;flex:0 0 32px;width:32px;height:32px;place-items:center;border-radius:50%;background:linear-gradient(135deg,#6f46ff,#8f63ff);color:#fff;font-size:13px;font-weight:800}
+.hero-flow__steps b{display:block;color:#2b2054;font-size:15px;line-height:1.25}
+.hero-flow__steps span:not(.hero-flow__icon):not(.hero-flow__num){display:block;margin-top:3px;color:#716b88;font-size:13px;line-height:1.5}
+.hero-flow__steps--grid{grid-template-columns:1fr 1fr;gap:10px}
+.hero-flow__steps--grid li{padding:12px 13px;gap:10px}
+.hero-flow__steps--grid b{font-size:14px}
+.hero-flow__steps--grid span:not(.hero-flow__num){font-size:12px}
+.hero-flow__foot{margin:18px 0 0;padding-top:16px;border-top:1px solid #eeeaf5;color:#5d5278;font-size:13px;font-weight:700;line-height:1.5}
+@media(max-width:640px){.hero-flow{padding:22px 18px 18px;border-radius:24px}.hero-flow__steps--grid{grid-template-columns:1fr}}

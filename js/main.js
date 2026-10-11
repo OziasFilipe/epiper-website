@@ -206,7 +206,7 @@ if (platformLayoutPages.has(internalPremiumFile) && !document.querySelector('lin
 }
 if (internalPremiumPages.has(internalPremiumFile) && !document.querySelector('script[data-internal-premium]')) {
   const premiumScript=document.createElement('script');
-  premiumScript.src='js/internal-premium.js?v=37';
+  premiumScript.src='js/internal-premium.js?v=39';
   premiumScript.defer=true;
   premiumScript.dataset.internalPremium='1';
   document.body.appendChild(premiumScript);

@@ -36,3 +36,15 @@
   .footer-logo-white,.footer__brand .footer-logo-white{width:142px;}
   .footer__product-brand .footer-logo-white{width:132px;}
 }
+
+/* Atalhos rápidos no topo: respostas objetivas em vez de ilustração decorativa */
+.faq-quick{width:min(100%,520px);padding:28px;border-radius:28px;background:#fff;box-shadow:0 28px 70px rgba(72,47,139,.14),0 0 0 1px rgba(100,76,175,.08)}
+.faq-quick__label{display:inline-flex;padding:6px 11px;border-radius:999px;background:#efeaff;color:#6947d7;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.faq-quick h2{margin:14px 0 16px;font-size:22px;line-height:1.2;letter-spacing:-.02em;color:#271b50}
+.faq-quick ul{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.faq-quick a{display:grid;gap:3px;padding:14px 16px;border:1px solid #ece7f7;border-radius:16px;background:#faf8ff;text-decoration:none;transition:.18s}
+.faq-quick a:hover{border-color:#b9a6f5;background:#f3eeff;transform:translateY(-1px)}
+.faq-quick b{color:#30255b;font-size:14px}
+.faq-quick span{color:#716b88;font-size:12.5px;line-height:1.5}
+.faq-search-band{padding:30px 0 0;background:#fff}
+.faq-search-band .ip-faq-search{max-width:760px;margin:0 auto}
