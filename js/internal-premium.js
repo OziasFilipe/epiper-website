@@ -1,5 +1,5 @@
 (() => {
-  const file = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  const file = (() => { const f = (location.pathname.split('/').pop() || 'index.html').toLowerCase(); return f.includes('.') ? f : `${f}.html`; })();
   const icon = (name) => `assets/icons/menu/${name}.svg`;
 
   const pages = {
@@ -227,7 +227,7 @@
   document.body.classList.add('internal-premium',`internal-${file.replace('.html','')}`);
   if (!document.querySelector('link[data-internal-premium]')) {
     const link = document.createElement('link');
-    link.rel='stylesheet'; link.href='css/internal-premium.css?v=36'; link.dataset.internalPremium='1';
+    link.rel='stylesheet'; link.href='css/internal-premium.css?v=37'; link.dataset.internalPremium='1';
     document.head.appendChild(link);
   }
 

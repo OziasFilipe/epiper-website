@@ -177,7 +177,7 @@ const syncStickyHeader=() => { if(header) header.classList.toggle('is-scrolled',
 syncStickyHeader(); window.addEventListener('scroll',syncStickyHeader,{passive:true});
 
 // Hub Epiper: apresenta uma captura real da central do sistema na página dedicada.
-if ((document.body && location.pathname.endsWith('/hub-epiper.html')) || location.pathname.endsWith('hub-epiper.html')) {
+if (/hub-epiper(.html)?$/.test(location.pathname)) {
   const detailsSection = document.getElementById('detalhes');
   if (detailsSection && !document.querySelector('.hub-real-showcase')) {
     const style = document.createElement('style');
@@ -224,16 +224,16 @@ const internalPremiumPages = new Set([
   'plataforma.html','hub-epiper.html','operacao-conectada.html','implantacao-guiada.html','evolucao-modulos.html',
   'pedido-eletronico.html','televendas.html','ecommerce.html','inteligencia-vendas.html','integracoes.html','duvidas.html'
 ]);
-const internalPremiumFile = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+const internalPremiumFile = (() => { const f = (location.pathname.split('/').pop() || 'index.html').toLowerCase(); return f.includes('.') ? f : `${f}.html`; })(); // aceita URLs limpas (/pedido-eletronico)
 const platformLayoutPages = new Set(['plataforma.html','hub-epiper.html','operacao-conectada.html','implantacao-guiada.html','evolucao-modulos.html','ecommerce.html','inteligencia-vendas.html']);
 if (platformLayoutPages.has(internalPremiumFile) && !document.querySelector('link[data-platform-v36]')) {
   const platformStyle=document.createElement('link');
-  platformStyle.rel='stylesheet'; platformStyle.href='css/plataforma.css?v=36'; platformStyle.dataset.platformV36='1';
+  platformStyle.rel='stylesheet'; platformStyle.href='css/plataforma.css?v=37'; platformStyle.dataset.platformV36='1';
   document.head.appendChild(platformStyle);
 }
 if (internalPremiumPages.has(internalPremiumFile) && !document.querySelector('script[data-internal-premium]')) {
   const premiumScript=document.createElement('script');
-  premiumScript.src='js/internal-premium.js?v=36';
+  premiumScript.src='js/internal-premium.js?v=37';
   premiumScript.defer=true;
   premiumScript.dataset.internalPremium='1';
   document.body.appendChild(premiumScript);
