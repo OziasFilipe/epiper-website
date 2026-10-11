@@ -26,3 +26,6 @@ body.internal-premium .visual__photo-card--mockup>img{width:100%;height:auto!imp
   .faq-layout:has(>.ip-faq-search)>.ip-faq-search{grid-column:2;grid-row:1}
   .faq-layout:has(>.ip-faq-search)>.faq-list{grid-column:2;grid-row:2}
 }
+
+/* Ícones dos cards de recursos: a regra genérica de 100% estourava o tamanho */
+body .feature>img{width:52px!important;height:52px!important;flex:0 0 52px;object-fit:contain!important}
