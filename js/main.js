@@ -207,7 +207,7 @@ if (/hub-epiper(.html)?$/.test(location.pathname)) {
         </div>
         <figure class="hub-real-showcase__frame">
           <div class="hub-real-showcase__bar" aria-hidden="true"><span></span><span></span><span></span></div>
-          <img src="assets/produto-real/hub-epiper.png" alt="Tela real do Hub Epiper com acesso ao Pedido Eletrônico, E-commerce, Televendas, Inteligência de Vendas, clientes, pedidos, produtos e integrações." loading="lazy" width="900" height="477" />
+          <img src="assets/produto-real/hub-epiper.webp" alt="Tela real do Hub Epiper com acesso ao Pedido Eletrônico, E-commerce, Televendas, Inteligência de Vendas, clientes, pedidos, produtos e integrações." loading="lazy" width="900" height="477" />
         </figure>
         <div class="hub-real-showcase__chips" aria-label="Benefícios do Hub Epiper">
           <div class="hub-real-showcase__chip">Soluções em um só lugar</div>
@@ -242,8 +242,8 @@ if (internalPremiumPages.has(internalPremiumFile) && !document.querySelector('sc
 // Home: as Soluções 01 e 02 usam capturas reais do produto em funcionamento.
 if (internalPremiumFile === 'index.html') {
   const homeSolutionMockups = [
-    ['.platform-solution--primary','assets/produto-real/pedido-eletronico.png','Tela real do Pedido Eletrônico Epiper'],
-    ['.platform-solution--secondary','assets/produto-real/televendas-dashboard.png','Tela real do Televendas Epiper'],
+    ['.platform-solution--primary','assets/produto-real/pedido-eletronico.webp','Tela real do Pedido Eletrônico Epiper'],
+    ['.platform-solution--secondary','assets/produto-real/televendas-dashboard.webp','Tela real do Televendas Epiper'],
     ['.platform-solution--commerce','assets/produto-real/ecommerce.png','Tela real do E-commerce B2B Epiper'],
     ['.platform-solution--intelligence','assets/produto-real/inteligencia-vendas.png','Tela real da Inteligência de Vendas Epiper']
   ];
