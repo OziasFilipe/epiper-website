@@ -40,3 +40,9 @@ body .feature>img{width:52px!important;height:52px!important;flex:0 0 52px;objec
 /* "Na prática": a interface aparece inteira em vez de cortada */
 body.internal-premium .product-image-strip__media{height:auto;aspect-ratio:650/460;max-height:340px;background:#f5f1ff}
 body.internal-premium .product-image-strip__media>img{object-fit:contain}
+
+/* Pedido Eletrônico · "O que o usuário encontra": título compacto e espaçamento equilibrado */
+body.internal-premium:has(.hero img[src*="pedido-eletronico-mockup-topo"]) #recursos{padding:64px 0 72px!important}
+body.internal-premium:has(.hero img[src*="pedido-eletronico-mockup-topo"]) #recursos .head{max-width:780px!important;margin:0 auto 38px!important}
+body.internal-premium:has(.hero img[src*="pedido-eletronico-mockup-topo"]) #recursos .head h2{font-size:clamp(24px,2.3vw,30px)!important;line-height:1.15!important;margin:12px 0 10px!important}
+body.internal-premium:has(.hero img[src*="pedido-eletronico-mockup-topo"]) #recursos .head p{font-size:14px!important;line-height:1.6!important;max-width:520px!important;margin:0 auto!important}
