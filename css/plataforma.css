@@ -11,11 +11,11 @@
 .platform-orbit:before,.platform-orbit:after,.platform-orbit__core,.platform-orbit__node{display:none!important}
 
 /* Cada página representa o seu próprio assunto */
-html:has(link[rel="canonical"][href$="/plataforma.html"]) .platform-orbit{width:min(100%,560px)!important;aspect-ratio:4/3!important;border-radius:34px!important;background-color:#ece6ff!important;background-size:cover!important;box-shadow:0 28px 70px rgba(72,47,139,.18),0 0 0 1px rgba(100,76,175,.08)!important;background-image:url("../assets/images/plataforma-hero.webp")!important}
+html:has(link[rel="canonical"][href$="/plataforma.html"]) .platform-orbit{background-image:url("../assets/images/plataforma-overview.svg")!important}
 html:has(link[rel="canonical"][href$="/hub-epiper.html"]) .platform-orbit{width:min(100%,690px)!important;aspect-ratio:1909/1012;background-image:url("../assets/images/hub-epiper-dashboard.webp")!important}
-html:has(link[rel="canonical"][href$="/operacao-conectada.html"]) .platform-orbit{width:min(100%,560px)!important;aspect-ratio:4/3!important;border-radius:34px!important;background-color:#ece6ff!important;background-size:cover!important;box-shadow:0 28px 70px rgba(72,47,139,.18),0 0 0 1px rgba(100,76,175,.08)!important;background-image:url("../assets/images/operacao-conectada-hero.webp")!important}
-html:has(link[rel="canonical"][href$="/implantacao-guiada.html"]) .platform-orbit{width:min(100%,560px)!important;aspect-ratio:4/3!important;border-radius:34px!important;background-color:#ece6ff!important;background-size:cover!important;box-shadow:0 28px 70px rgba(72,47,139,.18),0 0 0 1px rgba(100,76,175,.08)!important;background-image:url("../assets/images/implantacao-guiada-hero.webp")!important}
-html:has(link[rel="canonical"][href$="/evolucao-modulos.html"]) .platform-orbit{width:min(100%,560px)!important;aspect-ratio:4/3!important;border-radius:34px!important;background-color:#ece6ff!important;background-size:cover!important;box-shadow:0 28px 70px rgba(72,47,139,.18),0 0 0 1px rgba(100,76,175,.08)!important;background-image:url("../assets/images/evolucao-modulos-hero.webp")!important}
+html:has(link[rel="canonical"][href$="/operacao-conectada.html"]) .platform-orbit{background-image:url("../assets/images/operacao-conectada-diagrama.svg")!important}
+html:has(link[rel="canonical"][href$="/implantacao-guiada.html"]) .platform-orbit{background-image:url("../assets/images/implantacao-guiada-diagrama.svg")!important}
+html:has(link[rel="canonical"][href$="/evolucao-modulos.html"]) .platform-orbit{background-image:url("../assets/images/evolucao-modulos-diagrama.svg")!important}
 html:has(link[rel="canonical"][href$="/ecommerce.html"]) .platform-orbit,
 html:has(link[rel="canonical"][href$="/inteligencia-vendas.html"]) .platform-orbit{width:min(100%,690px)!important;aspect-ratio:16/9;border-radius:20px!important;background-color:#eef0f7!important;box-shadow:0 24px 70px rgba(47,36,94,.16)!important}
 html:has(link[rel="canonical"][href$="/ecommerce.html"]) .platform-orbit{background-image:url("../assets/produto-real/ecommerce.png")!important}
@@ -77,5 +77,3 @@ html:has(link[rel="canonical"][href$="/inteligencia-vendas.html"]) .platform-gri
   body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card{width:100%;border-radius:0!important}
   .product-real-frame{padding:5px;border-radius:16px}.product-real-frame img{border-radius:11px}
 }
-
-.platform-hero__art{width:min(100%,520px);border-radius:36px;overflow:hidden;background:#f4f0ff;box-shadow:0 28px 70px rgba(72,47,139,.18),0 0 0 1px rgba(100,76,175,.08)}.platform-hero__art img{display:block;width:100%;height:auto}
