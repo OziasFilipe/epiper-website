@@ -43,7 +43,7 @@
 
 .mega-menu-backdrop{position:fixed;inset:0;background:rgba(25,16,49,.13);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);opacity:0;visibility:hidden;pointer-events:none;transition:.2s ease;z-index:45}.mega-menu-backdrop.is-visible{opacity:1;visibility:visible;pointer-events:auto}
 
-@media(max-width:1040px){.site-header .nav-pill>a,.site-header .nav-top-trigger{padding:8px 8px;font-size:10.8px}.site-header .nav-actions{display:none}}
+@media(max-width:1040px){.site-header .nav-pill>a,.site-header .nav-top-trigger{padding:8px 8px;font-size:10.8px}.site-header .nav-actions .btn{padding-left:12px;padding-right:12px;font-size:11px}.site-header .nav-actions .btn--primary{white-space:nowrap}}
 @media(max-width:900px){.site-header .nav-shell{display:none}.site-header .hamburger{display:block}.site-header.is-open .nav-shell{position:absolute;left:14px;right:14px;top:58px;display:flex;flex-direction:column;align-items:stretch;z-index:80}.site-header.is-open .nav-pill{display:flex;flex-direction:column;align-items:stretch;border-radius:18px}.site-header.is-open .nav-pill>a,.site-header.is-open .nav-top-trigger{width:100%;justify-content:space-between}.site-header.is-open .nav-actions{display:flex;justify-content:center;border-radius:18px}.mega-menu-wrap,.mega-menu-backdrop{display:none}}
 @media(max-width:620px){.site-header .brand-logo{width:98px;max-height:34px}}
 
@@ -331,3 +331,5 @@
 @media(max-width:900px){html.mobile-nav-open{overflow:hidden}}
 
 .site-header .nav-actions .btn--login{background:transparent;color:#5b3fd0;box-shadow:inset 0 0 0 1px rgba(111,70,255,.28);margin-right:2px}.site-header .nav-actions .btn--login:hover{background:#f1ebff;box-shadow:inset 0 0 0 1px rgba(111,70,255,.5)}
+
+@media(max-width:900px){.site-header.is-open .nav-actions{flex-direction:column;gap:8px}.site-header.is-open .nav-actions .btn--login{margin:0;min-height:44px}}
