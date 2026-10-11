@@ -17,7 +17,7 @@ function buildMobileAccordions() {
       ['Visão geral da plataforma','plataforma.html'],['Hub Epiper','hub-epiper.html'],['Operação conectada','operacao-conectada.html'],['Implantação guiada','implantacao-guiada.html'],['Evolução por módulos','evolucao-modulos.html']
     ],
     solucoes: [
-      ['Pedido Eletrônico','pedido-eletronico.html'],['Televendas','televendas.html'],['E-commerce B2B','ecommerce.html'],['Inteligência de Vendas','inteligencia-vendas.html'],['Hub Epiper','hub-epiper.html'],['Integrações','integracoes.html'],['Falar com especialista','fale-com-especialista.html']
+      ['Pedido Eletrônico','pedido-eletronico.html'],['Televendas','televendas.html'],['Hub Epiper','hub-epiper.html'],['Integrações','integracoes.html'],['Falar com especialista','fale-com-especialista.html']
     ],
     recursos: [
       ['Catálogo e Pedido','pedido-eletronico.html'],['Clientes e atendimento','televendas.html'],['Integração com ERP','integracoes.html'],['Dúvidas frequentes','duvidas.html']
@@ -32,23 +32,7 @@ function buildMobileAccordions() {
 }
 buildMobileAccordions();
 
-// Mantém o menu de soluções alinhado aos quatro produtos reais do Hub.
 const solutionMenuGrid = document.querySelector('[data-menu-panel="solucoes"] .solution-menu-grid');
-if (solutionMenuGrid && !solutionMenuGrid.querySelector('[data-ecosystem-product]')) {
-  const hubCard = [...solutionMenuGrid.querySelectorAll('.solution-menu-card')].find(card => card.href?.includes('hub-epiper.html'));
-  const productCards = [
-    ['E-commerce B2B','Loja digital com catálogo por filial, carrinho, pedidos e landing pages para campanhas.','assets/icons/menu/varejo.svg','ecommerce.html'],
-    ['Inteligência de Vendas','Conteúdos, promoções, treinamentos e App Comercial para manter a equipe informada.','assets/icons/menu/evolucao.svg','inteligencia-vendas.html']
-  ];
-  productCards.forEach(([title,description,icon,href]) => {
-    const card = document.createElement('a');
-    card.href = href;
-    card.className = 'solution-menu-card';
-    card.dataset.ecosystemProduct = '1';
-    card.innerHTML = `<div class="solution-menu-card__head"><span class="solution-menu-card__icon"><img alt="" src="${icon}"/></span><h5>${title}</h5></div><p>${description}</p><strong>Conhecer produto →</strong>`;
-    solutionMenuGrid.insertBefore(card, hubCard || null);
-  });
-}
 if (solutionMenuGrid && !solutionMenuGrid.querySelector('[data-specialist-card]')) {
   const specialistCard = document.createElement('a');
   specialistCard.href = 'fale-com-especialista.html';
@@ -58,17 +42,6 @@ if (solutionMenuGrid && !solutionMenuGrid.querySelector('[data-specialist-card]'
   solutionMenuGrid.appendChild(specialistCard);
 }
 
-// Os footers antigos passam a listar todo o portfólio sem duplicar a marcação em cada página.
-document.querySelectorAll('nav[aria-label="Produtos"]').forEach(productsNav => {
-  const products = [
-    ['E-commerce B2B','ecommerce.html'],
-    ['Inteligência de Vendas','inteligencia-vendas.html']
-  ];
-  products.forEach(([label,href]) => {
-    if ([...productsNav.querySelectorAll('a')].some(link => link.textContent.trim() === label)) return;
-    const link = document.createElement('a'); link.href = href; link.textContent = label; productsNav.appendChild(link);
-  });
-});
 
 // Páginas legais: resumo e navegação local para leitura mais rápida, sem alterar o conteúdo jurídico.
 const legalWrap = document.querySelector('.legal-page .legal-wrap');
@@ -207,7 +180,7 @@ if (/hub-epiper(.html)?$/.test(location.pathname)) {
         </div>
         <figure class="hub-real-showcase__frame">
           <div class="hub-real-showcase__bar" aria-hidden="true"><span></span><span></span><span></span></div>
-          <img src="assets/produto-real/hub-epiper.webp" alt="Tela real do Hub Epiper com acesso ao Pedido Eletrônico, E-commerce, Televendas, Inteligência de Vendas, clientes, pedidos, produtos e integrações." loading="lazy" width="900" height="477" />
+          <img src="assets/produto-real/hub-epiper.webp" alt="Tela real do Hub Epiper com acesso ao Pedido Eletrônico, Televendas, clientes, pedidos, produtos e integrações." loading="lazy" width="900" height="477" />
         </figure>
         <div class="hub-real-showcase__chips" aria-label="Benefícios do Hub Epiper">
           <div class="hub-real-showcase__chip">Soluções em um só lugar</div>
@@ -222,10 +195,10 @@ if (/hub-epiper(.html)?$/.test(location.pathname)) {
 // Acabamento editorial e conteúdo adicional somente nas páginas internas de produto/plataforma.
 const internalPremiumPages = new Set([
   'plataforma.html','hub-epiper.html','operacao-conectada.html','implantacao-guiada.html','evolucao-modulos.html',
-  'pedido-eletronico.html','televendas.html','ecommerce.html','inteligencia-vendas.html','integracoes.html','duvidas.html'
+  'pedido-eletronico.html','televendas.html','integracoes.html','duvidas.html'
 ]);
 const internalPremiumFile = (() => { const f = (location.pathname.split('/').pop() || 'index.html').toLowerCase(); return f.includes('.') ? f : `${f}.html`; })(); // aceita URLs limpas (/pedido-eletronico)
-const platformLayoutPages = new Set(['plataforma.html','hub-epiper.html','operacao-conectada.html','implantacao-guiada.html','evolucao-modulos.html','ecommerce.html','inteligencia-vendas.html']);
+const platformLayoutPages = new Set(['plataforma.html','hub-epiper.html','operacao-conectada.html','implantacao-guiada.html','evolucao-modulos.html']);
 if (platformLayoutPages.has(internalPremiumFile) && !document.querySelector('link[data-platform-v36]')) {
   const platformStyle=document.createElement('link');
   platformStyle.rel='stylesheet'; platformStyle.href='css/plataforma.css?v=37'; platformStyle.dataset.platformV36='1';
@@ -243,9 +216,7 @@ if (internalPremiumPages.has(internalPremiumFile) && !document.querySelector('sc
 if (internalPremiumFile === 'index.html') {
   const homeSolutionMockups = [
     ['.platform-solution--primary','assets/produto-real/pedido-eletronico.webp','Tela real do Pedido Eletrônico Epiper'],
-    ['.platform-solution--secondary','assets/produto-real/televendas-dashboard.webp','Tela real do Televendas Epiper'],
-    ['.platform-solution--commerce','assets/produto-real/ecommerce.png','Tela real do E-commerce B2B Epiper'],
-    ['.platform-solution--intelligence','assets/produto-real/inteligencia-vendas.png','Tela real da Inteligência de Vendas Epiper']
+    ['.platform-solution--secondary','assets/produto-real/televendas-dashboard.webp','Tela real do Televendas Epiper']
   ];
 
   homeSolutionMockups.forEach(([selector,src,alt]) => {

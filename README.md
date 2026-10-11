@@ -151,17 +151,16 @@ Na seção Plataforma Epiper da Home, os cards de Pedido Eletrônico e Televenda
 
 ## V35 — Conteúdo alinhado ao produto real
 - A Home preserva a proposta de Pedido Eletrônico + Televendas, mas passa a apresentar o ecossistema completo.
-- E-commerce B2B e Inteligência de Vendas entram no portfólio com recursos confirmados no sistema.
-- O Hub agora explica os quatro produtos, o núcleo compartilhado, filiais e permissões por usuário.
+- O Hub agora explica os dois produtos (Pedido Eletrônico e Televendas), o núcleo compartilhado, filiais e permissões por usuário.
 - Capturas reais do Hub, Televendas, Pedido Eletrônico e Central de Integrações substituem parte dos mockups genéricos.
 - Navegação desktop, menu mobile e footer passam a listar o portfólio completo.
 - SEO e FAQ foram atualizados para refletir a solução atual.
 
 ## V36 — Todas as páginas alinhadas ao ecossistema
-- Criadas páginas próprias para `ecommerce.html` e `inteligencia-vendas.html`, com conteúdo e capturas do produto em funcionamento.
-- Home, Hub, evolução modular, menus e rodapés agora direcionam corretamente para os quatro produtos.
+- Portfólio reduzido a Pedido Eletrônico, Televendas e o Hub; páginas de E-commerce e Inteligência de Vendas removidas.
+- Home, Hub, evolução modular, menus e rodapés agora direcionam corretamente para os dois produtos (Pedido Eletrônico e Televendas).
 - Páginas internas receberam conteúdo mais específico sobre uso, integração, implantação e critérios de decisão.
 - Integrações passaram a diferenciar o WinThor, já conectado, dos demais ERPs que ainda dependem de avaliação e implementação.
-- Formulário comercial ganhou os quatro produtos, contexto automático de origem e link para a Política de Privacidade.
+- Formulário comercial ganhou os dois produtos (Pedido Eletrônico e Televendas), contexto automático de origem e link para a Política de Privacidade.
 - Política de Privacidade e Termos ganharam resumo e navegação local para melhorar a leitura.
 - Sitemap atualizado com as duas novas páginas de produto.

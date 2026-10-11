@@ -14,8 +14,6 @@
   const originInterest = [
     ['pedido-eletronico','Pedido Eletrônico'],
     ['televendas','Televendas'],
-    ['ecommerce','E-commerce B2B'],
-    ['inteligencia-vendas','Inteligência de Vendas'],
     ['hub-epiper','Hub Epiper'],
     ['integracoes','Integrações com ERP'],
     ['operacao-conectada','Operação conectada'],
