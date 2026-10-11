@@ -189,7 +189,7 @@
   document.body.classList.add('internal-premium',`internal-${file.replace('.html','')}`);
   if (!document.querySelector('link[data-internal-premium]')) {
     const link = document.createElement('link');
-    link.rel='stylesheet'; link.href='css/internal-premium.css?v=40'; link.dataset.internalPremium='1';
+    link.rel='stylesheet'; link.href='css/internal-premium.css?v=41'; link.dataset.internalPremium='1';
     document.head.appendChild(link);
   }
 

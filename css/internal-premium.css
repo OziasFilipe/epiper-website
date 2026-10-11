@@ -61,3 +61,6 @@ body.internal-premium .ip-related__card:hover{background:#fff;border-color:rgba(
 body.internal-premium .ip-related__card b{color:#30245a}
 body.internal-premium .ip-related__card span{color:#716b88}
 body.internal-premium .ip-related__card em{color:#6a43dd}
+
+/* Dúvidas: a barra de categorias não acompanha a rolagem (cobria o conteúdo) */
+body.internal-premium .faq-nav-section,.faq-nav-section{position:static!important;top:auto!important;box-shadow:none!important;backdrop-filter:none!important}
