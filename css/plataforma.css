@@ -77,3 +77,5 @@ html:has(link[rel="canonical"][href$="/inteligencia-vendas.html"]) .platform-gri
   body:has(.hub-real-showcase) .platform-section--soft .platform-visual-card{width:100%;border-radius:0!important}
   .product-real-frame{padding:5px;border-radius:16px}.product-real-frame img{border-radius:11px}
 }
+
+.platform-hero__art{width:min(100%,520px);border-radius:36px;overflow:hidden;background:#f4f0ff;box-shadow:0 28px 70px rgba(72,47,139,.18),0 0 0 1px rgba(100,76,175,.08)}.platform-hero__art img{display:block;width:100%;height:auto}
