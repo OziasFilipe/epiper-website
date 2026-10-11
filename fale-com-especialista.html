@@ -43,20 +43,32 @@
         </div>
 
         <div class="form-grid">
-          <label class="field"><span>Nome *</span><input name="nome" autocomplete="name" required placeholder="Seu nome"/></label>
+          <label class="field"><span>Nome *</span><input name="nome" minlength="3" autocomplete="name" required placeholder="Seu nome"/></label>
           <label class="field"><span>Empresa *</span><input name="empresa" autocomplete="organization" required placeholder="Nome da empresa"/></label>
           <label class="field"><span>WhatsApp *</span><input name="telefone" inputmode="tel" autocomplete="tel" required placeholder="(27) 99999-9999"/></label>
           <label class="field"><span>E-mail *</span><input type="email" name="email" autocomplete="email" required placeholder="voce@empresa.com.br"/></label>
           <label class="field"><span>Segmento *</span><select name="segmento" required><option value="">Selecione</option><option>Varejo</option><option>Atacado</option><option>Distribuição</option><option>Indústria</option><option>Outro</option></select></label>
           <label class="field"><span>ERP atual</span><input name="erp" placeholder="Ex.: WinThor TOTVS, SAP, Sankhya..."/></label>
+          <label class="field"><span>Seu cargo *</span><select name="cargo" required><option value="">Selecione</option><option>Sócio / Diretor</option><option>Gerente comercial</option><option>TI / Sistemas</option><option>Operações / Logística</option><option>Vendedor / Representante</option><option>Outro</option></select></label>
+          <label class="field"><span>Vendedores na operação *</span><select name="vendedores" required><option value="">Selecione</option><option>Até 5</option><option>6 a 20</option><option>21 a 50</option><option>Mais de 50</option></select></label>
+          <label class="field"><span>Pedidos por mês *</span><select name="volume" required><option value="">Selecione</option><option>Até 200</option><option>201 a 1.000</option><option>1.001 a 5.000</option><option>Mais de 5.000</option></select></label>
+          <label class="field"><span>Prazo para decidir *</span><select name="prazo" required><option value="">Selecione</option><option>Imediato (até 30 dias)</option><option>1 a 3 meses</option><option>Mais de 3 meses</option><option>Apenas pesquisando</option></select></label>
+          <fieldset class="field field--full field--checks"><legend>Como os pedidos chegam hoje? <small>(marque quantos quiser)</small></legend>
+            <label><input type="checkbox" name="canais" value="WhatsApp"/><span>WhatsApp</span></label>
+            <label><input type="checkbox" name="canais" value="Telefone / Televendas"/><span>Telefone</span></label>
+            <label><input type="checkbox" name="canais" value="E-mail"/><span>E-mail</span></label>
+            <label><input type="checkbox" name="canais" value="Vendedor externo"/><span>Vendedor externo</span></label>
+            <label><input type="checkbox" name="canais" value="Portal / e-commerce"/><span>Portal / e-commerce</span></label>
+          </fieldset>
           <label class="field field--full"><span>Principal interesse *</span><select name="interesse" required><option value="">Selecione</option><option>Pedido Eletrônico</option><option>Televendas</option><option>E-commerce B2B</option><option>Inteligência de Vendas</option><option>Hub Epiper</option><option>Integrações com ERP</option><option>Operação conectada</option><option>Implantação e evolução por módulos</option><option>Quero entender qual solução faz sentido</option></select></label>
           <label class="field field--full"><span>O que você quer melhorar na operação?</span><textarea name="mensagem" rows="5" placeholder="Ex.: reduzir digitação de pedidos, integrar vendedores ao ERP, melhorar atendimento, criar canal B2B..."></textarea></label>
         </div>
 
-        <label class="consent"><input type="checkbox" required/><span>Concordo em enviar essas informações para que a Epiper entre em contato sobre as soluções apresentadas. Consulte a <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.</span></label>
+        <label class="consent"><input type="checkbox" name="consent" required/><span>Concordo em enviar essas informações para que a Epiper entre em contato sobre as soluções apresentadas. Consulte a <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.</span></label>
         <input type="hidden" name="origem" id="formOrigin"/>
         <button class="submit-btn" type="submit">Continuar no WhatsApp <span>→</span></button>
-        <p class="form-helper" id="formHelper">Você poderá revisar a mensagem antes de enviar no WhatsApp.</p>
+        <p class="form-helper" id="formHelper" role="status" aria-live="polite">Você poderá revisar a mensagem antes de enviar no WhatsApp. Resposta em horário comercial.</p>
+        <p class="form-helper"><a href="#" id="mailFallback">Prefere e-mail? Enviar por e-mail</a></p>
       </form>
     </div>
   </section>

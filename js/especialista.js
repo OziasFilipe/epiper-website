@@ -54,27 +54,60 @@
     document.querySelector('.contact-hero')?.insertAdjacentElement('afterend',section);
   }
 
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    if (!form.reportValidity()) return;
+  const helper = document.getElementById('formHelper');
+  const emailTo = 'contato@epiper.com.br';
 
-    const data = new FormData(form);
-    const lines = [
+  // Pontuação simples só para o time comercial priorizar o retorno (não é exibida ao visitante).
+  const scoreLead = (d) => {
+    const pts = {
+      vendedores: { 'Até 5': 1, '6 a 20': 2, '21 a 50': 3, 'Mais de 50': 4 },
+      volume: { 'Até 200': 1, '201 a 1.000': 2, '1.001 a 5.000': 3, 'Mais de 5.000': 4 },
+      prazo: { 'Imediato (até 30 dias)': 4, '1 a 3 meses': 3, 'Mais de 3 meses': 2, 'Apenas pesquisando': 1 }
+    };
+    const total = ['vendedores','volume','prazo'].reduce((a,k) => a + (pts[k][d.get(k)] || 0), 0);
+    return total >= 10 ? 'Alta' : total >= 7 ? 'Média' : 'Inicial';
+  };
+
+  const buildLines = () => {
+    const d = new FormData(form);
+    const canais = d.getAll('canais').join(', ') || 'Não informado';
+    return [
       'Olá! Quero falar com um especialista da Epiper.',
       '',
-      `Nome: ${data.get('nome')}`,
-      `Empresa: ${data.get('empresa')}`,
-      `WhatsApp: ${data.get('telefone')}`,
-      `E-mail: ${data.get('email')}`,
-      `Segmento: ${data.get('segmento')}`,
-      `ERP atual: ${data.get('erp') || 'Não informado'}`,
-      `Interesse: ${data.get('interesse')}`,
-      `Origem: ${data.get('origem') || 'site Epiper'}`,
+      `Nome: ${d.get('nome')} (${d.get('cargo')})`,
+      `Empresa: ${d.get('empresa')}`,
+      `WhatsApp: ${d.get('telefone')}`,
+      `E-mail: ${d.get('email')}`,
+      `Segmento: ${d.get('segmento')}`,
+      `ERP atual: ${d.get('erp') || 'Não informado'}`,
+      `Vendedores: ${d.get('vendedores')}`,
+      `Pedidos/mês: ${d.get('volume')}`,
+      `Canais de pedido hoje: ${canais}`,
+      `Prazo: ${d.get('prazo')}`,
+      `Interesse: ${d.get('interesse')}`,
+      `Prioridade estimada: ${scoreLead(d)}`,
+      `Origem: ${d.get('origem') || 'site Epiper'}`,
       '',
-      `Objetivo / contexto: ${data.get('mensagem') || 'Quero entender qual solução se encaixa melhor na operação.'}`
-    ];
+      `Objetivo / contexto: ${d.get('mensagem') || 'Quero entender qual solução se encaixa melhor na operação.'}`
+    ].join('\n');
+  };
 
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(lines.join('\n'))}`;
-    window.location.href = url;
+  const validate = () => {
+    const phone = phoneInput?.value.replace(/\D/g, '') || '';
+    phoneInput?.setCustomValidity(phone.length >= 10 ? '' : 'Informe um WhatsApp válido com DDD.');
+    return form.reportValidity();
+  };
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!validate()) return;
+    if (helper) helper.textContent = 'Abrindo o WhatsApp com sua mensagem pronta…';
+    window.location.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(buildLines())}`;
+  });
+
+  document.getElementById('mailFallback')?.addEventListener('click', (event) => {
+    event.preventDefault();
+    if (!validate()) return;
+    window.location.href = `mailto:${emailTo}?subject=${encodeURIComponent('Contato pelo site - ' + form.elements.empresa.value)}&body=${encodeURIComponent(buildLines())}`;
   });
 })();
