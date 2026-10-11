@@ -110,3 +110,5 @@
   .footer-logo-white,.footer__brand .footer-logo-white{width:142px;}
   .footer__product-brand .footer-logo-white{width:132px;}
 }
+
+.erp-hero-art{width:min(100%,540px);border-radius:34px;overflow:hidden;background:#ece6ff;box-shadow:0 28px 70px rgba(72,47,139,.18),0 0 0 1px rgba(100,76,175,.08)}.erp-hero-art img{display:block;width:100%;height:auto}
