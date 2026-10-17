@@ -38,7 +38,7 @@ if (solutionMenuGrid && !solutionMenuGrid.querySelector('[data-specialist-card]'
   specialistCard.href = 'fale-com-especialista.html';
   specialistCard.className = 'solution-menu-card';
   specialistCard.dataset.specialistCard = '1';
-  specialistCard.innerHTML = '<div class="solution-menu-card__head"><span class="solution-menu-card__icon"><img alt="" src="assets/icons/menu/clientes.svg"/></span><h5>Falar com especialista</h5></div><p>Conte seu cenário e receba uma orientação objetiva sobre produtos, integrações e implantação.</p><strong>Preencher formulário →</strong>';
+  specialistCard.innerHTML = '<div class="solution-menu-card__head"><span class="solution-menu-card__icon"><img alt="" src="assets/icons/menu/clientes.svg"/></span><h5 role="presentation">Falar com especialista</h5></div><p>Conte seu cenário e receba uma orientação objetiva sobre produtos, integrações e implantação.</p><strong>Preencher formulário →</strong>';
   solutionMenuGrid.appendChild(specialistCard);
 }
 
@@ -149,49 +149,6 @@ document.querySelectorAll('.mega-menu-wrap a,.nav-pill>a,.mobile-accordion-panel
 const syncStickyHeader=() => { if(header) header.classList.toggle('is-scrolled',window.scrollY>18); };
 syncStickyHeader(); window.addEventListener('scroll',syncStickyHeader,{passive:true});
 
-// Hub Epiper: apresenta uma captura real da central do sistema na página dedicada.
-if (/hub-epiper(.html)?$/.test(location.pathname)) {
-  const detailsSection = document.getElementById('detalhes');
-  if (detailsSection && !document.querySelector('.hub-real-showcase')) {
-    const style = document.createElement('style');
-    style.textContent = `
-      .hub-real-showcase{padding:78px 0 86px;background:linear-gradient(180deg,#fff 0%,#fbf9ff 100%);overflow:hidden}
-      .hub-real-showcase__intro{max-width:820px;margin:0 auto 34px;text-align:center}
-      .hub-real-showcase__intro h2{margin:13px 0 10px;font-size:clamp(29px,3.5vw,44px);line-height:1.08;letter-spacing:-.045em;color:#2b2054}
-      .hub-real-showcase__intro p{margin:0 auto;max-width:760px;color:#756e89;font-size:13px;line-height:1.75}
-      .hub-real-showcase__frame{position:relative;margin:0;padding:11px;border-radius:28px;background:#fff;box-shadow:0 26px 70px rgba(69,46,134,.14),0 0 0 1px rgba(98,72,178,.08);overflow:hidden}
-      .hub-real-showcase__bar{display:flex;align-items:center;gap:6px;padding:3px 4px 12px}.hub-real-showcase__bar span{width:8px;height:8px;border-radius:50%;background:#d8cff0}
-      .hub-real-showcase__frame img{display:block;width:100%;height:auto;border-radius:18px;background:#f6f3fb}
-      .hub-real-showcase__chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
-      .hub-real-showcase__chip{display:flex;align-items:center;justify-content:center;min-height:50px;padding:12px 14px;border-radius:15px;background:#f6f2ff;color:#554b73;font-size:11px;font-weight:750;text-align:center;box-shadow:inset 0 0 0 1px rgba(98,72,178,.06)}
-      @media(max-width:720px){.hub-real-showcase{padding:56px 0 60px}.hub-real-showcase__intro{text-align:left}.hub-real-showcase__frame{padding:7px;border-radius:20px}.hub-real-showcase__frame img{border-radius:14px}.hub-real-showcase__chips{grid-template-columns:1fr}.hub-real-showcase__chip{justify-content:flex-start;text-align:left}}
-    `;
-    document.head.appendChild(style);
-
-    const section = document.createElement('section');
-    section.className = 'hub-real-showcase';
-    section.setAttribute('aria-labelledby','hub-real-title');
-    section.innerHTML = `
-      <div class="container">
-        <div class="hub-real-showcase__intro">
-          <span class="platform-kicker">O Hub na prática</span>
-          <h2 id="hub-real-title">A central da operação Epiper em uma única tela.</h2>
-          <p>Veja o ambiente real do Hub Epiper, onde produtos, canais de venda, clientes, pedidos, indicadores e integrações ficam organizados para a equipe acessar cada solução com mais contexto.</p>
-        </div>
-        <figure class="hub-real-showcase__frame">
-          <div class="hub-real-showcase__bar" aria-hidden="true"><span></span><span></span><span></span></div>
-          <img src="assets/produto-real/hub-epiper.webp" alt="Tela real do Hub Epiper com acesso ao Pedido Eletrônico, Televendas, clientes, pedidos, produtos e integrações." loading="lazy" width="900" height="477" />
-        </figure>
-        <div class="hub-real-showcase__chips" aria-label="Benefícios do Hub Epiper">
-          <div class="hub-real-showcase__chip">Soluções em um só lugar</div>
-          <div class="hub-real-showcase__chip">Visão centralizada da operação</div>
-          <div class="hub-real-showcase__chip">Integração com o ERP</div>
-        </div>
-      </div>`;
-    detailsSection.insertAdjacentElement('afterend', section);
-  }
-}
-
 // Acabamento editorial e conteúdo adicional somente nas páginas internas de produto/plataforma.
 const internalPremiumPages = new Set([
   'plataforma.html','hub-epiper.html','operacao-conectada.html','implantacao-guiada.html','evolucao-modulos.html',
@@ -210,51 +167,4 @@ if (internalPremiumPages.has(internalPremiumFile) && !document.querySelector('sc
   premiumScript.defer=true;
   premiumScript.dataset.internalPremium='1';
   document.body.appendChild(premiumScript);
-}
-
-// Home: as Soluções 01 e 02 usam capturas reais do produto em funcionamento.
-if (internalPremiumFile === 'index.html') {
-  const homeSolutionMockups = [
-    ['.platform-solution--primary','assets/produto-real/pedido-eletronico.webp','Tela real do Pedido Eletrônico Epiper'],
-    ['.platform-solution--secondary','assets/produto-real/televendas-dashboard.webp','Tela real do Televendas Epiper']
-  ];
-
-  homeSolutionMockups.forEach(([selector,src,alt]) => {
-    const solution=document.querySelector(selector);
-    const img=solution?.querySelector('.platform-solution__media-img');
-    const mediaCard=solution?.querySelector('.platform-solution__media-card');
-    if (!img || !mediaCard) return;
-    img.src=src;
-    img.alt=alt;
-    img.removeAttribute('aria-hidden');
-    mediaCard.querySelector('.platform-solution__media-chip')?.remove();
-    mediaCard.classList.add('platform-solution__media-card--product-only');
-  });
-
-  const homeSolutionStyle=document.createElement('style');
-  homeSolutionStyle.dataset.homeSolutionProductOnly='1';
-  homeSolutionStyle.textContent=`
-    .platform-solution__media-card--product-only{
-      min-height:0!important;
-      padding:0!important;
-      overflow:visible!important;
-      border-radius:0!important;
-      background:transparent!important;
-      box-shadow:none!important;
-    }
-    .platform-solution__media-card--product-only .platform-solution__media-img{
-      width:100%!important;
-      height:auto!important;
-      max-height:390px!important;
-      object-fit:contain!important;
-      object-position:center!important;
-      border-radius:0!important;
-      background:transparent!important;
-      box-shadow:none!important;
-    }
-    @media(max-width:620px){
-      .platform-solution__media-card--product-only .platform-solution__media-img{max-height:310px!important}
-    }
-  `;
-  document.head.appendChild(homeSolutionStyle);
 }

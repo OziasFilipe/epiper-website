@@ -1,0 +1,79 @@
+/*
+  Telas reais do sistema Epiper dentro de molduras de navegador e de celular.
+  Usado em: index, plataforma, hub-epiper, televendas, pedido-eletronico, integracoes e páginas de processo.
+  As imagens ficam em assets/produto/ (capturas do sistema com dados fictícios).
+*/
+:root{--tr-ink:#1d1640;--tr-muted:#6b6485;--tr-line:#e6defa;--tr-purple:#6f46ff;--tr-shadow:0 28px 70px rgba(54,34,108,.20),0 0 0 1px rgba(80,55,160,.10)}
+
+/* ---------- moldura de navegador (computador) ---------- */
+.tr-browser{margin:0;border-radius:14px;overflow:hidden;background:#fff;box-shadow:var(--tr-shadow)}
+.tr-browser__bar{display:flex;align-items:center;gap:10px;height:34px;padding:0 14px;background:linear-gradient(180deg,#f6f3ff,#eee9fb);border-bottom:1px solid var(--tr-line)}
+.tr-browser__dots{display:flex;gap:6px;flex:none}
+.tr-browser__dots i{width:9px;height:9px;border-radius:50%;background:#d6cdf0}
+.tr-browser__dots i:nth-child(1){background:#ff7b72}.tr-browser__dots i:nth-child(2){background:#f5c451}.tr-browser__dots i:nth-child(3){background:#58c97b}
+.tr-browser__url{flex:1;max-width:340px;margin:0 auto;padding:4px 12px;border-radius:999px;background:#fff;color:#7a7396;font-size:11px;line-height:1.3;text-align:center;box-shadow:inset 0 0 0 1px var(--tr-line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tr-browser img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:top center;background:#f4f1fc}
+
+/* ---------- moldura de celular ---------- */
+.tr-phone{position:relative;margin:0;width:100%;max-width:230px;padding:9px;border-radius:34px;background:#17122e;box-shadow:0 26px 60px rgba(30,18,70,.34),0 0 0 1px rgba(255,255,255,.08) inset}
+.tr-phone::before{content:"";position:absolute;top:15px;left:50%;width:62px;height:16px;margin-left:-31px;border-radius:12px;background:#17122e;z-index:2}
+.tr-phone img{display:block;width:100%;height:auto;aspect-ratio:585/1266;object-fit:cover;object-position:top center;border-radius:26px;background:#f4f1fc}
+
+/* ---------- composição: notebook + celular sobreposto ---------- */
+.tr-stage{position:relative;width:100%;padding:0 0 38px}
+.tr-stage .tr-browser{width:100%}
+.tr-stage .tr-phone{position:absolute;right:-14px;bottom:0;width:30%;max-width:210px;min-width:118px}
+.tr-stage--left .tr-phone{right:auto;left:-14px}
+.tr-stage__tag{position:absolute;left:14px;bottom:14px;z-index:3;display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border-radius:12px;background:#fff;color:var(--tr-ink);font-size:12px;font-weight:800;box-shadow:0 14px 30px rgba(54,34,108,.18),0 0 0 1px rgba(80,55,160,.08)}
+.tr-stage__tag i{width:8px;height:8px;border-radius:50%;background:#2fbf71;box-shadow:0 0 0 4px rgba(47,191,113,.18)}
+
+/* ---------- hero das páginas: o visual precisa de largura para a captura ---------- */
+.hero-visual--shots,.visual--shots,.platform-hero__visual--shots{min-width:0;display:block;min-height:0;position:relative;padding:8px 14px 0 0}
+body.internal-premium .visual--shots::before,body.internal-premium .platform-hero__visual--shots::before{display:none}
+.hero-visual--shots{padding-top:0}
+
+/* ---------- galeria de telas ---------- */
+.tr-section{padding:clamp(64px,7vw,96px) 0;background:#fff}
+.tr-section--soft{background:linear-gradient(180deg,#faf8ff,#f3eeff)}
+.tr-head{max-width:760px;margin:0 auto 38px;text-align:center}
+.tr-head .tr-eyebrow{display:inline-block;margin-bottom:12px;padding:6px 12px;border-radius:999px;background:#eee8ff;color:#6948dc;font-size:11px;font-weight:850;letter-spacing:.07em;text-transform:uppercase}
+.tr-head h2{margin:0 0 12px;color:var(--tr-ink);font-size:clamp(28px,3.4vw,42px);line-height:1.08;letter-spacing:-.04em;font-weight:800;text-wrap:balance}
+.tr-head p{margin:0;color:var(--tr-muted);font-size:16px;line-height:1.7}
+.tr-grid{display:grid;gap:26px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.tr-grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.tr-card{margin:0;display:flex;flex-direction:column;gap:16px;min-width:0}
+.tr-card figcaption,.tr-card .tr-card__txt{display:block}
+.tr-card h3{margin:0 0 6px;color:var(--tr-ink);font-size:18px;line-height:1.25;letter-spacing:-.02em}
+.tr-card p{margin:0;color:var(--tr-muted);font-size:14.5px;line-height:1.65}
+.tr-card--phone{align-items:center;text-align:center}
+.tr-card--phone .tr-phone{max-width:240px}
+.tr-split{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(32px,5vw,72px);align-items:center}
+.tr-split--rev{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
+.tr-split--rev .tr-split__txt{order:2}
+.tr-split__txt h2{margin:10px 0 14px;color:var(--tr-ink);font-size:clamp(26px,3vw,38px);line-height:1.1;letter-spacing:-.04em;font-weight:800;text-wrap:balance}
+.tr-split__txt p{margin:0 0 16px;color:var(--tr-muted);font-size:16px;line-height:1.7}
+.tr-list{margin:0 0 22px;padding:0;list-style:none;display:grid;gap:10px}
+.tr-list li{position:relative;padding-left:28px;color:#3d3560;font-size:15px;line-height:1.5}
+.tr-list li::before{content:"";position:absolute;left:0;top:3px;width:18px;height:18px;border-radius:50%;background:#eee8ff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.4l2.6 2.6L12 5.6' fill='none' stroke='%236f46ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat}
+.tr-duo{position:relative;padding:0 0 30px}
+.tr-duo .tr-phone{position:absolute;right:-10px;bottom:0;width:28%;min-width:112px;max-width:200px}
+.tr-note{margin:14px 0 0;text-align:center;color:#8a84a3;font-size:12px}
+
+/* ---------- uma única captura larga ---------- */
+.tr-wide{max-width:1040px;margin:0 auto}
+
+@media(max-width:1080px){
+  .tr-split,.tr-split--rev{grid-template-columns:1fr}
+  .tr-split--rev .tr-split__txt{order:0}
+  .tr-grid--3{grid-template-columns:1fr 1fr}
+}
+@media(max-width:720px){
+  .tr-grid,.tr-grid--3{grid-template-columns:1fr}
+  .tr-stage .tr-phone,.tr-duo .tr-phone{right:-4px;width:32%;min-width:96px}
+  .tr-stage--left .tr-phone{left:-4px}
+  .tr-browser__bar{height:28px;padding:0 10px}
+  .tr-browser__url{font-size:10px}
+  .tr-head{text-align:left;margin-bottom:28px}
+  .tr-stage__tag{left:8px;bottom:8px;font-size:11px;padding:7px 10px}
+}
+@media(prefers-reduced-motion:reduce){.tr-browser,.tr-phone{transition:none}}
