@@ -69,19 +69,20 @@
   const buildLines = () => {
     const d = new FormData(form);
     const canais = d.getAll('canais').join(', ') || 'Não informado';
+    const v = (k) => d.get(k) || 'Não informado';
     return [
       'Olá! Quero falar com um especialista da Epiper.',
       '',
-      `Nome: ${d.get('nome')} (${d.get('cargo')})`,
+      `Nome: ${d.get('nome')}${d.get('cargo') ? ` (${d.get('cargo')})` : ''}`,
       `Empresa: ${d.get('empresa')}`,
       `WhatsApp: ${d.get('telefone')}`,
       `E-mail: ${d.get('email')}`,
-      `Segmento: ${d.get('segmento')}`,
+      `Segmento: ${v('segmento')}`,
       `ERP atual: ${d.get('erp') || 'Não informado'}`,
-      `Vendedores: ${d.get('vendedores')}`,
-      `Pedidos/mês: ${d.get('volume')}`,
+      `Vendedores: ${v('vendedores')}`,
+      `Pedidos/mês: ${v('volume')}`,
       `Canais de pedido hoje: ${canais}`,
-      `Prazo: ${d.get('prazo')}`,
+      `Prazo: ${v('prazo')}`,
       `Interesse: ${d.get('interesse')}`,
       `Prioridade estimada: ${scoreLead(d)}`,
       `Origem: ${d.get('origem') || 'site Epiper'}`,

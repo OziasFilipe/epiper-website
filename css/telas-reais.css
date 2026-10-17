@@ -36,7 +36,7 @@ body.internal-premium .visual--shots::before,body.internal-premium .platform-her
 .tr-section{padding:clamp(64px,7vw,96px) 0;background:#fff}
 .tr-section--soft{background:linear-gradient(180deg,#faf8ff,#f3eeff)}
 .tr-head{max-width:760px;margin:0 auto 38px;text-align:center}
-.tr-head .tr-eyebrow{display:inline-block;margin-bottom:12px;padding:6px 12px;border-radius:999px;background:#eee8ff;color:#6948dc;font-size:11px;font-weight:850;letter-spacing:.07em;text-transform:uppercase}
+.tr-eyebrow{display:inline-block;margin-bottom:12px;padding:6px 12px;border-radius:999px;background:#eee8ff;color:#6948dc;font-size:11px;font-weight:850;letter-spacing:.07em;text-transform:uppercase}
 .tr-head h2{margin:0 0 12px;color:var(--tr-ink);font-size:clamp(28px,3.4vw,42px);line-height:1.08;letter-spacing:-.04em;font-weight:800;text-wrap:balance}
 .tr-head p{margin:0;color:var(--tr-muted);font-size:16px;line-height:1.7}
 .tr-grid{display:grid;gap:26px;grid-template-columns:repeat(2,minmax(0,1fr))}

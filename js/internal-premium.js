@@ -222,7 +222,7 @@
       const [src,title,text,points] = cfg.visual;
       const visual = document.createElement('section');
       visual.className='ip-visual';
-      visual.innerHTML=`<div class="container"><div class="ip-visual__wrap"><div class="ip-visual__copy"><span class="ip-kicker">Visão explicativa</span><h2>${title}</h2><p>${text}</p><div class="ip-visual__points">${points.map(p=>`<div>${p}</div>`).join('')}</div></div><figure class="ip-visual__media"><img src="${src}" alt="${title}" loading="lazy"/><figcaption class="ip-visual__caption">Representação funcional para facilitar o entendimento do fluxo.</figcaption></figure></div></div>`;
+      visual.innerHTML=`<div class="container"><div class="ip-visual__wrap"><div class="ip-visual__copy"><span class="ip-kicker">No sistema</span><h2>${title}</h2><p>${text}</p><div class="ip-visual__points">${points.map(p=>`<div>${p}</div>`).join('')}</div></div><figure class="ip-visual__media"><img src="${src}" alt="${title}" loading="lazy"/><figcaption class="ip-visual__caption">Representação funcional para facilitar o entendimento do fluxo.</figcaption></figure></div></div>`;
       last.insertAdjacentElement('afterend',visual); last=visual;
     }
 
