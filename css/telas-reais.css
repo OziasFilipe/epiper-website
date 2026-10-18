@@ -105,3 +105,11 @@ body .platform-card__icon img{width:56px!important;height:56px!important}
 body .hub-item__img{width:34px!important;height:34px!important;flex:0 0 34px}
 body .feature img{width:52px!important;height:52px!important}
 body .scenario-type img{width:20px!important;height:20px!important;border-radius:6px}
+
+/* o celular cobre só o canto da tela do computador, para a captura aparecer quase inteira */
+.tr-stage{padding-bottom:56px}
+.tr-stage .tr-phone{width:23%;min-width:104px;max-width:170px;right:-8px;bottom:-6px}
+.tr-stage--left .tr-phone{left:-8px;right:auto}
+.tr-duo{padding-bottom:50px}
+.tr-duo .tr-phone{width:22%;min-width:96px;max-width:160px;right:-6px;bottom:-4px}
+@media(max-width:720px){.tr-stage{padding-bottom:44px}.tr-stage .tr-phone{width:28%;min-width:84px}.tr-duo .tr-phone{width:26%;min-width:80px}}
