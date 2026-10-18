@@ -1,0 +1,144 @@
+/*
+  Padrão de tipografia único do site, igual ao do início (index.html).
+  Todas as páginas carregam este arquivo por último; ele define família, tamanhos, pesos, espaçamento e títulos.
+  Para mudar o padrão do site inteiro, mude só os valores marcados com "--tp-" aqui.
+
+  Escala do início:
+    título principal (h1)  46px · peso 600 · -0,03em · destaque em peso 800
+    título de seção (h2)   31px · peso 700 · -0,035em
+    título de cartão (h3)  14px · peso 700
+    subtítulo / chamada    13,5px · peso 500
+    texto corrido          13,5px · peso 400
+    texto de cartão        12,5px · peso 400
+    botão                  12,5px · peso 800
+    selo (kicker)          10px · peso 800 · caixa alta
+  Obs.: a fonte Satoshi carrega só os pesos 400, 500, 700 e 900. Pesos intermediários caem no mais próximo; por isso o padrão usa 600/800,
+  como o início, e não valores como 720 ou 880 (que viravam 900 e deixavam os títulos pesados demais).
+*/
+:root{
+  --tp-familia:"Satoshi",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --tp-cor-titulo:#241b45;
+  --tp-h1:clamp(31px,3.4vw,46px);
+  --tp-h2:clamp(23px,2.5vw,31px);
+  --tp-h2-menor:clamp(21px,2.1vw,26px);
+  --tp-h2-painel:20px;
+  --tp-h3:14px;
+  --tp-lead:13.5px;
+  --tp-intro:12.5px;
+  --tp-corpo:13.5px;
+  --tp-cartao:12.5px;
+  --tp-btn:12.5px;
+  --tp-kicker:10px;
+}
+
+html body{font-family:var(--tp-familia)!important;font-size:13px!important;line-height:1.5}
+html body:not(.pagina-inicio) :is(h1,h2,h3,h4,h5,p,li,a,button,input,select,textarea,summary,label,small,span,strong,b,em,dt,dd,th,td,figcaption){font-family:var(--tp-familia)}
+
+/* ---------- título principal (h1) ---------- */
+html body:not(.pagina-inicio) :is(main h1,.platform-hero h1,.hero h1,.integration-hero h1,.faq-hero h1,.contact-copy h1,.legal-wrap h1,.nf h1){
+  font-size:var(--tp-h1)!important;font-weight:600!important;line-height:1.10!important;letter-spacing:-.03em!important;color:var(--tp-cor-titulo);text-wrap:balance
+}
+html body:not(.pagina-inicio) :is(main h1 strong,.hero h1 strong,.platform-hero h1 strong,.integration-hero h1 strong,.faq-hero h1 strong){font-weight:800!important;font-size:inherit!important;letter-spacing:inherit!important;line-height:inherit!important}
+
+/* ---------- subtítulo / chamada logo abaixo do h1 ---------- */
+html body:not(.pagina-inicio) :is(.hero__sub,.platform-hero__copy>p,.integration-hero__copy>p,.integration-hero p,.faq-hero__copy>p,.faq-hero p,.contact-copy>p,.legal-lead,.legal-wrap p.legal-lead){
+  font-size:var(--tp-lead)!important;font-weight:500!important;line-height:1.72!important;letter-spacing:normal!important
+}
+
+/* ---------- selos (kicker) ---------- */
+html body:not(.pagina-inicio) :is(.kicker,.platform-kicker,.faq-kicker,.contact-kicker,.ip-kicker,.section__eyebrow,.hub-showcase__kicker,.platform-solution__kicker){
+  font-size:var(--tp-kicker)!important;font-weight:800!important;letter-spacing:.04em!important;text-transform:uppercase
+}
+html body:not(.pagina-inicio) .price-pill{font-size:11px!important;font-weight:800!important;letter-spacing:normal!important}
+
+/* ---------- título de seção (h2) ---------- */
+html body:not(.pagina-inicio) :is(.head h2,.platform-head h2,.ip-section__head h2,.integration-head h2,.faq-section__intro h2,.contact-assurance__head h2,.ip-visual__copy h2,
+  .platform-split h2,.split h2,.compat-box h2,.ip-related__head h2,.integration-section h2,.platform-section h2,.ip-section h2,.section__head h2,main section>.container>h2,main section>.container>div>h2){
+  font-size:var(--tp-h2)!important;font-weight:700!important;line-height:1.15!important;letter-spacing:-.035em!important;color:var(--tp-cor-titulo)
+}
+html body:not(.pagina-inicio) :is(.platform-cta h2,.cta__box h2,.faq-cta__box h2,.platform-cta__box h2,.compat-box h2){
+  font-size:clamp(22px,2.4vw,30px)!important;font-weight:700!important;line-height:1.15!important;letter-spacing:-.03em!important
+}
+html body:not(.pagina-inicio) :is(.hero-flow__title,.faq-quick h2,.integration-box h3,.support-band h2,.legal-wrap h2){
+  font-size:var(--tp-h2-painel)!important;font-weight:700!important;line-height:1.2!important;letter-spacing:-.03em!important;color:var(--tp-cor-titulo)
+}
+html body:not(.pagina-inicio) :is(h2 strong,h1 strong){font-weight:800!important}
+
+/* ---------- introdução da seção (texto abaixo do h2) ---------- */
+html body:not(.pagina-inicio) :is(.head p,.platform-head p,.ip-section__head p,.integration-head p,.faq-section__intro p,.contact-assurance__head p,.ip-related__head p,.section__head p){
+  font-size:var(--tp-intro)!important;font-weight:500!important;line-height:1.7!important;letter-spacing:normal!important
+}
+
+/* ---------- texto corrido ---------- */
+html body:not(.pagina-inicio) :is(.ip-visual__copy p,.platform-split p,.split p,.compat-box p,.platform-cta p,.cta__box p,.faq-cta__box p,.platform-cta__box p,.legal-wrap p,.faq-answer p,.faq-answer li,.integration-box p){
+  font-size:var(--tp-corpo)!important;font-weight:400!important;line-height:1.8!important;letter-spacing:normal!important
+}
+html body:not(.pagina-inicio) .faq-answer strong{font-size:inherit!important}
+
+/* ---------- título e texto de cartão ---------- */
+html body:not(.pagina-inicio) :is(.platform-card h3,.step h3,.feature h3,.ip-card h3,.ip-decision__card h3,.benefit h3,.benefit strong,.sync-card h3,.erp-brand-card h3,.flow-step h3,.method h3,.contact-assurance article h3,
+  .integration-section article h3,.platform-section article h3,.ip-section article h3,.solution-card h3,.faq-card h3){
+  font-size:var(--tp-h3)!important;font-weight:700!important;line-height:1.35!important;letter-spacing:normal!important;color:var(--tp-cor-titulo)
+}
+html body:not(.pagina-inicio) :is(.platform-card p,.step p,.feature p,.ip-card p,.benefit p,.sync-card p,.erp-brand-card p,.flow-step p,.method p,.contact-assurance article p,.ip-context__item span,
+  .ip-decision__card li,.ip-related__card span,.integration-section article p,.platform-section article p,.ip-section article p,.erp-brand-note,.ip-note p){
+  font-size:var(--tp-cartao)!important;font-weight:400!important;line-height:1.65!important;letter-spacing:normal!important
+}
+html body:not(.pagina-inicio) :is(.ip-context__item b,.ip-related__card b,.ip-note b,.erp-brand-note strong,.integration-validated b){font-size:13px!important;font-weight:700!important;letter-spacing:normal!important}
+html body:not(.pagina-inicio) .ip-related__card em{font-size:12px!important;font-weight:700!important}
+html body:not(.pagina-inicio) :is(.ip-card__tag,.ip-decision__card small,.step b,.flow-num,.hero-flow__num){font-weight:800!important}
+html body:not(.pagina-inicio) :is(.hero-flow__steps li,.hero-flow__steps span,.hero-flow__steps b){font-size:var(--tp-cartao)!important;line-height:1.55!important}
+html body:not(.pagina-inicio) .hero-flow__steps b{font-weight:700!important;font-size:13px!important}
+html body:not(.pagina-inicio) :is(.hero-flow__foot){font-size:12px!important;font-weight:700!important}
+html body:not(.pagina-inicio) :is(.hero__checks li,.hero-tags span){font-size:12px!important;font-weight:650!important}
+html body:not(.pagina-inicio) :is(.trust__row span,.erp-band__row span){font-size:11px!important;font-weight:700!important}
+
+/* ---------- perguntas frequentes ---------- */
+html body:not(.pagina-inicio) .faq-page summary,html body:not(.pagina-inicio) details>summary{font-size:var(--tp-h3)!important;font-weight:700!important;line-height:1.45!important}
+html body:not(.pagina-inicio) .faq-quick li,html body:not(.pagina-inicio) .faq-quick li *{font-size:var(--tp-cartao)}
+html body:not(.pagina-inicio) .faq-quick li b,html body:not(.pagina-inicio) .faq-quick li strong{font-size:13px;font-weight:700}
+
+/* ---------- botões ---------- */
+html body:not(.pagina-inicio) .btn,html body .submit-btn{font-size:var(--tp-btn)!important;font-weight:800!important;letter-spacing:normal!important}
+html body:not(.pagina-inicio) .btn{min-height:40px!important;padding:0 17px!important}
+html body .submit-btn{min-height:44px}
+
+/* ---------- formulário de contato ---------- */
+html body:not(.pagina-inicio) .contact-form :is(label>span,legend,.field>span){font-size:12px!important;font-weight:700!important}
+html body:not(.pagina-inicio) .contact-form :is(input,select,textarea){font-size:13px!important}
+html body:not(.pagina-inicio) .contact-form__head span{font-size:var(--tp-h3)!important;font-weight:700!important}
+html body:not(.pagina-inicio) :is(.contact-form__head small,.form-helper,.contact-note,.contact-assurance__note,.consent span){font-size:11.5px!important;font-weight:400!important}
+html body:not(.pagina-inicio) .contact-note strong,html body .contact-assurance__note strong{font-size:inherit!important}
+html body:not(.pagina-inicio) .contact-points span{font-size:var(--tp-cartao)!important}
+
+/* ---------- 404 e páginas legais ---------- */
+html body:not(.pagina-inicio) .legal-wrap section h2{margin-top:26px}
+html body:not(.pagina-inicio) .legal-wrap section p{margin:8px 0 0}
+
+
+/* ---------- componentes novos (telas reais e SEO): valem no início e nas outras páginas ---------- */
+html body .tr-head h2,html body .tr-split__txt h2{font-size:var(--tp-h2)!important;font-weight:700!important;line-height:1.15!important;letter-spacing:-.035em!important;color:var(--tp-cor-titulo)}
+html body .tr-head p{font-size:var(--tp-intro)!important;font-weight:500!important;line-height:1.7!important}
+html body .tr-split__txt p{font-size:var(--tp-corpo)!important;font-weight:400!important;line-height:1.8!important}
+html body .tr-card h3{font-size:var(--tp-h3)!important;font-weight:700!important;line-height:1.35!important;letter-spacing:normal!important}
+html body :is(.tr-card p,.tr-list li){font-size:var(--tp-cartao)!important;font-weight:400!important;line-height:1.65!important}
+html body .tr-eyebrow{font-size:var(--tp-kicker)!important;font-weight:800!important;letter-spacing:.04em!important;text-transform:uppercase}
+html body :is(.tr-note,.tr-stage__tag,.ip-visual__caption){font-size:11.5px!important}
+html body .tr-stage__tag{font-weight:800!important}
+html body .seo-resumo h2{font-size:var(--tp-h2-painel)!important;font-weight:700!important;line-height:1.2!important;letter-spacing:-.03em!important;color:var(--tp-cor-titulo)}
+html body .seo-resumo p{font-size:var(--tp-corpo)!important;font-weight:400!important;line-height:1.8!important}
+html body .seo-links__titulo{font-size:var(--tp-kicker)!important;font-weight:800!important;letter-spacing:.04em!important;text-transform:uppercase}
+html body :is(.seo-links__lista a,.seo-links__lista li){font-size:12.5px!important;font-weight:700!important}
+
+/* ---------- página 404 ---------- */
+html body .nf h1{margin:16px 0 12px}
+html body .nf p{font-size:var(--tp-lead)!important;font-weight:500!important;line-height:1.72!important}
+html body .nf small{font-size:var(--tp-kicker)!important;font-weight:800!important;letter-spacing:.04em!important}
+html body a.b{font-size:var(--tp-btn)!important;font-weight:800!important;min-height:40px!important;padding:0 17px!important}
+
+/* ---------- celular: mesmos ajustes do início ---------- */
+@media(max-width:700px){
+  :root{--tp-h1:29px;--tp-h2:25px;--tp-lead:12.5px}
+  html body:not(.pagina-inicio) :is(.hero__sub,.platform-hero__copy>p,.integration-hero p,.faq-hero p,.contact-copy>p,.legal-lead){font-size:12.5px!important}
+  html body:not(.pagina-inicio) :is(.platform-cta h2,.cta__box h2,.faq-cta__box h2,.platform-cta__box h2,.compat-box h2){font-size:23px!important}
+}

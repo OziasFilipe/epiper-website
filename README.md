@@ -11,6 +11,9 @@ Epiper Hub (outra hospedagem) ──── leitura assinada ┘   /api/hub/*   (
 ## Páginas
 `index`, `plataforma`, `hub-epiper`, `televendas`, `pedido-eletronico`, `integracoes`, `operacao-conectada`, `implantacao-guiada`, `evolucao-modulos`, `duvidas`, `fale-com-especialista`, `privacidade`, `termos`, `404`.
 
+## Tipografia (padrão único)
+Todas as páginas seguem a tipografia do início. O padrão fica em `css/tipografia.css` (carregado por último em cada página) e usa só a fonte Satoshi: título principal 46px/600, título de seção 31px/700, título de cartão 14px/700, subtítulo 13,5px/500, texto 13,5px/400, botão 12,5px/800. Para mudar o site inteiro, altere as variáveis `--tp-*` no topo desse arquivo. Página nova: inclua `<link href="css/tipografia.css" rel="stylesheet"/>` por último no `<head>`.
+
 ## SEO (título, descrição, palavras-chave, dados estruturados)
 Tudo é controlado em **um arquivo só**: `seo/seo.config.json`.
 
