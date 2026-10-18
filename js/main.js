@@ -138,10 +138,59 @@ document.querySelectorAll('[data-whatsapp]').forEach(link => {
 
 // Botão flutuante discreto de WhatsApp continua como contato rápido direto.
 if(!document.querySelector('.whatsapp-float')) {
-  const a=document.createElement('a'); a.className='whatsapp-float'; a.href=`https://wa.me/${EPIPER_WHATSAPP_NUMBER}?text=${encodeURIComponent(EPIPER_WHATSAPP_TEXT)}`; a.target='_blank'; a.rel='noopener'; a.setAttribute('aria-label','Falar com a Epiper no WhatsApp');
+  const a=document.createElement('a'); a.className='whatsapp-float'; a.href=`https://wa.me/${EPIPER_WHATSAPP_NUMBER}?text=${encodeURIComponent(EPIPER_WHATSAPP_TEXT)}`; a.target='_blank'; a.rel='noopener'; a.setAttribute('aria-label','Falar com o time comercial da Epiper no WhatsApp');
   a.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.6A11.8 11.8 0 0 0 1.9 17.8L.3 23.7l6-1.6A11.8 11.8 0 0 0 12 23.5h.1A11.8 11.8 0 0 0 20.5 3.6Zm-8.4 17.9h-.1a9.7 9.7 0 0 1-4.9-1.3l-.4-.2-3.6 1 1-3.5-.2-.4A9.8 9.8 0 1 1 12.1 21.5Zm5.4-7.3c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.6.1-.2.1-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.3 1.4 3.5c.2.2 2.5 3.8 6 5.3.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.2-.6-.4Z"/></svg>';
   document.body.appendChild(a);
 }
+
+// Balão do botão de WhatsApp: "Nosso time comercial está disponível".
+// - Ao carregar a página aparece por 15 segundos, mas só se passaram 20 minutos desde a última vez que este visitante o viu
+//   (o horário fica guardado no navegador; navegar para outra página dentro desses 20 minutos não mostra de novo).
+// - Passar o mouse (ou focar com o teclado) no botão mostra o balão na hora, para qualquer visitante, a qualquer momento.
+(() => {
+  const botao = document.querySelector('.whatsapp-float');
+  if (!botao || botao.querySelector('.zap-balao')) return;
+  const CHAVE = 'epiper_zap_balao';
+  const JANELA_MS = 20 * 60 * 1000;
+  const DURACAO_MS = 15000;
+  const ATRASO_MS = 1200;
+
+  const balao = document.createElement('span');
+  balao.className = 'zap-balao';
+  balao.setAttribute('aria-hidden', 'true');
+  balao.innerHTML = '<span class="zap-balao__linha"><i class="zap-balao__ponto" aria-hidden="true"></i><b>Nosso time comercial está disponível</b></span><span class="zap-balao__sub">Tire suas dúvidas e fale com um especialista agora.</span>';
+  botao.appendChild(balao);
+
+  let automatico = false;
+  let sobre = false;
+  const atualizar = () => {
+    const visivel = automatico || sobre;
+    botao.classList.toggle('is-balao', visivel);
+    balao.setAttribute('aria-hidden', visivel ? 'false' : 'true');
+  };
+  botao.addEventListener('mouseenter', () => { sobre = true; atualizar(); });
+  botao.addEventListener('mouseleave', () => { sobre = false; atualizar(); });
+  botao.addEventListener('focus', () => { sobre = true; atualizar(); });
+  botao.addEventListener('blur', () => { sobre = false; atualizar(); });
+
+  const ler = () => { try { return parseInt(localStorage.getItem(CHAVE) || '0', 10) || 0; } catch (e) { return 0; } };
+  const gravar = () => { try { localStorage.setItem(CHAVE, String(Date.now())); } catch (e) { /* sem armazenamento: aparece a cada página */ } };
+
+  const mostrarSozinho = () => {
+    if (Date.now() - ler() < JANELA_MS) return;
+    gravar();
+    setTimeout(() => {
+      automatico = true; atualizar();
+      setTimeout(() => { automatico = false; atualizar(); }, DURACAO_MS);
+    }, ATRASO_MS);
+  };
+  if (document.visibilityState === 'visible') mostrarSozinho();
+  else document.addEventListener('visibilitychange', function aoVoltar() {
+    if (document.visibilityState !== 'visible') return;
+    document.removeEventListener('visibilitychange', aoVoltar);
+    mostrarSozinho();
+  });
+})();
 
 document.addEventListener('keydown', e => { if(e.key==='Escape') { closeMegaMenus(); closeMobileAccordions(); header?.classList.remove('is-open','mobile-menu-surface'); hamburger?.setAttribute('aria-expanded','false'); document.documentElement.classList.remove('mobile-nav-open'); } });
 document.querySelectorAll('.mega-menu-wrap a,.nav-pill>a,.mobile-accordion-panel a').forEach(link => link.addEventListener('click', () => { closeMegaMenus(); closeMobileAccordions(); if(isMobile()) { header?.classList.remove('is-open','mobile-menu-surface'); hamburger?.setAttribute('aria-expanded','false'); document.documentElement.classList.remove('mobile-nav-open'); } }));
