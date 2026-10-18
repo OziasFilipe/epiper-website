@@ -12,3 +12,26 @@
 
 /* campo-isca contra robôs: invisível e fora do alcance do teclado */
 .hp-campo{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
+
+/* ---------- envio: erro e painel "enviado com sucesso" ---------- */
+.form-erro{margin:10px 0 0;padding:10px 13px;border-radius:12px;background:#fff1f2;color:#be123c;font-size:12.5px;font-weight:600;text-align:center}
+.form-erro a{color:#be123c;text-decoration:underline}
+.submit-btn[disabled]{opacity:.7;cursor:progress}
+.contact-form{overflow:hidden}
+.form-sucesso{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:32px;text-align:center;background:rgba(255,255,255,.985);animation:sucessoEntra .45s ease both}
+.form-sucesso[hidden]{display:none}
+.form-sucesso h2{margin:6px 0 0;color:#241b45;font-size:26px;line-height:1.15;letter-spacing:-.03em;font-weight:700}
+.form-sucesso p{margin:0;max-width:340px;color:#5d5678;font-size:14px;line-height:1.6}
+.form-sucesso small{color:#8a84a3;font-size:12px}
+.form-sucesso small a{color:#6f46ff;font-weight:700}
+.form-sucesso__icone{width:92px;height:92px}
+.form-sucesso__anel{stroke:#d9f5e7;stroke-dasharray:214;stroke-dashoffset:214;animation:sucessoTraco .7s .15s ease forwards}
+.form-sucesso__check{stroke:#19b87a;stroke-dasharray:60;stroke-dashoffset:60;animation:sucessoTraco .45s .75s ease forwards}
+.form-sucesso__icone{animation:sucessoPulo .6s .9s ease both}
+.form-sucesso__barra{width:min(240px,70%);height:5px;margin-top:6px;border-radius:99px;background:#eee8ff;overflow:hidden}
+.form-sucesso__barra i{display:block;height:100%;width:100%;border-radius:99px;background:linear-gradient(90deg,#6f46ff,#19b87a);transform-origin:left;animation:sucessoBarra 5s linear forwards}
+@keyframes sucessoEntra{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+@keyframes sucessoTraco{to{stroke-dashoffset:0}}
+@keyframes sucessoPulo{0%{transform:scale(1)}50%{transform:scale(1.12)}100%{transform:scale(1)}}
+@keyframes sucessoBarra{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+@media(prefers-reduced-motion:reduce){.form-sucesso,.form-sucesso__anel,.form-sucesso__check,.form-sucesso__icone,.form-sucesso__barra i{animation:none}.form-sucesso__anel,.form-sucesso__check{stroke-dashoffset:0}.form-sucesso__barra i{transform:none}}

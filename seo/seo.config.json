@@ -369,13 +369,13 @@
     },
     "fale-com-especialista.html": {
       "titulo": "Fale com um especialista em vendas B2B | Epiper",
-      "descricao": "Conte sobre a sua distribuidora e o seu ERP e fale com um especialista da Epiper sobre Pedido Eletrônico, Televendas e integração. Atendimento pelo WhatsApp.",
+      "descricao": "Conte sobre a sua distribuidora e o seu ERP e fale com um especialista da Epiper sobre Pedido Eletrônico, Televendas e integração. Retorno em horário comercial.",
       "principal": "especialista",
       "palavras_chave": [
         "fale com um especialista",
-        "WhatsApp",
         "pedido eletrônico",
         "televendas",
+        "integração com ERP",
         "Epiper"
       ],
       "tipo": "contato",
