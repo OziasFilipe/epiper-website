@@ -33,7 +33,7 @@ test('contato válido é guardado CIFRADO: nome, e-mail e telefone nunca aparece
 test('exige consentimento e campos válidos', () => comBanco(async (banco, amb) => {
   const casos = [
     [{ consentimento: false }, 'consentimento'], [{ consentimento: 'true' }, 'consentimento'], [{ nome: 'Al' }, 'nome'], [{ empresa: '' }, 'empresa'],
-    [{ telefone: '123' }, 'telefone'], [{ email: 'sem-arroba' }, 'email'], [{ email: 'a@b' }, 'email'], [{ email: '<x>@b.com' }, 'email'], [{ interesse: '' }, 'interesse'],
+    [{ telefone: '123' }, 'telefone'], [{ email: 'sem-arroba' }, 'email'], [{ email: 'a@b' }, 'email'], [{ email: '<x>@b.com' }, 'email'], /* e-mail vazio é permitido */ [{ interesse: '' }, 'interesse'],
   ]
   let n = 0
   for (const [extra, campo] of casos) {
@@ -42,6 +42,15 @@ test('exige consentimento e campos válidos', () => comBanco(async (banco, amb) 
     assert.equal((await r.json()).campo, campo)
   }
   assert.equal(await total(banco), 0)
+}))
+
+test('formulário enxuto: só nome, WhatsApp, empresa e interesse bastam (e-mail e o resto são opcionais)', () => comBanco(async (banco, amb) => {
+  const r = await enviar(banco, amb, { nome: 'João Pereira', empresa: 'Atacado Sul', telefone: '(27) 98888-7777', interesse: 'Televendas', consentimento: true, hp: '', t0: Date.now() - 15000 })
+  assert.equal(r.status, 200)
+  const dados = JSON.parse(decifrar(String((await banco.execute('SELECT dados FROM formularios')).rows[0].dados), CHAVE_CAMPOS))
+  assert.equal(dados.nome, 'João Pereira')
+  assert.equal(dados.email, '')
+  assert.equal(dados.mensagem, '')
 }))
 
 test('robôs: campo-isca preenchido, formulário rápido demais ou sem horário → finge sucesso e não guarda', () => comBanco(async (banco, amb) => {

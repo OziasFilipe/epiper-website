@@ -40,49 +40,34 @@
       <div class="contact-copy">
         <span class="contact-kicker">Fale com um especialista</span>
         <h1>Fale com um especialista e veja qual solução faz sentido para sua operação.</h1>
-        <p>Preencha as informações abaixo. No final, você será direcionado ao WhatsApp da Epiper com a mensagem já organizada para agilizar o atendimento.</p>
+        <p>Deixe seu nome e WhatsApp. Respondemos em horário comercial, sem compromisso, para entender o que você precisa.</p>
         <div class="contact-products" aria-label="Produtos Epiper"><span>Pedido Eletrônico</span><span>Televendas</span></div>
         <div class="contact-points">
-          <div><b>1</b><span>Você informa o cenário atual</span></div>
-          <div><b>2</b><span>A Epiper entende ERP, canais e prioridades</span></div>
-          <div><b>3</b><span>O especialista orienta a solução adequada</span></div>
+          <div><b>1</b><span>Você diz o que procura (menos de 1 minuto)</span></div>
+          <div><b>2</b><span>Um especialista chama você no WhatsApp</span></div>
+          <div><b>3</b><span>Mostramos a solução que se encaixa na sua operação</span></div>
         </div>
-        <div class="contact-note"><strong>Sem compromisso.</strong> As informações servem para tornar a conversa mais objetiva e evitar perguntas repetidas no primeiro contato.</div>
       </div>
 
       <form class="contact-form" id="specialistForm">
         <div class="contact-form__head">
-          <span>Conte sobre sua empresa</span>
-          <small>Só o essencial é obrigatório (*). O resto ajuda a conversa, mas pode ficar em branco.</small>
+          <span>Como podemos ajudar?</span>
+          <small>São só 4 campos.</small>
         </div>
 
         <div class="form-grid">
-          <label class="field"><span>Nome *</span><input name="nome" minlength="3" autocomplete="name" required placeholder="Seu nome"/></label>
-          <label class="field"><span>Empresa *</span><input name="empresa" autocomplete="organization" required placeholder="Nome da empresa"/></label>
+          <label class="field"><span>Seu nome *</span><input name="nome" minlength="3" autocomplete="name" required placeholder="Como podemos chamar você"/></label>
           <label class="field"><span>WhatsApp *</span><input name="telefone" inputmode="tel" autocomplete="tel" required placeholder="(27) 99999-9999"/></label>
-          <label class="field"><span>E-mail *</span><input type="email" name="email" autocomplete="email" required placeholder="voce@empresa.com.br"/></label>
-          <label class="field"><span>Segmento</span><select name="segmento"><option value="">Selecione</option><option>Varejo</option><option>Atacado</option><option>Distribuição</option><option>Indústria</option><option>Outro</option></select></label>
-          <label class="field"><span>ERP atual</span><input name="erp" placeholder="Ex.: WinThor TOTVS, SAP, Sankhya..."/></label>
-          <label class="field"><span>Seu cargo</span><select name="cargo"><option value="">Selecione</option><option>Sócio / Diretor</option><option>Gerente comercial</option><option>TI / Sistemas</option><option>Operações / Logística</option><option>Vendedor / Representante</option><option>Outro</option></select></label>
-          <label class="field"><span>Vendedores na operação</span><select name="vendedores"><option value="">Selecione</option><option>Até 5</option><option>6 a 20</option><option>21 a 50</option><option>Mais de 50</option></select></label>
-          <label class="field"><span>Pedidos por mês</span><select name="volume"><option value="">Selecione</option><option>Até 200</option><option>201 a 1.000</option><option>1.001 a 5.000</option><option>Mais de 5.000</option></select></label>
-          <label class="field"><span>Prazo para decidir</span><select name="prazo"><option value="">Selecione</option><option>Imediato (até 30 dias)</option><option>1 a 3 meses</option><option>Mais de 3 meses</option><option>Apenas pesquisando</option></select></label>
-          <fieldset class="field field--full field--checks"><legend>Como os pedidos chegam hoje? <small>(marque quantos quiser)</small></legend>
-            <label><input type="checkbox" name="canais" value="WhatsApp"/><span>WhatsApp</span></label>
-            <label><input type="checkbox" name="canais" value="Telefone / Televendas"/><span>Telefone</span></label>
-            <label><input type="checkbox" name="canais" value="E-mail"/><span>E-mail</span></label>
-            <label><input type="checkbox" name="canais" value="Vendedor externo"/><span>Vendedor externo</span></label>
-            <label><input type="checkbox" name="canais" value="Portal / e-commerce"/><span>Portal / e-commerce</span></label>
-          </fieldset>
-          <label class="field field--full"><span>Principal interesse *</span><select name="interesse" required><option value="">Selecione</option><option>Pedido Eletrônico</option><option>Televendas</option><option>Hub Epiper</option><option>Integrações com ERP</option><option>Operação conectada</option><option>Implantação e evolução por módulos</option><option>Quero entender qual solução faz sentido</option></select></label>
-          <label class="field field--full"><span>O que você quer melhorar na operação?</span><textarea name="mensagem" rows="5" placeholder="Ex.: reduzir digitação de pedidos, integrar vendedores ao ERP, melhorar atendimento, criar canal B2B..."></textarea></label>
+          <label class="field"><span>Empresa *</span><input name="empresa" autocomplete="organization" required placeholder="Nome da empresa"/></label>
+          <label class="field"><span>O que você procura? *</span><select name="interesse" required><option value="">Selecione</option><option>Pedido Eletrônico</option><option>Televendas</option><option>Hub Epiper</option><option>Integração com o meu ERP</option><option>Quero entender qual solução faz sentido</option></select></label>
+          <label class="field field--full"><span>Quer contar mais? <small>(opcional)</small></span><textarea name="mensagem" rows="3" placeholder="Ex.: uso o WinThor e quero que meus clientes façam pedido pelo celular"></textarea></label>
         </div>
 
-        <label class="consent"><input type="checkbox" name="consent" required/><span>Concordo em enviar essas informações para que a Epiper entre em contato sobre as soluções apresentadas e em que elas sejam guardadas com segurança para esse fim. Consulte a <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.</span></label>
+        <label class="consent"><input type="checkbox" name="consent" required/><span>Concordo em enviar esses dados para a Epiper entrar em contato. <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.</span></label>
         <input type="hidden" name="origem" id="formOrigin"/>
         <div class="hp-campo" aria-hidden="true"><label>Não preencha este campo<input type="text" name="website" tabindex="-1" autocomplete="off"/></label></div>
-        <button class="submit-btn" type="submit">Continuar no WhatsApp <span>→</span></button>
-        <p class="form-helper" id="formHelper" role="status" aria-live="polite">Você poderá revisar a mensagem antes de enviar no WhatsApp. Resposta em horário comercial.</p>
+        <button class="submit-btn" type="submit">Falar no WhatsApp <span>→</span></button>
+        <p class="form-helper" id="formHelper" role="status" aria-live="polite">Você revisa a mensagem antes de enviar no WhatsApp.</p>
         <p class="form-helper"><a href="#" id="mailFallback">Prefere e-mail? Enviar por e-mail</a></p>
       </form>
     </div>

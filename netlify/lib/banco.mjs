@@ -18,7 +18,8 @@ export async function banco(env = process.env) {
     const authToken = env.EPIPER_BANCO_TOKEN
     if (!url || !authToken) throw new Error('Banco não configurado (EPIPER_BANCO_URL e EPIPER_BANCO_TOKEN).')
     if (!/^(libsql|https):\/\//.test(url)) throw new Error('EPIPER_BANCO_URL precisa ser libsql:// ou https://.')
-    cliente = createClient({ url, authToken })
+    // libsql:// abre WebSocket, que nem todo ambiente de funções tem; https:// fala com o mesmo banco por HTTP e funciona em qualquer lugar.
+    cliente = createClient({ url: url.replace(/^libsql:\/\//, 'https://'), authToken })
     pronto = migrar(cliente)
   }
   await pronto

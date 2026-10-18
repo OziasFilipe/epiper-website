@@ -16,7 +16,7 @@ export function validarContato(c, agoraMs = Date.now()) {
   if (nome.length < 3) return { erro: 'nome' }
   if (empresa.length < 2) return { erro: 'empresa' }
   if (telefone.length < 10 || telefone.length > 15) return { erro: 'telefone' }
-  if (!EMAIL.test(email)) return { erro: 'email' }
+  if (email && !EMAIL.test(email)) return { erro: 'email' } // e-mail é opcional; se vier, precisa ser válido
   const interesse = texto(c.interesse, 60)
   if (!interesse) return { erro: 'interesse' }
   const canais = Array.isArray(c.canais) ? c.canais.slice(0, 8).map((x) => texto(x, 40)).filter(Boolean) : []

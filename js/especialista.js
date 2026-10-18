@@ -15,10 +15,8 @@
     ['pedido-eletronico','Pedido Eletrônico'],
     ['televendas','Televendas'],
     ['hub-epiper','Hub Epiper'],
-    ['integracoes','Integrações com ERP'],
-    ['operacao-conectada','Operação conectada'],
-    ['implantacao-guiada','Implantação e evolução por módulos'],
-    ['evolucao-modulos','Implantação e evolução por módulos']
+    ['integracoes','Integração com o meu ERP'],
+    ['operacao-conectada','Integração com o meu ERP']
   ].find(([key]) => originLower.includes(key));
   if (interest && originInterest && !interest.value) interest.value = originInterest[1];
 
@@ -30,64 +28,20 @@
     else phoneInput.value = `(${digits.slice(0,2)}) ${digits.slice(2,7)}-${digits.slice(7)}`;
   });
 
-  // Bloco de orientação: reduz formulário “cru” e ajuda o visitante a chegar com as informações certas.
-  const grid = document.querySelector('.contact-grid');
-  if (grid && !document.querySelector('.contact-assurance')) {
-    const section = document.createElement('section');
-    section.className = 'contact-assurance';
-    section.innerHTML = `
-      <div class="contact-container">
-        <div class="contact-assurance__head">
-          <span>Uma conversa mais objetiva</span>
-          <h2>Três informações ajudam a avaliar seu cenário com mais precisão.</h2>
-          <p>Não é necessário ter um projeto pronto. Basta trazer o contexto atual para entendermos onde existe mais impacto e quais dependências técnicas precisam ser verificadas.</p>
-        </div>
-        <div class="contact-assurance__grid">
-          <article><b>1</b><h3>ERP e estrutura atual</h3><p>Qual sistema sustenta clientes, produtos, preço, estoque e pedidos hoje.</p></article>
-          <article><b>2</b><h3>Fluxo comercial</h3><p>Quem vende, como o pedido é montado e onde aparecem as principais etapas manuais.</p></article>
-          <article><b>3</b><h3>Prioridade</h3><p>Qual problema deve melhorar primeiro: pedido B2B, atendimento, loja digital, comunicação comercial ou integração.</p></article>
-        </div>
-        <div class="contact-assurance__note"><strong>Importante:</strong> compatibilidade com ERP, automações e retornos são confirmados depois da análise técnica do ambiente — sem prometer integração automática antes de avaliar APIs, banco, arquivos, permissões e processo.</div>
-      </div>`;
-    document.querySelector('.contact-hero')?.insertAdjacentElement('afterend',section);
-  }
-
   const helper = document.getElementById('formHelper');
   const emailTo = 'contato@epiper.com.br';
 
-  // Pontuação simples só para o time comercial priorizar o retorno (não é exibida ao visitante).
-  const scoreLead = (d) => {
-    const pts = {
-      vendedores: { 'Até 5': 1, '6 a 20': 2, '21 a 50': 3, 'Mais de 50': 4 },
-      volume: { 'Até 200': 1, '201 a 1.000': 2, '1.001 a 5.000': 3, 'Mais de 5.000': 4 },
-      prazo: { 'Imediato (até 30 dias)': 4, '1 a 3 meses': 3, 'Mais de 3 meses': 2, 'Apenas pesquisando': 1 }
-    };
-    const total = ['vendedores','volume','prazo'].reduce((a,k) => a + (pts[k][d.get(k)] || 0), 0);
-    return total >= 10 ? 'Alta' : total >= 7 ? 'Média' : 'Inicial';
-  };
-
   const buildLines = () => {
     const d = new FormData(form);
-    const canais = d.getAll('canais').join(', ') || 'Não informado';
-    const v = (k) => d.get(k) || 'Não informado';
     return [
       'Olá! Quero falar com um especialista da Epiper.',
       '',
-      `Nome: ${d.get('nome')}${d.get('cargo') ? ` (${d.get('cargo')})` : ''}`,
+      `Nome: ${d.get('nome')}`,
       `Empresa: ${d.get('empresa')}`,
       `WhatsApp: ${d.get('telefone')}`,
-      `E-mail: ${d.get('email')}`,
-      `Segmento: ${v('segmento')}`,
-      `ERP atual: ${d.get('erp') || 'Não informado'}`,
-      `Vendedores: ${v('vendedores')}`,
-      `Pedidos/mês: ${v('volume')}`,
-      `Canais de pedido hoje: ${canais}`,
-      `Prazo: ${v('prazo')}`,
       `Interesse: ${d.get('interesse')}`,
-      `Prioridade estimada: ${scoreLead(d)}`,
-      `Origem: ${d.get('origem') || 'site Epiper'}`,
-      '',
-      `Objetivo / contexto: ${d.get('mensagem') || 'Quero entender qual solução se encaixa melhor na operação.'}`
+      ...(d.get('mensagem') ? [`Contexto: ${d.get('mensagem')}`] : []),
+      `Origem: ${d.get('origem') || 'site Epiper'}`
     ].join('\n');
   };
 
@@ -105,9 +59,7 @@
       let visitante = null;
       try { visitante = localStorage.getItem('epiper_v'); } catch (e) { /* sem armazenamento */ }
       const corpo = {
-        nome: d.get('nome'), empresa: d.get('empresa'), telefone: d.get('telefone'), email: d.get('email'),
-        segmento: d.get('segmento'), erp: d.get('erp'), cargo: d.get('cargo'), vendedores: d.get('vendedores'), volume: d.get('volume'), prazo: d.get('prazo'),
-        canais: d.getAll('canais'), interesse: d.get('interesse'), mensagem: d.get('mensagem'),
+        nome: d.get('nome'), empresa: d.get('empresa'), telefone: d.get('telefone'), interesse: d.get('interesse'), mensagem: d.get('mensagem'),
         consentimento: d.get('consent') !== null, hp: d.get('website') || '', t0: carregadoEm, visitante, pagina: location.pathname,
       };
       const controle = new AbortController();
