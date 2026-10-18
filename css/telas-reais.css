@@ -12,12 +12,12 @@
 .tr-browser__dots i{width:9px;height:9px;border-radius:50%;background:#d6cdf0}
 .tr-browser__dots i:nth-child(1){background:#ff7b72}.tr-browser__dots i:nth-child(2){background:#f5c451}.tr-browser__dots i:nth-child(3){background:#58c97b}
 .tr-browser__url{flex:1;max-width:340px;margin:0 auto;padding:4px 12px;border-radius:999px;background:#fff;color:#7a7396;font-size:11px;line-height:1.3;text-align:center;box-shadow:inset 0 0 0 1px var(--tr-line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tr-browser img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:top center;background:#f4f1fc}
+.tr-browser img{display:block;width:100%;height:auto;background:#f4f1fc}  /* a captura aparece inteira, na proporção original (1600x1000): nada é cortado nem esticado */
 
 /* ---------- moldura de celular ---------- */
 .tr-phone{position:relative;margin:0;width:100%;max-width:230px;padding:9px;border-radius:34px;background:#17122e;box-shadow:0 26px 60px rgba(30,18,70,.34),0 0 0 1px rgba(255,255,255,.08) inset}
 .tr-phone::before{content:"";position:absolute;top:15px;left:50%;width:62px;height:16px;margin-left:-31px;border-radius:12px;background:#17122e;z-index:2}
-.tr-phone img{display:block;width:100%;height:auto;aspect-ratio:585/1266;object-fit:cover;object-position:top center;border-radius:26px;background:#f4f1fc}
+.tr-phone img{display:block;width:100%;height:auto;border-radius:26px;background:#f4f1fc}  /* idem: proporção 585x1266 preservada */
 
 /* ---------- composição: notebook + celular sobreposto ---------- */
 .tr-stage{position:relative;width:100%;padding:0 0 38px}
@@ -84,3 +84,24 @@ body.internal-premium .visual--shots::before,body.internal-premium .platform-her
 /* a moldura dentro do bloco "visão explicativa" das páginas internas */
 .ip-visual__media--tela{padding:0!important;background:none!important;box-shadow:none!important;border:0!important}
 .ip-visual__media--tela .ip-visual__caption{margin-top:12px}
+
+/* ---------- ícones: cada SVG já traz o próprio ladrilho colorido; os contêineres antigos não colocam outro fundo por trás ---------- */
+body .mega-menu-icon,body .solution-menu-card__icon,body .ip-context__icon,body .ip-card__icon,body .platform-card__icon{background:none!important;border:0!important;box-shadow:none!important;padding:0!important}
+body .ip-context__icon{width:48px;height:48px;flex-basis:48px}
+body .ip-context__icon img{width:48px;height:48px}
+body .ip-card__icon{width:54px;height:54px}
+body .ip-card__icon img{width:54px;height:54px}
+body .platform-card__icon{width:56px;height:56px}
+body .platform-card__icon img{width:56px;height:56px}
+body .hero-flow__icon,body .hero-flow__icon img{width:44px;height:44px;flex-basis:44px}
+body .mega-menu-icon img{width:100%;height:100%}
+/* tamanhos com !important porque o internal-premium.css é carregado depois por JavaScript e redefine os ícones */
+body .ip-context__icon{width:48px!important;height:48px!important;flex-basis:48px!important}
+body .ip-context__icon img{width:48px!important;height:48px!important}
+body .ip-card__icon{width:54px!important;height:54px!important}
+body .ip-card__icon img{width:54px!important;height:54px!important}
+body .platform-card__icon{width:56px!important;height:56px!important}
+body .platform-card__icon img{width:56px!important;height:56px!important}
+body .hub-item__img{width:34px!important;height:34px!important;flex:0 0 34px}
+body .feature img{width:52px!important;height:52px!important}
+body .scenario-type img{width:20px!important;height:20px!important;border-radius:6px}
