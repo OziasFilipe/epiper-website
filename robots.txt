@@ -1,3 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /seo/
+Disallow: /404.html
+
 Sitemap: https://epiper.com.br/sitemap.xml

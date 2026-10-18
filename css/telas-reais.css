@@ -113,3 +113,21 @@ body .scenario-type img{width:20px!important;height:20px!important;border-radius
 .tr-duo{padding-bottom:50px}
 .tr-duo .tr-phone{width:22%;min-width:96px;max-width:160px;right:-6px;bottom:-4px}
 @media(max-width:720px){.tr-stage{padding-bottom:44px}.tr-stage .tr-phone{width:28%;min-width:84px}.tr-duo .tr-phone{width:26%;min-width:80px}}
+
+/* o ícone é um <span>: regras como ".ip-context__item span{display:block}" tiravam o centralizamento e o desenho ficava colado no canto */
+body .ip-context__icon,body .ip-card__icon,body .platform-card__icon,body .hero-flow__icon,body .mega-menu-icon,body .solution-menu-card__icon,body .support-band__icon,body .integration-teaser__icon{display:grid!important;place-items:center!important;align-self:center}
+body .ip-context__icon img,body .ip-card__icon img,body .platform-card__icon img,body .hero-flow__icon img,body .mega-menu-icon img{display:block;margin:0}
+body.internal-premium .ip-context__item{align-items:center!important}
+body .platform-visual-card__flow img{width:40px!important;height:40px!important;display:block;margin:0 auto 6px}
+
+/* ---------- SEO: resumo da página e assuntos relacionados ---------- */
+.seo-resumo{padding:clamp(40px,5vw,64px) 0 8px;background:#fff}
+.seo-resumo .container{max-width:880px;text-align:center}
+.seo-resumo h2{margin:0 0 12px;color:#241849;font-size:clamp(20px,2.4vw,26px);line-height:1.2;letter-spacing:-.02em;font-weight:800;text-wrap:balance}
+.seo-resumo p{margin:0 auto;color:#6b6485;font-size:15px;line-height:1.75}
+.seo-links{padding:28px 0 clamp(40px,5vw,64px);background:#fff}
+.seo-links .container{text-align:center}
+.seo-links__titulo{margin:0 0 14px;color:#8a84a3;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.seo-links__lista{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:0;padding:0;list-style:none}
+.seo-links__lista a{display:inline-block;padding:9px 15px;border-radius:999px;background:#f3eeff;color:#5b3fd1;font-size:13.5px;font-weight:700;text-decoration:none;box-shadow:inset 0 0 0 1px rgba(111,70,255,.10);transition:background .15s,color .15s}
+.seo-links__lista a:hover,.seo-links__lista a:focus-visible{background:#6f46ff;color:#fff}

@@ -1,0 +1,445 @@
+{
+  "_leia_me": "Arquivo de controle do SEO do site. Edite aqui (título, descrição, palavras-chave) e rode: python seo/seo.py aplicar  — ele reescreve o <head> de todas as páginas, o sitemap.xml, o robots.txt e o llms.txt, e depois python seo/seo.py verificar mostra o que ainda precisa de atenção. Limites: título até 60 caracteres, descrição de 110 a 160.",
+  "site": {
+    "url": "https://epiper.com.br",
+    "nome": "Epiper",
+    "nome_legal": "Epiper Tecnologia",
+    "idioma": "pt-BR",
+    "locale_og": "pt_BR",
+    "email": "contato@epiper.com.br",
+    "telefone": "+55 27 99621-7169",
+    "logo": "assets/images/logo-epiper-principal.webp",
+    "og_padrao": "assets/images/og-epiper.png",
+    "descricao_curta": "A Epiper conecta Pedido Eletrônico, Televendas e um Hub de gestão ao ERP de distribuidoras, sem trocar o ERP que a empresa já usa. Integração com WinThor TOTVS.",
+    "assuntos": [
+      "pedido eletrônico",
+      "televendas",
+      "integração com ERP",
+      "WinThor TOTVS",
+      "distribuidoras",
+      "vendas B2B"
+    ]
+  },
+  "paginas": {
+    "index.html": {
+      "titulo": "Pedido Eletrônico e Televendas para distribuidoras | Epiper",
+      "descricao": "Pedido Eletrônico, Televendas e Hub conectados ao ERP da sua distribuidora: catálogo, preço, estoque e pedido em um só fluxo. Integração com WinThor TOTVS.",
+      "principal": "pedido eletrônico",
+      "palavras_chave": [
+        "pedido eletrônico",
+        "pedido eletrônico para distribuidoras",
+        "sistema de televendas",
+        "integração com ERP",
+        "integração WinThor TOTVS",
+        "portal de pedidos B2B",
+        "sistema de pedidos para distribuidora",
+        "app de pedidos para clientes",
+        "vendas B2B",
+        "Epiper"
+      ],
+      "tipo": "home",
+      "prioridade": "1.0",
+      "frequencia": "weekly",
+      "preload_imagem": "assets/images/epiper-hero.webp",
+      "relacionadas": [
+        "pedido-eletronico.html",
+        "televendas.html",
+        "integracoes.html",
+        "hub-epiper.html",
+        "duvidas.html"
+      ],
+      "texto": [
+        "Pedido eletrônico, televendas e integração com ERP para distribuidoras",
+        "A Epiper entrega pedido eletrônico para distribuidoras e um sistema de televendas integrados ao ERP, com integração WinThor TOTVS. O portal de pedidos B2B permite que o cliente consulte catálogo, preço e estoque e envie o pedido pelo celular, como um app de pedidos para clientes, enquanto a equipe usa o Televendas e o Hub para acompanhar a operação. É um sistema de pedidos para distribuidora que cresce por módulos, sem trocar o ERP, e apoia as vendas B2B de ponta a ponta."
+      ]
+    },
+    "plataforma.html": {
+      "titulo": "Plataforma de vendas B2B integrada ao ERP | Epiper",
+      "descricao": "Conheça a plataforma Epiper: Hub, Pedido Eletrônico e Televendas sobre o mesmo núcleo, conectados ao ERP e liberados por empresa, usuário e filial.",
+      "principal": "plataforma",
+      "palavras_chave": [
+        "plataforma de vendas B2B",
+        "ecossistema comercial integrado ao ERP",
+        "hub comercial",
+        "vendas B2B para distribuidoras",
+        "canais de venda conectados ao ERP",
+        "plataforma para distribuidoras",
+        "Epiper"
+      ],
+      "tipo": "pagina",
+      "breadcrumb": "Plataforma",
+      "prioridade": "0.7",
+      "frequencia": "monthly",
+      "relacionadas": [
+        "hub-epiper.html",
+        "pedido-eletronico.html",
+        "televendas.html",
+        "operacao-conectada.html",
+        "implantacao-guiada.html"
+      ],
+      "h1": "Plataforma de vendas B2B <strong>para conectar toda a operação comercial.</strong>",
+      "texto": [
+        "Plataforma de vendas B2B para distribuidoras",
+        "A plataforma Epiper reúne o Hub, o Pedido Eletrônico e o Televendas em um ecossistema comercial integrado ao ERP. Os canais de venda conectados ao ERP ficam liberados por empresa, usuário e filial, formando uma plataforma para distribuidoras que atua em vendas B2B sem trocar o sistema de gestão. O Hub funciona como hub comercial do conjunto."
+      ]
+    },
+    "hub-epiper.html": {
+      "titulo": "Hub Epiper: usuários, soluções e integrações com ERP",
+      "descricao": "O Hub Epiper centraliza usuários, permissões, filiais, regras comerciais e integrações com o ERP para o Pedido Eletrônico e o Televendas.",
+      "principal": "hub",
+      "palavras_chave": [
+        "Hub Epiper",
+        "hub comercial",
+        "gestão de usuários e permissões",
+        "regras comerciais",
+        "integração com ERP",
+        "painel de gestão comercial",
+        "acesso por filial",
+        "central de integrações",
+        "Epiper"
+      ],
+      "tipo": "software",
+      "software": {
+        "nome": "Epiper Hub",
+        "categoria": "BusinessApplication",
+        "so": "Web",
+        "recursos": [
+          "Gestão de usuários e permissões",
+          "Acesso por empresa e filial",
+          "Regras comerciais configuráveis",
+          "Central de integrações com ERP",
+          "Indicadores da operação"
+        ]
+      },
+      "breadcrumb": "Hub Epiper",
+      "og_imagem": "assets/images/og-hub-epiper.png",
+      "prioridade": "0.8",
+      "frequencia": "monthly",
+      "relacionadas": [
+        "plataforma.html",
+        "integracoes.html",
+        "pedido-eletronico.html",
+        "televendas.html",
+        "implantacao-guiada.html"
+      ],
+      "texto": [
+        "Hub comercial: gestão de usuários, permissões e regras",
+        "O Hub Epiper é o painel de gestão comercial da operação: a equipe cuida da gestão de usuários e permissões, define o acesso por filial, configura as regras comerciais (como desconto máximo, alçada de aprovação, pedido mínimo e limite de crédito) e acompanha a central de integrações com o ERP. Esse hub comercial serve de base para o Pedido Eletrônico e para o Televendas."
+      ]
+    },
+    "televendas.html": {
+      "titulo": "Sistema de Televendas integrado ao ERP | Epiper",
+      "descricao": "Software de Televendas para distribuidoras: carteira de clientes, catálogo, preço, estoque e pedido no mesmo fluxo, integrado ao WinThor TOTVS e a outros ERPs.",
+      "principal": "televendas",
+      "palavras_chave": [
+        "sistema de televendas",
+        "software de televendas",
+        "televendas para distribuidoras",
+        "venda assistida",
+        "carteira de clientes",
+        "pedido por telefone",
+        "CRM de vendas",
+        "televendas integrado ao ERP",
+        "Epiper"
+      ],
+      "tipo": "software",
+      "software": {
+        "nome": "Epiper Televendas",
+        "categoria": "BusinessApplication",
+        "so": "Web",
+        "recursos": [
+          "Carteira de clientes",
+          "Catálogo, preço e estoque",
+          "Lançamento de pedidos",
+          "Metas e indicadores",
+          "Integração com ERP"
+        ]
+      },
+      "breadcrumb": "Televendas",
+      "og_imagem": "assets/images/og-televendas.png",
+      "prioridade": "0.9",
+      "frequencia": "weekly",
+      "relacionadas": [
+        "pedido-eletronico.html",
+        "hub-epiper.html",
+        "integracoes.html",
+        "implantacao-guiada.html",
+        "duvidas.html"
+      ],
+      "h1": "Televendas para distribuidoras: <strong>atenda e monte pedidos sem sair do contexto do cliente.</strong>",
+      "texto": [
+        "Sistema de televendas para distribuidoras",
+        "O Televendas da Epiper é um software de televendas para a venda assistida: o operador trabalha a carteira de clientes, consulta catálogo, preço e estoque e lança o pedido por telefone ou atendimento, sem sair do contexto do cliente. O CRM de vendas, as metas e os indicadores ficam no mesmo ambiente, e o sistema de televendas é integrado ao ERP, com destaque para o TOTVS WinThor."
+      ]
+    },
+    "pedido-eletronico.html": {
+      "titulo": "Pedido Eletrônico B2B para distribuidoras | Epiper",
+      "descricao": "Portal de Pedido Eletrônico B2B para distribuidoras: o cliente consulta catálogo, preço e estoque e envia o pedido pelo celular ou computador, integrado ao ERP.",
+      "principal": "pedido eletrônico",
+      "palavras_chave": [
+        "pedido eletrônico",
+        "pedido eletrônico B2B",
+        "pedido eletrônico para distribuidoras",
+        "portal de pedidos B2B",
+        "e-commerce B2B",
+        "app de pedidos para clientes",
+        "pedido online pelo celular",
+        "catálogo online com preço e estoque",
+        "Epiper"
+      ],
+      "tipo": "software",
+      "software": {
+        "nome": "Epiper Pedido Eletrônico",
+        "categoria": "BusinessApplication",
+        "so": "Web (instalável no celular)",
+        "recursos": [
+          "Catálogo B2B com preço e estoque",
+          "Condições comerciais por cliente",
+          "Pedido pelo celular ou computador",
+          "Acompanhamento de status do pedido",
+          "Integração com ERP"
+        ]
+      },
+      "breadcrumb": "Pedido Eletrônico",
+      "og_imagem": "assets/images/og-pedido-eletronico.png",
+      "prioridade": "0.9",
+      "frequencia": "weekly",
+      "relacionadas": [
+        "televendas.html",
+        "hub-epiper.html",
+        "integracoes.html",
+        "implantacao-guiada.html",
+        "duvidas.html"
+      ],
+      "h1": "Pedido Eletrônico para distribuidoras: <strong>seu cliente consulta e pede, conectado à sua operação.</strong>",
+      "texto": [
+        "Pedido eletrônico para distribuidoras e portal de pedidos B2B",
+        "O Pedido Eletrônico da Epiper é um portal de pedidos B2B para distribuidoras, um e-commerce B2B em que o cliente acessa o catálogo online com preço e estoque, aplica as condições comerciais e faz o pedido online pelo celular ou pelo computador, como um app de pedidos para clientes. A integração com o ERP é avaliada para o ambiente de cada distribuidora."
+      ]
+    },
+    "integracoes.html": {
+      "titulo": "Integração com ERP WinThor TOTVS, API e conectores | Epiper",
+      "descricao": "Integração com ERP para Pedido Eletrônico e Televendas: WinThor TOTVS conectado e outros ERPs avaliados por API, banco de dados, arquivos ou conectores.",
+      "principal": "integração",
+      "palavras_chave": [
+        "integração com ERP",
+        "integração WinThor",
+        "TOTVS WinThor",
+        "conector ERP",
+        "API de integração",
+        "sincronização de pedidos",
+        "integrar o ERP com o Pedido Eletrônico",
+        "Epiper"
+      ],
+      "tipo": "pagina",
+      "breadcrumb": "Integrações",
+      "prioridade": "0.8",
+      "frequencia": "monthly",
+      "relacionadas": [
+        "operacao-conectada.html",
+        "implantacao-guiada.html",
+        "pedido-eletronico.html",
+        "televendas.html",
+        "duvidas.html"
+      ],
+      "h1": "Integração com ERP: <strong>conecte a Epiper à estrutura que sua empresa já utiliza.</strong>",
+      "texto": [
+        "Integração com ERP: WinThor TOTVS, API e conectores",
+        "A integração WinThor conecta o TOTVS WinThor à Epiper por um agente instalado na rede do cliente, e a integração com ERP de outros sistemas é avaliada por API de integração, banco de dados, arquivos ou conectores. O objetivo é integrar o ERP com o Pedido Eletrônico e o Televendas, com sincronização de pedidos e retorno de status quando disponíveis, sem refazer o que já funciona."
+      ]
+    },
+    "operacao-conectada.html": {
+      "titulo": "Operação conectada: do ERP ao pedido e de volta | Epiper",
+      "descricao": "Veja como os dados circulam entre o ERP e os canais de venda: catálogo, preço e estoque vão para o cliente, e o pedido e o status voltam para a operação.",
+      "principal": "ERP",
+      "palavras_chave": [
+        "fluxo de pedidos integrado ao ERP",
+        "retorno de status do pedido",
+        "sincronização com o ERP",
+        "integração bidirecional",
+        "operação comercial conectada",
+        "pedido enviado ao ERP",
+        "Epiper"
+      ],
+      "tipo": "pagina",
+      "breadcrumb": "Operação conectada",
+      "prioridade": "0.5",
+      "frequencia": "monthly",
+      "relacionadas": [
+        "integracoes.html",
+        "plataforma.html",
+        "implantacao-guiada.html",
+        "pedido-eletronico.html",
+        "televendas.html"
+      ],
+      "h1": "Operação conectada: <strong>do ERP ao canal de venda e do pedido de volta à operação.</strong>",
+      "texto": [
+        "Fluxo de pedidos integrado ao ERP",
+        "Na operação conectada, o fluxo de pedidos integrado ao ERP leva catálogo, preço e estoque aos canais de venda, recebe o pedido enviado ao ERP e devolve o retorno de status do pedido para a equipe e para o cliente. É uma integração bidirecional, com sincronização com o ERP, pensada para a operação comercial conectada do começo ao fim."
+      ]
+    },
+    "implantacao-guiada.html": {
+      "titulo": "Implantação guiada de Pedido Eletrônico e Televendas",
+      "descricao": "Da análise do ERP ao go-live: diagnóstico, configuração de regras, integração, homologação e acompanhamento na implantação do Pedido Eletrônico e do Televendas.",
+      "principal": "implantação",
+      "palavras_chave": [
+        "sistema de pedidos",
+        "implantação de pedido eletrônico",
+        "implantação de televendas",
+        "homologação",
+        "go-live",
+        "configuração de regras comerciais",
+        "go-live acompanhado",
+        "Epiper"
+      ],
+      "tipo": "pagina",
+      "breadcrumb": "Implantação guiada",
+      "prioridade": "0.5",
+      "frequencia": "monthly",
+      "relacionadas": [
+        "integracoes.html",
+        "evolucao-modulos.html",
+        "operacao-conectada.html",
+        "pedido-eletronico.html",
+        "fale-com-especialista.html"
+      ],
+      "texto": [
+        "Implantação de pedido eletrônico e de televendas",
+        "A implantação de um sistema de pedidos na Epiper segue etapas: diagnóstico do processo, configuração de regras comerciais, integração com o ERP, homologação com cenários reais e go-live acompanhado. A implantação de pedido eletrônico e a implantação de televendas têm prazo e escopo que dependem do ambiente de cada empresa."
+      ]
+    },
+    "evolucao-modulos.html": {
+      "titulo": "Evolução por módulos: comece pequeno e cresça | Epiper",
+      "descricao": "Evolução por módulos: comece pelo canal de maior impacto, Pedido Eletrônico ou Televendas, e amplie sobre a mesma base, sem refazer a integração com o ERP.",
+      "principal": "evolução",
+      "palavras_chave": [
+        "evolução por módulos",
+        "implantação por etapas",
+        "começar com o Pedido Eletrônico",
+        "ampliar para o Televendas",
+        "plataforma modular para distribuidoras",
+        "Epiper"
+      ],
+      "tipo": "pagina",
+      "breadcrumb": "Evolução por módulos",
+      "prioridade": "0.5",
+      "frequencia": "monthly",
+      "relacionadas": [
+        "implantacao-guiada.html",
+        "plataforma.html",
+        "pedido-eletronico.html",
+        "televendas.html",
+        "fale-com-especialista.html"
+      ],
+      "h1": "Evolução por módulos: <strong>comece pelo problema mais importante, sem refazer a plataforma.</strong>",
+      "texto": [
+        "Implantação por etapas em uma plataforma modular",
+        "Uma plataforma modular para distribuidoras permite começar com o Pedido Eletrônico e depois ampliar para o Televendas, em uma implantação por etapas sobre a mesma base. Cada módulo se soma ao anterior sem refazer a integração com o ERP."
+      ]
+    },
+    "duvidas.html": {
+      "titulo": "Dúvidas sobre Pedido Eletrônico, Televendas e ERP | Epiper",
+      "descricao": "Respostas às principais dúvidas sobre Pedido Eletrônico, Televendas, integração com ERP e WinThor TOTVS, implantação e funcionamento da plataforma Epiper.",
+      "principal": "pedido eletrônico",
+      "palavras_chave": [
+        "dúvidas sobre pedido eletrônico",
+        "diferença entre pedido eletrônico e televendas",
+        "a Epiper substitui o ERP",
+        "funciona com WinThor",
+        "como começar a implantação",
+        "perguntas frequentes",
+        "Epiper"
+      ],
+      "tipo": "faq",
+      "breadcrumb": "Dúvidas",
+      "prioridade": "0.6",
+      "frequencia": "monthly",
+      "relacionadas": [
+        "pedido-eletronico.html",
+        "televendas.html",
+        "integracoes.html",
+        "implantacao-guiada.html",
+        "fale-com-especialista.html"
+      ],
+      "h1": "Dúvidas sobre Pedido Eletrônico e Televendas: <strong>entenda a plataforma antes de decidir.</strong>",
+      "texto": [
+        "Perguntas frequentes sobre pedido eletrônico",
+        "Reunimos as perguntas frequentes sobre o que é pedido eletrônico, a diferença entre pedido eletrônico e televendas, se a Epiper substitui o ERP, se a Epiper funciona com WinThor e como começar a implantação. Se a sua dúvida não estiver aqui, fale com um especialista."
+      ]
+    },
+    "fale-com-especialista.html": {
+      "titulo": "Fale com um especialista em vendas B2B | Epiper",
+      "descricao": "Conte sobre a sua distribuidora e o seu ERP e fale com um especialista da Epiper sobre Pedido Eletrônico, Televendas e integração. Atendimento pelo WhatsApp.",
+      "principal": "especialista",
+      "palavras_chave": [
+        "fale com um especialista",
+        "WhatsApp",
+        "pedido eletrônico",
+        "televendas",
+        "Epiper"
+      ],
+      "tipo": "contato",
+      "breadcrumb": "Fale com um especialista",
+      "prioridade": "0.7",
+      "frequencia": "yearly",
+      "sem_relacionadas": true,
+      "h1": "Fale com um especialista e veja qual solução faz sentido para sua operação."
+    },
+    "privacidade.html": {
+      "titulo": "Política de Privacidade | Epiper",
+      "descricao": "Política de Privacidade da Epiper: como tratamos os dados pessoais enviados pelo site e pelo formulário de contato e como exercer seus direitos pela LGPD.",
+      "principal": "privacidade",
+      "palavras_chave": [
+        "política de privacidade",
+        "LGPD",
+        "dados pessoais",
+        "Epiper"
+      ],
+      "tipo": "legal",
+      "breadcrumb": "Política de Privacidade",
+      "prioridade": "0.2",
+      "frequencia": "yearly",
+      "sem_relacionadas": true,
+      "h1": "Política de Privacidade: como a Epiper trata as informações enviadas pelo site."
+    },
+    "termos.html": {
+      "titulo": "Termos de Uso | Epiper",
+      "descricao": "Termos de uso do site da Epiper: condições de acesso ao conteúdo, propriedade intelectual, marcas de terceiros e limites de responsabilidade.",
+      "principal": "termos",
+      "palavras_chave": [
+        "termos de uso",
+        "Epiper"
+      ],
+      "tipo": "legal",
+      "breadcrumb": "Termos de Uso",
+      "prioridade": "0.2",
+      "frequencia": "yearly",
+      "sem_relacionadas": true,
+      "h1": "Termos de Uso do site institucional da Epiper Tecnologia."
+    },
+    "404.html": {
+      "titulo": "Página não encontrada | Epiper",
+      "descricao": "A página que você procurou não existe ou mudou de lugar. Volte ao início ou conheça o Pedido Eletrônico, o Televendas e as integrações com ERP da Epiper.",
+      "principal": "página",
+      "palavras_chave": [
+        "Epiper"
+      ],
+      "tipo": "erro",
+      "noindex": true,
+      "sem_relacionadas": true
+    }
+  },
+  "ancoras": {
+    "index.html": "Epiper: Pedido Eletrônico e Televendas para distribuidoras",
+    "plataforma.html": "Plataforma de vendas B2B integrada ao ERP",
+    "hub-epiper.html": "Hub Epiper: usuários, soluções e integrações",
+    "televendas.html": "Sistema de Televendas integrado ao ERP",
+    "pedido-eletronico.html": "Pedido Eletrônico B2B para distribuidoras",
+    "integracoes.html": "Integração com ERP WinThor TOTVS e outros ERPs",
+    "operacao-conectada.html": "Fluxo de pedidos conectado ao ERP",
+    "implantacao-guiada.html": "Implantação guiada do Pedido Eletrônico e do Televendas",
+    "evolucao-modulos.html": "Evolução por módulos",
+    "duvidas.html": "Dúvidas frequentes sobre Pedido Eletrônico e Televendas",
+    "fale-com-especialista.html": "Falar com um especialista"
+  }
+}

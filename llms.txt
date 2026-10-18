@@ -1,0 +1,23 @@
+# Epiper
+
+> A Epiper conecta Pedido Eletrônico, Televendas e um Hub de gestão ao ERP de distribuidoras, sem trocar o ERP que a empresa já usa. Integração com WinThor TOTVS.
+
+A Epiper atende distribuidoras e atacadistas que já têm ERP (foco em TOTVS WinThor). Não substitui o ERP: conecta canais de venda a ele.
+
+## Produtos
+- [Pedido Eletrônico B2B para distribuidoras](https://epiper.com.br/pedido-eletronico.html): Portal de Pedido Eletrônico B2B para distribuidoras: o cliente consulta catálogo, preço e estoque e envia o pedido pelo celular ou computador, integrado ao ERP.
+- [Sistema de Televendas integrado ao ERP](https://epiper.com.br/televendas.html): Software de Televendas para distribuidoras: carteira de clientes, catálogo, preço, estoque e pedido no mesmo fluxo, integrado ao WinThor TOTVS e a outros ERPs.
+- [Hub Epiper: usuários, soluções e integrações](https://epiper.com.br/hub-epiper.html): O Hub Epiper centraliza usuários, permissões, filiais, regras comerciais e integrações com o ERP para o Pedido Eletrônico e o Televendas.
+
+## Integração e implantação
+- [Integração com ERP WinThor TOTVS e outros ERPs](https://epiper.com.br/integracoes.html): Integração com ERP para Pedido Eletrônico e Televendas: WinThor TOTVS conectado e outros ERPs avaliados por API, banco de dados, arquivos ou conectores.
+- [Fluxo de pedidos conectado ao ERP](https://epiper.com.br/operacao-conectada.html): Veja como os dados circulam entre o ERP e os canais de venda: catálogo, preço e estoque vão para o cliente, e o pedido e o status voltam para a operação.
+- [Implantação guiada do Pedido Eletrônico e do Televendas](https://epiper.com.br/implantacao-guiada.html): Da análise do ERP ao go-live: diagnóstico, configuração de regras, integração, homologação e acompanhamento na implantação do Pedido Eletrônico e do Televendas.
+- [Evolução por módulos](https://epiper.com.br/evolucao-modulos.html): Evolução por módulos: comece pelo canal de maior impacto, Pedido Eletrônico ou Televendas, e amplie sobre a mesma base, sem refazer a integração com o ERP.
+
+## Visão geral e contato
+- [Plataforma de vendas B2B integrada ao ERP](https://epiper.com.br/plataforma.html): Conheça a plataforma Epiper: Hub, Pedido Eletrônico e Televendas sobre o mesmo núcleo, conectados ao ERP e liberados por empresa, usuário e filial.
+- [Dúvidas frequentes sobre Pedido Eletrônico e Televendas](https://epiper.com.br/duvidas.html): Respostas às principais dúvidas sobre Pedido Eletrônico, Televendas, integração com ERP e WinThor TOTVS, implantação e funcionamento da plataforma Epiper.
+- [Falar com um especialista](https://epiper.com.br/fale-com-especialista.html): Conte sobre a sua distribuidora e o seu ERP e fale com um especialista da Epiper sobre Pedido Eletrônico, Televendas e integração. Atendimento pelo WhatsApp.
+
+Contato: contato@epiper.com.br · +55 27 99621-7169
