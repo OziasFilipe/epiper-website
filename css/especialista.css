@@ -35,3 +35,21 @@
 @keyframes sucessoPulo{0%{transform:scale(1)}50%{transform:scale(1.12)}100%{transform:scale(1)}}
 @keyframes sucessoBarra{from{transform:scaleX(1)}to{transform:scaleX(0)}}
 @media(prefers-reduced-motion:reduce){.form-sucesso,.form-sucesso__anel,.form-sucesso__check,.form-sucesso__icone,.form-sucesso__barra i{animation:none}.form-sucesso__anel,.form-sucesso__check{stroke-dashoffset:0}.form-sucesso__barra i{transform:none}}
+
+/* ---------- mais compacta no topo, card com borda roxa e aviso de campo obrigatório ---------- */
+.contact-hero{padding:clamp(18px,2.2vw,30px) 0 clamp(36px,4vw,56px)}
+.contact-copy{padding-top:0}
+.contact-copy h1{margin-top:14px}
+.contact-form{border:2px solid #6f46ff;box-shadow:0 0 0 5px rgba(111,70,255,.10),0 26px 70px rgba(46,27,91,.14)}
+.obrig{margin-left:2px;color:#dc2626;font-style:normal;font-size:10.5px;font-weight:600;letter-spacing:0;white-space:nowrap}
+@media(max-width:1040px){.contact-hero{padding-top:20px}}
+
+/* ícone do WhatsApp no rótulo e link da política em vermelho */
+.rotulo-zap{display:inline-flex;align-items:center;gap:6px;height:18px;line-height:18px}
+.ic-zap{width:14px;height:14px;flex:none;color:#25d366}
+html body .consent a{color:#dc2626;font-weight:700;text-decoration:underline;text-underline-offset:2px}
+html body .consent a:hover,html body .consent a:focus-visible{color:#b91c1c}
+
+/* todos os rótulos com a mesma altura: os campos ficam alinhados mesmo com ícone ou aviso no rótulo */
+html body .contact-form .field>span{display:flex;align-items:center;gap:6px;height:19px;line-height:19px;flex-wrap:nowrap}
+html body .contact-form .field>span .obrig{line-height:19px}
