@@ -30,6 +30,8 @@ export function validarContato(c, agoraMs = Date.now()) {
       segmento: texto(c.segmento, 40), erp: texto(c.erp, 80), cargo: texto(c.cargo, 40),
       vendedores: texto(c.vendedores, 30), volume: texto(c.volume, 30), prazo: texto(c.prazo, 40), canais,
       mensagem: texto(c.mensagem, 1000),
+      usa_solucao: c.usa_solucao === 'Sim' || c.usa_solucao === 'Não' ? c.usa_solucao : '', // só aceita as duas respostas
+      nome_solucao: c.usa_solucao === 'Sim' ? texto(c.nome_solucao, 80) : '', // o nome só vale quando a resposta é Sim
     },
     // sinais de robô (não validam nada para o visitante; só decidem se guardamos)
     robo: (typeof c.hp === 'string' && c.hp.length > 0) || !(inteiro(c.t0, 0, 4e12, 0) > 0) || agoraMs - inteiro(c.t0, 0, 4e12, 0) < TEMPO_MINIMO_MS,

@@ -53,3 +53,16 @@ html body .consent a:hover,html body .consent a:focus-visible{color:#b91c1c}
 /* todos os rótulos com a mesma altura: os campos ficam alinhados mesmo com ícone ou aviso no rótulo */
 html body .contact-form .field>span{display:flex;align-items:center;gap:6px;height:19px;line-height:19px;flex-wrap:nowrap}
 html body .contact-form .field>span .obrig{line-height:19px}
+
+/* pergunta "já utiliza alguma solução?": o campo do nome só aparece quando a resposta é Sim */
+.field[hidden]{display:none}
+#campoSolucao{animation:campoEntra .25s ease both}
+@keyframes campoEntra{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){#campoSolucao{animation:none}}
+
+/* rótulos longos (pergunta sobre a solução que já usa) quebram de linha em vez de cortar */
+html body .contact-form .field--rotulo-longo>span{height:auto;min-height:19px;flex-wrap:wrap;row-gap:0}
+#campoSolucao{margin-top:-2px}
+
+/* borda do card: fina e suave (substitui a borda forte e o halo anteriores) */
+.contact-form{border:1px solid rgba(111,70,255,.28);box-shadow:0 22px 60px rgba(46,27,91,.10)}

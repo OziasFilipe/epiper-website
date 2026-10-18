@@ -53,6 +53,17 @@ test('formulário enxuto: só nome, WhatsApp, empresa e interesse bastam (e-mail
   assert.equal(dados.mensagem, '')
 }))
 
+test('"já utiliza alguma solução?": Sim guarda o nome; Não ou lixo descarta o nome', () => comBanco(async (banco, amb) => {
+  let n = 0
+  const enviarCom = async (extra) => (await enviar(banco, amb, valido(extra), {}, contexto('198.51.100.' + ++n))).status
+  assert.equal(await enviarCom({ usa_solucao: 'Sim', nome_solucao: 'WinThor <b>TOTVS</b>' }), 200)
+  assert.equal(await enviarCom({ usa_solucao: 'Não', nome_solucao: 'não deveria ficar' }), 200)
+  assert.equal(await enviarCom({ usa_solucao: 'talvez', nome_solucao: 'lixo' }), 200)
+  assert.equal(await enviarCom({}), 200)
+  const linhas = (await banco.execute('SELECT dados FROM formularios ORDER BY id')).rows.map((l) => JSON.parse(decifrar(String(l.dados), CHAVE_CAMPOS)))
+  assert.deepEqual(linhas.map((d) => [d.usa_solucao, d.nome_solucao]), [['Sim', 'WinThor <b>TOTVS</b>'], ['Não', ''], ['', ''], ['', '']])
+}))
+
 test('robôs: campo-isca preenchido, formulário rápido demais ou sem horário → finge sucesso e não guarda', () => comBanco(async (banco, amb) => {
   for (const extra of [{ hp: 'http://spam' }, { t0: Date.now() - 500 }, { t0: undefined }, { t0: Date.now() + 99999 }]) {
     const r = await enviar(banco, amb, valido(extra))

@@ -27,6 +27,18 @@
     else phoneInput.value = `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
   });
 
+  // "Já utiliza alguma solução?": só com "Sim" aparece o campo do nome; com "Não" (ou sem resposta) nada acontece e o campo fica limpo.
+  const usaSolucao = document.getElementById('usaSolucao');
+  const campoSolucao = document.getElementById('campoSolucao');
+  const nomeSolucao = document.getElementById('nomeSolucao');
+  const atualizarSolucao = () => {
+    const sim = usaSolucao?.value === 'Sim';
+    if (campoSolucao) campoSolucao.hidden = !sim;
+    if (!sim && nomeSolucao) nomeSolucao.value = '';
+  };
+  usaSolucao?.addEventListener('change', atualizarSolucao);
+  atualizarSolucao();
+
   const botao = document.getElementById('botaoEnviar');
   const textoBotao = botao?.querySelector('.submit-btn__txt');
   const helper = document.getElementById('formHelper');
@@ -80,6 +92,7 @@
     try { visitante = localStorage.getItem('epiper_v'); } catch (e) { /* sem armazenamento */ }
     const corpo = {
       nome: d.get('nome'), empresa: d.get('empresa'), telefone: d.get('telefone'), interesse: d.get('interesse'), mensagem: d.get('mensagem'),
+      usa_solucao: d.get('usa_solucao') || '', nome_solucao: d.get('usa_solucao') === 'Sim' ? (d.get('nome_solucao') || '') : '',
       consentimento: d.get('consent') !== null, hp: d.get('website') || '', t0: carregadoEm, visitante, pagina: location.pathname
     };
 
