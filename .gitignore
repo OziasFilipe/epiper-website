@@ -6,3 +6,7 @@ node_modules/
 *.sqlite
 .netlify/
 .data/
+
+# Arquivos com segredos (nunca versionar)
+*.env
+!.env.example
