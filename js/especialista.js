@@ -13,9 +13,9 @@
   const originInterest = [
     ['pedido-eletronico', 'Pedido Eletrônico'],
     ['televendas', 'Televendas'],
-    ['hub-epiper', 'Hub Epiper'],
-    ['integracoes', 'Integração com o meu ERP'],
-    ['operacao-conectada', 'Integração com o meu ERP']
+    ['hub-epiper', 'Quero entender qual solução faz sentido'],
+    ['integracoes', 'Quero entender qual solução faz sentido'],
+    ['operacao-conectada', 'Quero entender qual solução faz sentido']
   ].find(([key]) => originLower.includes(key));
   if (interest && originInterest && !interest.value) interest.value = originInterest[1];
 
@@ -27,16 +27,34 @@
     else phoneInput.value = `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
   });
 
-  // "Já utiliza alguma solução?": só com "Sim" aparece o campo do nome; com "Não" (ou sem resposta) nada acontece e o campo fica limpo.
-  const usaSolucao = document.getElementById('usaSolucao');
+  // "Já utiliza alguma solução?": a pergunta acompanha o que o visitante procura e só aparece depois dessa escolha.
+  // Só com "Sim" aparece o campo do nome; com "Não" (ou sem resposta) nada acontece e o campo fica limpo.
+  const perguntas = {
+    'Pedido Eletrônico': ['Você já utiliza alguma solução de pedido eletrônico?', 'Qual é o nome da solução de pedido eletrônico?'],
+    'Televendas': ['Você já utiliza alguma solução de televendas?', 'Qual é o nome da solução de televendas?'],
+    'Quero entender qual solução faz sentido': ['Você já utiliza alguma solução de vendas ou gestão?', 'Qual solução você já utiliza?']
+  };
+  const campoUsa = document.getElementById('campoUsa');
+  const perguntaUsa = document.getElementById('perguntaUsa');
+  const perguntaNome = document.getElementById('perguntaNome');
+  const usaSolucao = form.querySelectorAll('input[name=usa_solucao]');
+  // "Prefiro não informar" conta como sem resposta: só Sim e Não seguem para o Hub.
+  const respostaUsa = () => { const v = form.querySelector('input[name=usa_solucao]:checked')?.value; return v === 'Sim' || v === 'Não' ? v : ''; };
   const campoSolucao = document.getElementById('campoSolucao');
   const nomeSolucao = document.getElementById('nomeSolucao');
   const atualizarSolucao = () => {
-    const sim = usaSolucao?.value === 'Sim';
+    const par = perguntas[interest?.value];
+    if (campoUsa) campoUsa.hidden = !par;
+    if (par) {
+      if (perguntaUsa) perguntaUsa.textContent = par[0];
+      if (perguntaNome) perguntaNome.textContent = par[1];
+    } else usaSolucao.forEach((r) => { r.checked = false; });
+    const sim = !!par && respostaUsa() === 'Sim';
     if (campoSolucao) campoSolucao.hidden = !sim;
     if (!sim && nomeSolucao) nomeSolucao.value = '';
   };
-  usaSolucao?.addEventListener('change', atualizarSolucao);
+  interest?.addEventListener('change', atualizarSolucao);
+  usaSolucao.forEach((r) => r.addEventListener('change', atualizarSolucao));
   atualizarSolucao();
 
   const botao = document.getElementById('botaoEnviar');
@@ -92,7 +110,7 @@
     try { visitante = localStorage.getItem('epiper_v'); } catch (e) { /* sem armazenamento */ }
     const corpo = {
       nome: d.get('nome'), empresa: d.get('empresa'), telefone: d.get('telefone'), interesse: d.get('interesse'), mensagem: d.get('mensagem'),
-      usa_solucao: d.get('usa_solucao') || '', nome_solucao: d.get('usa_solucao') === 'Sim' ? (d.get('nome_solucao') || '') : '',
+      usa_solucao: respostaUsa(), nome_solucao: respostaUsa() === 'Sim' ? (d.get('nome_solucao') || '') : '',
       consentimento: d.get('consent') !== null, hp: d.get('website') || '', t0: carregadoEm, visitante, pagina: location.pathname
     };
 

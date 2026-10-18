@@ -62,7 +62,24 @@ html body .contact-form .field>span .obrig{line-height:19px}
 
 /* rótulos longos (pergunta sobre a solução que já usa) quebram de linha em vez de cortar */
 html body .contact-form .field--rotulo-longo>span{height:auto;min-height:19px;flex-wrap:wrap;row-gap:0}
-#campoSolucao{margin-top:-2px}
 
 /* borda do card: fina e suave (substitui a borda forte e o halo anteriores) */
 .contact-form{border:1px solid rgba(111,70,255,.28);box-shadow:0 22px 60px rgba(46,27,91,.10)}
+
+/* "já utiliza alguma solução?": pergunta em cima e as opções em fileira logo abaixo */
+.pergunta-linha{display:flex;flex-direction:column;align-items:flex-start;gap:14px;margin:4px 0 0}
+.pergunta-linha[hidden]{display:none}
+.pergunta-linha__texto{color:#4e4464;font-size:12.5px;font-weight:820;line-height:1.35}
+.pergunta-linha__texto small{color:#9b94a6;font-size:11px;font-weight:600}
+.pergunta-linha__opcoes{display:flex;flex-wrap:wrap;align-items:center;gap:12px 44px;padding-left:2px}
+.bolinha{display:inline-flex;align-items:center;gap:12px;cursor:pointer;color:#3d3454;font-size:14px;font-weight:500}
+.bolinha input{appearance:none;-webkit-appearance:none;flex:none;width:19px;height:19px;margin:0;border:1.5px solid #8f88a1;border-radius:50%;background:#fff;cursor:pointer;transition:.16s;display:grid;place-content:center}
+.bolinha input::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--c-purple);transform:scale(0);transition:transform .16s}
+.bolinha input:checked{border-color:var(--c-purple)}
+.bolinha input:checked::before{transform:scale(1)}
+.bolinha:hover input{border-color:var(--c-purple)}
+.bolinha input:focus-visible{outline:3px solid rgba(111,70,255,.32);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.bolinha input,.bolinha input::before{transition:none}}
+@media(max-width:420px){.pergunta-linha__opcoes{gap:12px 28px}}
+html body .contact-form #campoSolucao>span{display:block;height:auto;line-height:1.35}
+html body:not(.pagina-inicio) .contact-form .pergunta-linha .bolinha>span{font-size:14px!important;font-weight:500!important;color:#3d3454}
