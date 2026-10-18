@@ -6,7 +6,7 @@
   "description": "Site institucional da Epiper (estático) + funções do Netlify que coletam visitas e contatos num banco SQLite (Turso/libSQL).",
   "engines": { "node": ">=20" },
   "scripts": {
-    "test": "node --test test/",
+    "test": "node --test \"test/**/*.test.mjs\"",
     "dev": "node seo/dev-server.mjs",
     "seo:aplicar": "python seo/seo.py aplicar",
     "seo:verificar": "python seo/seo.py verificar"

@@ -115,6 +115,7 @@ def bloco_head(arq, pg, html):
         L.append(f'<link rel="preload" as="image" href="{pg["preload_imagem"]}" fetchpriority="high"/>')
     if not pg.get("noindex"):
         L.append('<script type="application/ld+json">' + json.dumps(grafo(arq, pg, html), ensure_ascii=False, separators=(",", ":")) + "</script>")
+        L.append('<script src="js/rastreio.js" defer></script>')  # medição de visitas própria, sem cookies (ver privacidade.html)
     L.append(FIM)
     return "\n".join(L)
 
@@ -191,7 +192,7 @@ def sitemap():
 
 
 def robots():
-    gravar("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /seo/\nDisallow: /404.html\n\nSitemap: {URL}/sitemap.xml\n")
+    gravar("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /seo/\nDisallow: /404.html\n\nSitemap: {URL}/sitemap.xml\n")
     print("ok  robots.txt")
 
 

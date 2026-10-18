@@ -97,16 +97,38 @@
     return form.reportValidity();
   };
 
-  form.addEventListener('submit', (event) => {
+  // Guarda o contato no painel da Epiper (melhor esforço: se falhar, o WhatsApp abre do mesmo jeito).
+  const carregadoEm = Date.now();
+  const registrarContato = async () => {
+    try {
+      const d = new FormData(form);
+      let visitante = null;
+      try { visitante = localStorage.getItem('epiper_v'); } catch (e) { /* sem armazenamento */ }
+      const corpo = {
+        nome: d.get('nome'), empresa: d.get('empresa'), telefone: d.get('telefone'), email: d.get('email'),
+        segmento: d.get('segmento'), erp: d.get('erp'), cargo: d.get('cargo'), vendedores: d.get('vendedores'), volume: d.get('volume'), prazo: d.get('prazo'),
+        canais: d.getAll('canais'), interesse: d.get('interesse'), mensagem: d.get('mensagem'),
+        consentimento: d.get('consent') !== null, hp: d.get('website') || '', t0: carregadoEm, visitante, pagina: location.pathname,
+      };
+      const controle = new AbortController();
+      const limite = setTimeout(() => controle.abort(), 4000);
+      await fetch('/api/contato', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(corpo), keepalive: true, credentials: 'omit', signal: controle.signal });
+      clearTimeout(limite);
+    } catch (e) { /* o contato segue pelo WhatsApp mesmo assim */ }
+  };
+
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!validate()) return;
     if (helper) helper.textContent = 'Abrindo o WhatsApp com sua mensagem pronta…';
+    await registrarContato();
     window.location.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(buildLines())}`;
   });
 
-  document.getElementById('mailFallback')?.addEventListener('click', (event) => {
+  document.getElementById('mailFallback')?.addEventListener('click', async (event) => {
     event.preventDefault();
     if (!validate()) return;
+    await registrarContato();
     window.location.href = `mailto:${emailTo}?subject=${encodeURIComponent('Contato pelo site - ' + form.elements.empresa.value)}&body=${encodeURIComponent(buildLines())}`;
   });
 })();

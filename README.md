@@ -1,174 +1,69 @@
-# Epiper Site — V17 Produção
+# Site da Epiper (epiper.com.br)
 
-Versão refinada para publicação.
+Site institucional estático (HTML/CSS/JS) hospedado no **Netlify**, mais três **funções do Netlify** que coletam as visitas e os contatos do formulário num banco **SQLite hospedado (Turso)**. O **Epiper Hub** (outro sistema, em outra hospedagem) consulta esses dados no menu **SEO Site**, só para o usuário master.
 
-## Páginas
-- `index.html` — Home
-- `pedido-eletronico.html` — Pedido Eletrônico
-- `televendas.html` — Televendas
-- `integracoes.html` — ERPs e Integrações
-- `privacidade.html` — política básica de privacidade
-- `termos.html` — termos básicos de uso
-
-## Principais melhorias
-- Nova identidade visual Epiper aplicada no header/footer.
-- Favicon completo com o ícone roxo da folha digital.
-- Home mais curta e objetiva; seções redundantes removidas.
-- Headline da Home mais clara: Pedido Eletrônico + Televendas conectados ao ERP.
-- Campo de e-mail removido; CTAs simplificados.
-- Botão falso **Entrar** removido.
-- Hub de recursos com ícones semânticos padronizados.
-- Nova área técnica de integração e implantação.
-- Imagens secundárias próprias para Pedido Eletrônico e Televendas.
-- SEO básico, Open Graph, Twitter Card, canonical, sitemap e robots.
-- Manifest e ícones para navegador/celular.
-- Política de Privacidade e Termos adicionados como modelos básicos.
-
-## WhatsApp
-Abra `js/main.js` e configure:
-
-```js
-const EPIPER_WHATSAPP_NUMBER = '55DDDNUMERO';
+```
+visitante ──► epiper.com.br (Netlify)  ──► /api/coletar, /api/contato ──► Turso (SQLite)
+                                                    ▲
+Epiper Hub (outra hospedagem) ──── leitura assinada ┘   /api/hub/*   (o site NUNCA chama o Hub)
 ```
 
-Enquanto o número estiver vazio, os botões usam `contato@epiper.com.br` como fallback.
+## Páginas
+`index`, `plataforma`, `hub-epiper`, `televendas`, `pedido-eletronico`, `integracoes`, `operacao-conectada`, `implantacao-guiada`, `evolucao-modulos`, `duvidas`, `fale-com-especialista`, `privacidade`, `termos`, `404`.
 
-## Antes de publicar
-- Confirmar domínio final (`https://epiper.com.br/`).
-- Configurar o número oficial de WhatsApp.
-- Revisar Política de Privacidade e Termos com assessoria jurídica.
-- Confirmar que nomes/logos de ERPs e parceiros podem ser exibidos publicamente.
+## SEO (título, descrição, palavras-chave, dados estruturados)
+Tudo é controlado em **um arquivo só**: `seo/seo.config.json`.
 
+```bash
+python seo/seo.py aplicar      # reescreve o <head> de todas as páginas, sitemap.xml, robots.txt e llms.txt
+python seo/seo.py verificar    # relatório: tamanho do título/descrição, palavra-chave, h1, imagens sem alt, links quebrados
+```
+Para mudar o texto que aparece no Google, edite título/descrição/palavras-chave da página no JSON e rode `aplicar`. Limites: título até 60 caracteres, descrição de 110 a 160.
 
-## V18 — ícones padronizados
-Todos os ícones visuais do site foram padronizados no mesmo estilo: fundo roxo circular e símbolo branco central, inspirados na referência enviada.
+## Medição de visitas e contatos: como funciona e como é protegido
+| Peça | O que faz | Proteção |
+|---|---|---|
+| `js/rastreio.js` | Envia página, tempo, rolagem e cliques (nunca o que a pessoa digita) | Sem cookies; respeita "Não rastrear" e "Global Privacy Control"; só roda em epiper.com.br |
+| `POST /api/coletar` | Grava a medição | Só do nosso site (Origin), ignora robôs, corpo máximo de 6 KB, só páginas do site, limite por IP (hash), tempo e cliques com teto, IP nunca guardado |
+| `POST /api/contato` | Recebe o formulário | Consentimento obrigatório, campo-isca e tempo mínimo contra robôs, 5 por hora por IP, **dados pessoais criptografados (AES-256-GCM)** antes de ir ao banco |
+| `GET /api/hub/*` | O Hub lê os dados | **Assinatura HMAC-SHA256** com chave de 256 bits, janela de 60 s, código de uso único (anti-repetição), bloqueio após 10 erros, comparação em tempo constante, lista de IPs opcional; respostas de erro todas iguais |
+| Banco | SQLite (Turso/libSQL) | Acesso só com token (a "senha" do banco), cifrado em repouso pelo Turso. O SQLite sozinho não tem senha; por isso o token + a criptografia dos campos |
+| `_headers` | Cabeçalhos | CSP estrita (`script-src 'self'`), HSTS, sem iframe, sem sniffing |
 
+Privacidade (LGPD): o visitante é um código aleatório do navegador; o IP vira um hash que muda todo dia; dados de medição são apagados após 400 dias; a Política de Privacidade (`privacidade.html`) descreve isso. **Peça revisão jurídica do texto antes de divulgar.**
 
-## V19 — posicionamento de integrações
-O site agora apresenta a Epiper como plataforma de integração flexível para diferentes ERPs. WinThor TOTVS permanece em destaque por ser um cenário de integração trabalhado pela Epiper, sem transmitir dependência exclusiva desse ERP. A compatibilidade com outros sistemas é apresentada como sujeita à análise técnica de APIs, banco, arquivos e conectores disponíveis.
+## Colocar no ar (uma vez)
+1. **Turso** (https://turso.tech, o plano gratuito serve): crie um banco, por exemplo `epiper-site`.
+   ```bash
+   turso db create epiper-site
+   turso db show epiper-site --url        # → EPIPER_BANCO_URL  (começa com libsql://)
+   turso db tokens create epiper-site     # → EPIPER_BANCO_TOKEN
+   ```
+2. **Netlify** → Site configuration → Environment variables. Crie (veja `.env.example`):
+   `EPIPER_BANCO_URL`, `EPIPER_BANCO_TOKEN`, `EPIPER_CHAVE_CAMPOS`, `EPIPER_SEGREDO_IP` e, no passo 4, `EPIPER_HUB_SEGREDO`.
+   ```bash
+   node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"   # EPIPER_CHAVE_CAMPOS
+   node -e "console.log(require('crypto').randomBytes(24).toString('hex'))"      # EPIPER_SEGREDO_IP
+   ```
+   **Guarde a `EPIPER_CHAVE_CAMPOS` num cofre de senhas:** sem ela, os contatos já gravados não podem mais ser lidos.
+3. Faça o deploy (push no GitHub). O Netlify instala `@libsql/client` e publica as funções; as tabelas são criadas sozinhas na primeira chamada.
+4. **No Hub** (master → SEO Site → Conexão): salve o endereço `https://epiper.com.br`, clique em **Gerar chave**, copie a chave (aparece uma vez) para `EPIPER_HUB_SEGREDO` no Netlify, refaça o deploy e clique em **Testar conexão**.
+5. (Recomendado) Coloque em `EPIPER_HUB_IPS` o IP do servidor do Hub: só ele passa a conseguir ler.
 
+### Trocar a chave do Hub sem parar
+No Hub gere a chave nova → no Netlify coloque a antiga em `EPIPER_HUB_SEGREDO_ANTERIOR` e a nova em `EPIPER_HUB_SEGREDO` → deploy → teste → apague a `…_ANTERIOR`.
 
-## V20 — Hub de recursos
-Os ícones do bloco "Hub de recursos Epiper" foram reduzidos para ficarem mais proporcionais: círculo menor, símbolo menor e espaçamento mais equilibrado.
+## Testes
+```bash
+npm install
+npm test                 # 30 testes: criptografia, assinatura, repetição, bloqueio, robôs, limites, contatos, consultas
+npm run dev              # site + funções na sua máquina (http://127.0.0.1:8787), com SQLite em .data/ (nunca vai para produção)
+node seo/semear-demo.mjs # (com o dev rodando) popula dados fictícios para ver as telas do Hub
+```
+Para o Hub local falar com o `npm run dev`: `HUB_SEO_SITE_PERMITIR_LOCAL=true` no `.env` do Hub (só em desenvolvimento) e endereço `http://127.0.0.1:8787`.
 
-
-## V21 — Navbar e footer
-- Link “Contato” removido do navbar principal.
-- Indicador textual `⌄` substituído por um ícone visual de submenu (+ em bloco roxo claro), que gira ao abrir.
-- Footer atualizado para exibir folha roxa e palavra “epiper” em branco.
-
-
-## V22 — Integrações e Dúvidas
-- Navbar: `ERPs` passou a `Integrações`.
-- Navbar: `Como funciona` passou a `Dúvidas`.
-- Criada a página `duvidas.html` com FAQ sobre negócio, produtos, ERPs, implantação e operação.
-- Sitemap atualizado com a nova página.
-
-
-## V23 — Integrações mais visuais
-A página `integracoes.html` ganhou uma seção visual de cenários de ERP, destacando WinThor TOTVS e mostrando de forma intuitiva que a Epiper também pode se adaptar a outros ERPs, APIs, sistemas próprios e legados.
-
-
-## V24 — ERPs oficiais e header sticky
-- Logos de referência foram salvas em `assets/images/erps/`: TOTVS, Linx, Sankhya, Omie, Bling e SAP.
-- TOTVS/WinThor é apresentado como integração em destaque. Os demais aparecem como ecossistemas cuja viabilidade deve ser validada tecnicamente.
-- O header agora acompanha a rolagem. Depois de alguns pixels, a barra branca se expande e incorpora a logo Epiper em uma única navegação compacta.
-- Antes de publicar logos de terceiros em produção, valide as regras de uso de marca de cada fornecedor. A exibição no site não deve sugerir parceria ou certificação quando ela não existir.
-
-### Fontes dos arquivos de marca
-- TOTVS: repositório público oficial `totvs/totvstec-doc`.
-- Linx: domínio oficial `caixarapido.linx.com.br`.
-- Sankhya: arquivo público em `sankhya.com.br`.
-- Omie: Sala de Imprensa oficial.
-- Bling: domínio oficial `bling.com.br`.
-- SAP: SAP Digital Design System / domínio oficial `sap.com`.
-
-
-## V25 — Redesign da área de dados conectados
-A seção “O que pode ser conectado” da página de Integrações foi redesenhada com fundo suave, ramificação visual do ERP para os dados, cards compactos e ícones proporcionais, seguindo o conceito visual aprovado.
-
-
-## V26 — seções visuais suavizadas
-Aplicadas três melhorias visuais inspiradas nas referências aprovadas:
-1. Seção de plataforma (Home) mais refinada e suave para Pedido Eletrônico e Televendas.
-2. Bloco "Uma camada comercial moderna..." redesenhado com aparência mais natural e menos "AI".
-3. Bloco de integração pensada para a operação real com logos nativas de ERP, destacando TOTVS WinThor e exemplos de outros ERPs.
-
-Também foram trocados os ícones genéricos de ERP por logos nativas sempre que um ERP específico é citado.
-
-
-## V27 — correção de bugs visuais
-Corrigidos os cards Pedido Eletrônico/Televendas e o bloco WinThor/Outros ERPs. As áreas agora usam HTML/CSS isolado, sem sobreposição de ícone, e as logos nativas de ERP possuem áreas próprias para não quebrar o texto.
-
-
-## V28 — Logo branca no footer
-O footer de todas as páginas agora utiliza a nova logo Epiper com símbolo roxo e wordmark branco, em `assets/branding/logo-epiper-footer-branca.png`, com fundo transparente. A logo do header não foi alterada.
-
-
-## V29 — Plataforma Epiper com páginas próprias
-O menu **Plataforma** agora aponta para páginas dedicadas:
-- `plataforma.html` — visão geral
-- `hub-epiper.html`
-- `operacao-conectada.html`
-- `implantacao-guiada.html`
-- `evolucao-modulos.html`
-
-O mega menu foi atualizado em todas as páginas e cada página mantém o mesmo header, footer, identidade visual e CTA da Epiper.
-
-
-## V30 — cards de ERP refinados
-Na Home, a seção de integração pensada para a operação real foi atualizada para 4 cards: WinThor TOTVS, Linx, Bling e Outros ERPs. As logos agora aparecem sem card interno e centralizadas dentro do card principal, seguindo a referência aprovada.
-
-## V31 — correção do menu mobile
-O header mobile agora mantém fundo branco sólido quando o usuário rola a página ou deixa o menu aberto. O painel de navegação, itens ativos, botão e hamburger permanecem legíveis sem transparência sobre o conteúdo.
-
-
-## V32 — acabamento de produção
-- WhatsApp comercial configurado: +55 27 99621-7169 (`5527996217169`).
-- Menu mobile transformado em accordion com fundo branco persistente.
-- Footer reorganizado em Plataforma, Produtos, Empresa e Legal.
-- Home com mensagens mais orientadas a benefício e seção "A plataforma em prática" usando telas reais do projeto.
-- Botão flutuante de WhatsApp adicionado de forma discreta.
-- Organization Schema atualizado com telefone e ContactPoint.
-- SoftwareApplication Schema enriquecido com featureList.
-- Página Dúvidas recebeu FAQPage Schema.
-- Não foram adicionados logos/depoimentos de clientes sem autorização.
-
-### Pendente para publicação
-Google Analytics e Search Console exigem IDs/códigos da sua conta e verificação externa do domínio; o projeto está pronto para recebê-los, mas nenhum identificador fictício foi inserido.
-
-
-## V33 — menu corrigido
-- Corrigido conflito dos accordions mobile com o menu desktop.
-- Painéis mobile ficam totalmente fora do layout acima de 900px.
-- Fundo branco persiste no header e no painel enquanto o menu mobile está aberto ou durante scroll.
-- Estados do menu são resetados ao alternar entre mobile e desktop.
-- Rolagem da página é bloqueada enquanto o menu mobile está aberto, evitando deslocamentos visuais.
-
-
-## V34 — Soluções com imagens
-Na seção Plataforma Epiper da Home, os cards de Pedido Eletrônico e Televendas foram atualizados para usar imagens reais/previews do sistema no lugar do bloco abstrato, com moldura visual e selo contextual.
-
-## V35 — Conteúdo alinhado ao produto real
-- A Home preserva a proposta de Pedido Eletrônico + Televendas, mas passa a apresentar o ecossistema completo.
-- O Hub agora explica os dois produtos (Pedido Eletrônico e Televendas), o núcleo compartilhado, filiais e permissões por usuário.
-- Capturas reais do Hub, Televendas, Pedido Eletrônico e Central de Integrações substituem parte dos mockups genéricos.
-- Navegação desktop, menu mobile e footer passam a listar o portfólio completo.
-- SEO e FAQ foram atualizados para refletir a solução atual.
-
-## V36 — Todas as páginas alinhadas ao ecossistema
-- Portfólio reduzido a Pedido Eletrônico, Televendas e o Hub; páginas de E-commerce e Inteligência de Vendas removidas.
-- Home, Hub, evolução modular, menus e rodapés agora direcionam corretamente para os dois produtos (Pedido Eletrônico e Televendas).
-- Páginas internas receberam conteúdo mais específico sobre uso, integração, implantação e critérios de decisão.
-- Integrações passaram a diferenciar o WinThor, já conectado, dos demais ERPs que ainda dependem de avaliação e implementação.
-- Formulário comercial ganhou os dois produtos (Pedido Eletrônico e Televendas), contexto automático de origem e link para a Política de Privacidade.
-- Política de Privacidade e Termos ganharam resumo e navegação local para melhorar a leitura.
-- Sitemap atualizado com as duas novas páginas de produto.
-
-
-## Revisão de SEO, layout e conteúdo
-- Títulos, descrições, canonical, Open Graph e Twitter Cards únicos por página; JSON-LD de Organization/WebSite (home), BreadcrumbList (internas), SoftwareApplication (Pedido Eletrônico e Televendas) e FAQPage (Dúvidas).
-- Conteúdo complementar das páginas internas agora está no HTML estático (indexável sem JavaScript).
-- Hero de Plataforma, Operação conectada, Implantação, Evolução e Integrações usam o componente `css/hero-flow.css` (texto real em vez de diagramas SVG).
-- Skip link, `main#conteudo`, `width/height` e `loading="lazy"` nas imagens, `404.html`, `_headers` (segurança/cache) e `sitemap.xml` atualizado.
-- Portfólio: Pedido Eletrônico, Televendas e Hub Epiper.
+## Antes de publicar (checklist)
+- Número de WhatsApp e e-mail em `js/main.js`.
+- Revisão jurídica de `privacidade.html` e `termos.html`.
+- Confirmar que os logos de ERPs podem ser exibidos.
+- `python seo/seo.py verificar` sem problemas.
